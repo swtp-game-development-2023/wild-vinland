@@ -75,3 +75,6 @@ bin
 
 # vs stuff
 .vsconfig
+
+#ide
+.idea
