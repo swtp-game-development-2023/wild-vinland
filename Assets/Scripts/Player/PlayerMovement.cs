@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
         Left,
         Right
     }
-
+    
     public float moveSpeed = 1f;
     public Rigidbody2D rb;
     public Animator animator;
