@@ -7,10 +7,10 @@ using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private const float up = 1;
-    private const float down = -1;
-    private const float left = -1;
-    private const float right = 1;
+    private const float Up = 1;
+    private const float Down = -1;
+    private const float Left = -1;
+    private const float Right = 1;
     
     enum MovementTypes
     {
@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_movementInput != Vector2.zero)
         {
-            getDirection();
+            GetDirection();
             faceDirection();
             animator.SetFloat(Speed, _smoothMovementInput.sqrMagnitude);
             
@@ -116,21 +116,21 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //note the direction by the current user input
-    void getDirection()
+    private void GetDirection()
     {
-        if (_movementInput.x == left)
+        if (_movementInput.x == Left)
         {
             _currentDirection = Directions.Left;
         }
-        else if (_movementInput.x == right)
+        else if (_movementInput.x == Right)
         {
             _currentDirection = Directions.Right;
         }
-        else if (_movementInput.y == up)
+        else if (_movementInput.y == Up)
         {
             _currentDirection = Directions.Up;
         }
-        else if (_movementInput.y == down)
+        else if (_movementInput.y == Down)
         {
             _currentDirection = Directions.Down;
         }
@@ -147,26 +147,26 @@ public class PlayerMovement : MonoBehaviour
         {
                 case Directions.Right:
                 {
-                    scale.x = right;
+                    scale.x = Right;
                     rotation.z = noRotation;
                     break;
                 }
                 case Directions.Left:
                 {
-                    scale.x = left;
+                    scale.x = Left;
                     rotation.z = noRotation;
                     break;
                 }
                 case Directions.Up:
                 {
-                    scale.x = up;
+                    scale.x = Up;
                     // to rotate the player 90° if pressed Up, set rotation.z to 0.7f 
                     rotation.z = noRotation;
                     break;
                 }
                 case Directions.Down:
                 {
-                    scale.x = down;
+                    scale.x = Down;
                     // to rotate the player 90° if pressed Down, set rotation.z to -0.7f
                     rotation.z = noRotation;
                     break;
