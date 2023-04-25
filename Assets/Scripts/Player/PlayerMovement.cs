@@ -141,33 +141,34 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 scale = transform.localScale;
         Quaternion rotation = transform.rotation;
-        //TODO: reduce magic numbers
+        float rightAngle = 0.7f; // 90 degrees
+        float noRotation = 0f;
         switch (_currentDirection)
         {
                 case Directions.Right:
                 {
-                    scale.x = 1;
-                    rotation.z = 0f;
+                    scale.x = right;
+                    rotation.z = noRotation;
                     break;
                 }
                 case Directions.Left:
                 {
-                    scale.x = -1;
-                    rotation.z = 0f;
+                    scale.x = left;
+                    rotation.z = noRotation;
                     break;
                 }
                 case Directions.Up:
                 {
-                    scale.x = 1;
+                    scale.x = up;
                     // to rotate the player 90° if pressed Up, set rotation.z to 0.7f 
-                    rotation.z = 0f;
+                    rotation.z = noRotation;
                     break;
                 }
                 case Directions.Down:
                 {
-                    scale.x = 1;
+                    scale.x = down;
                     // to rotate the player 90° if pressed Down, set rotation.z to -0.7f
-                    rotation.z = 0f;
+                    rotation.z = noRotation;
                     break;
                 }
         }
