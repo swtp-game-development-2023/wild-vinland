@@ -41,3 +41,27 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Water
+    uniqueID: 3806994787
+    locked: 0
+  - name: Beach
+    uniqueID: 907536893
+    locked: 0
+  - name: Grass
+    uniqueID: 1275294403
+    locked: 0
+  - name: Mountain
+    uniqueID: 933107365
+    locked: 0
+  - name: Decoration
+    uniqueID: 355466799
+    locked: 0
+  - name: Farmabels
+    uniqueID: 1031047101
+    locked: 0
+  - name: Buildings
+    uniqueID: 2092585909
+    locked: 0
+  - name: Player
+    uniqueID: 4184631269
+    locked: 0
