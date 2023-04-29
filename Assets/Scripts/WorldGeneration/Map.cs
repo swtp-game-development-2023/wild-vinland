@@ -11,7 +11,7 @@ namespace WorldGeneration
         private readonly int _mapSize;
         private readonly int _numberOfLayers;
         private readonly int _edgeLength;
-        private bool[] _isLandMap;
+        private int[] _rawMap;
         private int[][] _stackedMap;
         public const int MinEdgeLength = 10;
         public const int MaxEdgeLength = 64;
@@ -23,11 +23,13 @@ namespace WorldGeneration
         public int EdgeLength => _edgeLength;
 
         //TODO deep copys
-        public bool[] IsLandMap => _isLandMap;
+        public int[] RawMap => _rawMap;
 
         public int[][] StackedMap => _stackedMap;
 
-        private const int noTile = 0;
+        public const int noTile = 0;
+        public const int water = 0;
+        public const int land = -1;
 
         public Map(int edgeLength, int numberOfLayers)
         {
@@ -39,7 +41,7 @@ namespace WorldGeneration
             _edgeLength = edgeLength;
             _numberOfLayers = numberOfLayers;
             _mapSize = _edgeLength * _edgeLength;
-            _isLandMap = new bool[_mapSize];
+            _rawMap = new int[_mapSize];
             //TODO _stackedMap = new int[_mapSize][];
         }
 
@@ -57,9 +59,9 @@ namespace WorldGeneration
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < _isLandMap.Length; i++)
+            for (int i = 0; i < _rawMap.Length; i++)
             {
-                stringBuilder.Append((_isLandMap[i] ? "[L]" : "[W]"));
+                stringBuilder.Append((IsLand(RawMap[i]) ? "[L]" : "[W]"));
                 if ((i % _edgeLength) == (_edgeLength - 1)) stringBuilder.Append("\n");
             }
 
@@ -88,7 +90,11 @@ namespace WorldGeneration
             };
             return IsOnMap(neighbourPos) ? neighbourPos : -1;
         }
-        
+
+        public bool IsLand(int tile)
+        {
+            return tile != water;
+        }
         public int GetBoarderDistance (int pos, Directions.AllDirections direction)
         {
             int counter = 0;
