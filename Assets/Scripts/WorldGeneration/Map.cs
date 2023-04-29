@@ -28,8 +28,6 @@ namespace WorldGeneration
         public int[][] StackedMap => _stackedMap;
 
         public const int noTile = 0;
-        public const int water = 0;
-        public const int land = -1;
 
         public Map(int edgeLength, int numberOfLayers)
         {
@@ -93,7 +91,18 @@ namespace WorldGeneration
 
         public bool IsLand(int tile)
         {
-            return tile != water;
+            return tile != (int) TileTypes.Sea;
+        }
+
+        public int countTiles(int[] map, TileTypes types)
+        {
+            int counter = 0;
+            foreach (var tile in map)
+            {
+                if (tile == (int)types) counter++;
+            }
+
+            return counter;
         }
         public int GetBoarderDistance (int pos, Directions.AllDirections direction)
         {
