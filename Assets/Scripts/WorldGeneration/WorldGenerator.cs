@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using WorldGeneration;
+using WorldGeneration.TileScripts;
 using Random = System.Random;
 
 public class WorldGenerator : MonoBehaviour
 {
-    //TODO DOC comments
     //TODO maybe tile rule visiter-pattern
 
     /// <summary>
@@ -31,29 +31,15 @@ public class WorldGenerator : MonoBehaviour
     /// The rules for placing a land tile.
     /// </summary>
     /// <returns>True if a land tile may be placed.</returns>
-    private readonly Func<int, Map, bool> _landTileRule = (pos, map) =>
+    private readonly TileRule _landTileRule = (tile, pos, map) =>
     {
         int landBoarderDistance = 0;
         if (!map.IsOnMap(pos)) return false;
-        if (map.IsLand(map.RawMap[pos]) || IsToCloseToBoarder(pos, map, landBoarderDistance)) return false;
+        if (map.IsLand(map.RawMap[pos]) || map.IsToCloseToBoarder(pos,  landBoarderDistance)) return false;
         return true;
     };
 
-    /// <summary>
-    /// Checks if a position is close to the border.
-    /// </summary>
-    /// <param name="pos">Position to be checked.</param>
-    /// <param name="map">Map on which to check.</param>
-    /// <param name="toleratedDistance">The allowed distance to the border.</param>
-    /// <returns>True if the position is too close to the border.</returns>
-    private static bool IsToCloseToBoarder(int pos, Map map, int toleratedDistance)
-    {
-        return Directions.BaseDirections.ToList()
-            .Select(direction => map.GetBoarderDistance(pos, direction))
-            .Any(distance => distance < toleratedDistance);
-    }
-
-
+    
     //TODO add parameterizability of probabilities for diffrent tiles
     /// <summary>
     /// generates a new map when called.
@@ -87,9 +73,9 @@ public class WorldGenerator : MonoBehaviour
         if (!IsPercentage(permittedDeviation))
             throw new ArgumentException("Argument has to be in % between 0 and 1", nameof(permittedDeviation));
         int permittedRange = (int)Math.Ceiling(map.EdgeLength * permittedDeviation);
-
+        int minDistance = (map.EdgeLength / 2) - permittedRange;//min border distance in each direction
         List<int> possibleStartPos = Enumerable.Range(0, map.MapSize)
-            .Where(i => !IsToCloseToBoarder(i, map, (map.EdgeLength / 2) - permittedRange))
+            .Where(pos => !map.IsToCloseToBoarder(pos, minDistance)) 
             .ToList(); //searches all possible start points that have the required distance from the edge
         int starPoint = possibleStartPos[_random.Next(0, possibleStartPos.Count)];
         map.RawMap[starPoint] = land;
@@ -104,12 +90,12 @@ public class WorldGenerator : MonoBehaviour
     /// <param name="map">Map on which to check.</param>
     /// <param name="isAllowedNeighbor">A function that determines whether a given neighbour is allowed or not.</param>
     /// <returns>Set of position of all neighbors on which a tile may be positioned according to valid rules.</returns>
-    private static HashSet<int> GetPlaceableNeighbours(int pos, Map map, Func<int, Map, bool> isAllowedNeighbor)
+    private static HashSet<int> GetPlaceableNeighbours(int pos, Map map, TileRule isAllowedNeighbor)
     {
         return Directions.BaseDirections
             .ToList()
             .Select(direction => map.GetTileNeighbourPos(pos, direction))
-            .Where(neighbourPos => isAllowedNeighbor(neighbourPos, map))
+            .Where(neighbourPos => isAllowedNeighbor(-1, neighbourPos, map))
             .ToHashSet();
     }
 
@@ -142,21 +128,24 @@ public class WorldGenerator : MonoBehaviour
     /// </summary>
     /// <param name="map">The map on which to generate land tiles.</param>
     /// <param name="percentOfLand">The desired percentage of land tiles, represented as a float value between 0 and 1.</param>
+    /// <param name="smoothnessOfCoast">The desired percentage of how rugged the island should be, represented as a float value between 0 and 1.
+    /// Larger values make for smoother coasts. Smaller ones for more natural ones.</param>
     /// <exception cref="ArgumentException">Thrown when the percentOfLand argument is not between 0 and 1.</exception>
     /// <returns>The current instance of the <see cref="WorldGenerator"/> class.</returns>
-    private WorldGenerator GenerateLand(Map map, float percentOfLand = 0.45f)
+    private WorldGenerator GenerateLand(Map map, float percentOfLand = 0.45f, float smoothnessOfCoast = 0.3f)
     {
         if (!IsPercentage(percentOfLand))
-            throw new ArgumentException("Argument has to be in % between 0 and 1", nameof(probability));
+            throw new ArgumentException("Argument has to be in % between 0 and 1", nameof(percentOfLand));
         int maxLandTiles = (int)(percentOfLand * map.MapSize);
+        
+        int maxPossibleTiles = map.CountTilesByRule(map.RawMap, LandTile.CheckRule);
         int start = StartPoint(map);
-        //TODO dont ignor minland tiles check the minimu
-        while (map.countTiles(map.RawMap, TileTypes.Beach) < maxLandTiles)
+        while (map.CountTiles(map.RawMap, TileTypes.Beach) < maxPossibleTiles && map.CountTiles(map.RawMap, TileTypes.Beach) < maxLandTiles)
         {
             Enumerable.Range(0, map.MapSize)
                 .Where(pos => map.IsLand(map.RawMap[pos]))
-                .SelectMany(pos => GetPlaceableNeighbours(pos, map, _landTileRule))
-                .Where(n => WillEventHappen(0.3f)) //TODO remove magic number
+                .SelectMany(pos => GetPlaceableNeighbours(pos, map, LandTile.CheckRule))
+                .Where(n => WillEventHappen(smoothnessOfCoast))
                 .ToList()
                 .ForEach(pos => map.RawMap[pos] = land);
         }

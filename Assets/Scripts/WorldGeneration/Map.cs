@@ -2,10 +2,11 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using Unity.VisualScripting;
+using WorldGeneration.TileScripts;
 
 namespace WorldGeneration
 {
-    //TODO DOC comments
     public class Map
     {
         /// <summary>
@@ -32,7 +33,7 @@ namespace WorldGeneration
         /// <summary>
         /// the map with its different levels.
         /// </summary>
-        //private int[][] _stackedMap;
+        private int[][] _stackedMap;
 
 
         /// <summary>
@@ -60,7 +61,6 @@ namespace WorldGeneration
         //public int[][] StackedMap => _stackedMap;
 
 
-
         /// <summary>
         /// Creates a new empty map.
         /// </summary>
@@ -77,7 +77,7 @@ namespace WorldGeneration
             _numberOfLayers = numberOfLayers;
             _mapSize = _edgeLength * _edgeLength;
             _rawMap = new int[_mapSize];
-            //TODO _stackedMap = new int[_mapSize][];
+            _stackedMap = new int[_mapSize][];
         }
 
         /// <summary>
@@ -116,7 +116,6 @@ namespace WorldGeneration
         }
         //TODO check upper and lower neighbour
 
-        //return -1 if there is no neighbour
 
         /// <summary>
         /// Searches the position of the specified neighbor.
@@ -156,16 +155,33 @@ namespace WorldGeneration
         /// <summary>
         /// Counts the number of tiles of a certain type.
         /// </summary>
-        /// <param name="map">Map on which to count.</param>
+        /// <param name="intMap">Map on which to count.</param>
         /// <param name="types">Type to be checked.</param>
         /// <returns>The number of tiles to which the condition applies.</returns>
-        public int countTiles(int[] map, TileTypes types)
+        public int CountTiles(int[] intMap, TileTypes types)
+        {
+            return CountTilesByRule(intMap, (tile, pos, map) => tile == (int)types);
+        }
+
+        /// <summary>
+        /// Counts the number of tiles in the given int map that match the specified tile rule.
+        /// </summary>
+        /// <param name="intMap">The int map to search for matching tiles.</param>
+        /// <param name="tileRule">The tile rule to use for matching tiles.</param>
+        /// <returns>The number of tiles in the int map that match the specified tile rule.</returns>
+        public int CountTilesByRule(int[] intMap, TileRule tileRule)
         {
             int counter = 0;
-            foreach (var tile in map)
-            {
-                if (tile == (int)types) counter++;
-            }
+
+            Enumerable.Range(0, intMap.Length)
+                .ToList()
+                .ForEach((pos) =>
+                {
+                    if (tileRule(intMap[pos], pos, this))
+                    {
+                        counter++;
+                    }
+                });
 
             return counter;
         }
@@ -185,6 +201,19 @@ namespace WorldGeneration
             }
 
             return counter;
+        }
+
+        /// <summary>
+        /// Checks if a position is close to the border.
+        /// </summary>
+        /// <param name="pos">Position to be checked.</param>
+        /// <param name="toleratedDistance">The allowed distance to the border.</param>
+        /// <returns>True if the position is too close to the border.</returns>
+        public bool IsToCloseToBoarder(int pos, int toleratedDistance)
+        {
+            return Directions.BaseDirections.ToList()
+                .Select(direction => GetBoarderDistance(pos, direction))
+                .Any(distance => distance < toleratedDistance);
         }
 
         /// <param name="pos">Position to be checked.</param>
