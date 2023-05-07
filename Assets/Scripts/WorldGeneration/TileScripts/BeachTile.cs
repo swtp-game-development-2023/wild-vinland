@@ -9,7 +9,7 @@ namespace WorldGeneration.TileScripts
         public new static bool CheckRule(TileTypes tileType, int pos, Map map)
         {
             LandTile.CheckRule(tileType, pos, map);
-            return !(map.GetNeighboursByCondition(pos, (t, p, m) => t == TileTypes.Mountain).Any());
+            return LandTile.CheckRule(tileType, pos, map) && !(map.GetNeighboursByCondition(pos, (t, p, m) => t == TileTypes.Mountain).Any());
         }
     }
 }

@@ -8,8 +8,7 @@ using Random = System.Random;
 
 public class WorldGenerator : MonoBehaviour
 {
-    //TODO maybe tile rule visiter-pattern
-
+    
     /// <summary>
     /// The map on which the game world is generated.
     /// </summary>
@@ -106,8 +105,12 @@ public class WorldGenerator : MonoBehaviour
     /// <returns>The current instance of the <see cref="WorldGenerator"/> class.</returns>
     private WorldGenerator GenerateLand(Map map, float percentOfLand = 0.45f, float smoothnessOfCoast = 0.3f)
     {
+        //TODO validation
         if (!IsPercentage(percentOfLand))
             throw new ArgumentException("Argument has to be in % between 0 and 1", nameof(percentOfLand));
+        if (!IsPercentage(percentOfLand))
+            throw new ArgumentException("Argument has to be in % between 0 and 1", nameof(smoothnessOfCoast));
+        
         int requestedTileCount = (int)(percentOfLand * map.MapSize);
 
         int maxPossibleTiles = map.CountTilesByRule(map.RawMap, LandTile.CheckRule);
@@ -126,18 +129,30 @@ public class WorldGenerator : MonoBehaviour
         return this;
     }
 
-    //TODO clean up
+    /// <summary>
+    /// Generates landscape features on the given map, such as mountains and grass, based on the provided percentage of mountain parameter.
+    /// </summary>
+    /// <param name="map">The map on which to generate landscape features.</param>
+    /// <param name="percentageOfMountain">The desired percentage of mountain tiles, represented as a float value between 0 and 1.</param>
+    /// <exception cref="ArgumentException">Thrown when the percentageOfMountain argument is not between 0 and 1.</exception>
+    /// <returns>The current instance of the <see cref="WorldGenerator"/> class.</returns>
     private WorldGenerator GenerateLandScape(Map map, float percentageOfMountain = 0.15f )
     {
+        if (!IsPercentage(percentageOfMountain))
+            throw new ArgumentException("Argument has to be in % between 0 and 1", nameof(percentageOfMountain));
+        
         float smoothnessOfMountain = 0.1f;
         int requestedTileCount = (int)(percentageOfMountain * Map.CountTilesByType(map.RawMap, (TileTypes)Land));
         int maxPossibleTiles = Map.CountTilesByType(map.RawMap, (TileTypes)Land);
+        
+        //Grass
         Enumerable.Range(0, map.MapSize)
             .Where(pos => Map.IsLand(map.RawMap[pos]))
             .SelectMany(pos => map.GetNeighboursByCondition(pos, GrasTile.CheckRule))
             .ToList()
             .ForEach(pos => PlaceTile(pos, map.RawMap, TileTypes.Gras));
 
+        //Mountain
         PlaceTile(_start, map.RawMap, TileTypes.Mountain);
         while (Map.CountTilesByType(map.RawMap, TileTypes.Mountain) < maxPossibleTiles &&
                Map.CountTilesByType(map.RawMap, TileTypes.Mountain) < requestedTileCount)
@@ -149,8 +164,6 @@ public class WorldGenerator : MonoBehaviour
                 .ToList()
                 .ForEach(pos => PlaceTile(pos, map.RawMap, TileTypes.Mountain));
         }
-
-
         return this;
     }
 
