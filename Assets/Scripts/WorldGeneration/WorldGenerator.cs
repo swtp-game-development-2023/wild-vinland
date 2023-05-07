@@ -105,7 +105,6 @@ public class WorldGenerator : MonoBehaviour
     /// <returns>The current instance of the <see cref="WorldGenerator"/> class.</returns>
     private WorldGenerator GenerateLand(Map map, float percentOfLand = 0.45f, float smoothnessOfCoast = 0.3f)
     {
-        //TODO validation
         if (!IsPercentage(percentOfLand))
             throw new ArgumentException("Argument has to be in % between 0 and 1", nameof(percentOfLand));
         if (!IsPercentage(percentOfLand))

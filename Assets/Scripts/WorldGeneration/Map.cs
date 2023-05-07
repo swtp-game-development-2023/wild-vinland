@@ -131,6 +131,7 @@ namespace WorldGeneration
 
             return stringBuilder.ToString();
         }
+        
         //TODO check upper and lower neighbour
 
 
@@ -166,7 +167,6 @@ namespace WorldGeneration
         /// </summary>
         /// <param name="pos">Position whose neighbors are to be checked.</param>
         /// <param name="isAllowedNeighbor">A function that determines whether a given neighbour is allowed or not.</param>
-        /// <param name="tile">Type of the tile, that should checked </param>
         /// <returns>Set of position of all neighbors on which a tile may be positioned according to valid rules.</returns>
         public HashSet<int> GetNeighboursByCondition(int pos, TileRuleCheck isAllowedNeighbor)
         {
@@ -187,7 +187,7 @@ namespace WorldGeneration
         /// Counts the number of tiles of a certain type.
         /// </summary>
         /// <param name="intMap">Map on which to count.</param>
-        /// <param name="types">Type to be checked.</param>
+        /// <param name="tileType">Type to be checked.</param>
         /// <returns>The number of tiles to which the condition applies.</returns>
         public static int CountTilesByType(int[] intMap, TileTypes tileType)
         {
