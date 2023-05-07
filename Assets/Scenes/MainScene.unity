@@ -123,7 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &59318421
+--- !u!1001 &239995650
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -137,11 +137,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6063773843490651936, guid: 092ac7ea8320d1c4b98573340ce6e7d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.3445629
+      value: -4.4290524
       objectReference: {fileID: 0}
     - target: {fileID: 6063773843490651936, guid: 092ac7ea8320d1c4b98573340ce6e7d9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.90583897
+      value: 2.61093
       objectReference: {fileID: 0}
     - target: {fileID: 6063773843490651936, guid: 092ac7ea8320d1c4b98573340ce6e7d9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -185,8 +185,25 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7913857174019831829, guid: 092ac7ea8320d1c4b98573340ce6e7d9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2103366245}
+      addedObject: {fileID: 239995652}
   m_SourcePrefab: {fileID: 100100000, guid: 092ac7ea8320d1c4b98573340ce6e7d9, type: 3}
+--- !u!1 &239995651 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7913857174019831829, guid: 092ac7ea8320d1c4b98573340ce6e7d9, type: 3}
+  m_PrefabInstance: {fileID: 239995650}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &239995652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239995651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933924c1f4673fe4a94cd2529da47bcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &325339713
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,20 +414,3 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &2103366244 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7913857174019831829, guid: 092ac7ea8320d1c4b98573340ce6e7d9, type: 3}
-  m_PrefabInstance: {fileID: 59318421}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2103366245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2103366244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bbc043a388065a4298161ebf6a3bd8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

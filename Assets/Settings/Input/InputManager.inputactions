@@ -69,9 +69,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "OpenInventory",
+                    "name": "TestGenerate",
                     "type": "Button",
-                    "id": "ff3510a9-ce24-49bd-ae24-634eef6dabcb",
+                    "id": "6af3b798-a7b2-4d72-9779-4ebfbbd87a29",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -301,12 +301,12 @@
                 },
                 {
                     "name": "",
-                    "id": "3376fb0b-7765-47c8-8755-1bb2dd23b4f6",
-                    "path": "<Keyboard>/i",
+                    "id": "effc5ec8-dc91-48c2-b69c-119532c2ec20",
+                    "path": "<Keyboard>/m",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "OpenInventory",
+                    "groups": "",
+                    "action": "TestGenerate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
