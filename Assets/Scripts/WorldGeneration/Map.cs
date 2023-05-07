@@ -62,7 +62,6 @@ namespace WorldGeneration
 
         //public int[][] StackedMap => _stackedMap;
 
-      
 
         /// <summary>
         /// Creates a new empty map.
@@ -111,7 +110,22 @@ namespace WorldGeneration
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < _rawMap.Length; i++)
             {
-                stringBuilder.Append((IsLand(RawMap[i]) ? "[ O ]" : "[W]"));
+                switch (RawMap[i])
+                {
+                    case (int)TileTypes.Sea:
+                        stringBuilder.Append("[W]");
+                        break;
+                    case (int)TileTypes.Beach:
+                        stringBuilder.Append("[ B ]");
+                        break;
+                    case (int)TileTypes.Gras:
+                        stringBuilder.Append("[ G ]");
+                        break;
+                    case (int)TileTypes.Mountain:
+                        stringBuilder.Append("[ M ]");
+                        break;
+                }
+
                 if ((i % _edgeLength) == (_edgeLength - 1)) stringBuilder.Append("\n");
             }
 
@@ -154,30 +168,30 @@ namespace WorldGeneration
         /// <param name="isAllowedNeighbor">A function that determines whether a given neighbour is allowed or not.</param>
         /// <param name="tile">Type of the tile, that should checked </param>
         /// <returns>Set of position of all neighbors on which a tile may be positioned according to valid rules.</returns>
-        public HashSet<int> GetNeighboursByCondition(int pos, TileRuleCheck isAllowedNeighbor, TileTypes tile = NoTile)
+        public HashSet<int> GetNeighboursByCondition(int pos, TileRuleCheck isAllowedNeighbor)
         {
             return Enumerable.ToHashSet(AllDirections.BaseDirections
                 .ToList()
                 .Select(direction => GetTileNeighbourPos(pos, direction))
-                .Where(neighbourPos => isAllowedNeighbor(tile, neighbourPos, this)));
+                .Where(neighbourPos => isAllowedNeighbor((TileTypes)RawMap[neighbourPos], neighbourPos, this)));
         }
 
-        /// <param name="tile">The tile to be checked</param>
+        /// <param name="tileType">The tile to be checked</param>
         /// <returns>True, if it is not a sea tile.</returns>
-        public static bool IsLand(int tile)
+        public static bool IsLand(int tileType)
         {
-            return tile != (int)TileTypes.Sea;
+            return tileType != (int)TileTypes.Sea;
         }
-        
+
         /// <summary>
         /// Counts the number of tiles of a certain type.
         /// </summary>
         /// <param name="intMap">Map on which to count.</param>
         /// <param name="types">Type to be checked.</param>
         /// <returns>The number of tiles to which the condition applies.</returns>
-        public static int CountTilesByType(int[] intMap, TileTypes types)
+        public static int CountTilesByType(int[] intMap, TileTypes tileType)
         {
-            return intMap.Count(tiles => tiles == (int)types);
+            return intMap.Count(tiles => tiles == (int)tileType);
         }
 
         /// <summary>
@@ -194,14 +208,13 @@ namespace WorldGeneration
                 .ToList()
                 .ForEach((pos) =>
                 {
-                    if (tileRule((TileTypes)intMap[pos], pos, this))
+                    if (tileRule(Map.NoTile, pos, this))
                     {
                         counter++;
                     }
                 });
 
             return counter;
-
         }
 
         /// <summary>

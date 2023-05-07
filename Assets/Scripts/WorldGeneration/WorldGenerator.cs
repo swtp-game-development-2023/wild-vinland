@@ -19,13 +19,15 @@ public class WorldGenerator : MonoBehaviour
     /// The random world generation generator.
     /// </summary>
     private Random _random;
+
+    private int _start;
     //private const float _defaultLandProbability = 0.3f;
 
     /// <summary>
     /// Each piece of land is beach first.
     /// </summary>
     private const int Land = (int)TileTypes.Beach;
-    
+
     //TODO add parameterizability of probabilities for diffrent tiles
     /// <summary>
     /// generates a new map when called.
@@ -59,16 +61,16 @@ public class WorldGenerator : MonoBehaviour
         if (!IsPercentage(permittedDeviation))
             throw new ArgumentException("Argument has to be in % between 0 and 1", nameof(permittedDeviation));
         int permittedRange = (int)Math.Ceiling(map.EdgeLength * permittedDeviation);
-        int minDistance = (map.EdgeLength / 2) - permittedRange;//min border distance in each direction
+        int minDistance = (map.EdgeLength / 2) - permittedRange; //min border distance in each direction
         List<int> possibleStartPos = Enumerable.Range(0, map.MapSize)
-            .Where(pos => !map.IsToCloseToBoarder(pos, minDistance)) 
+            .Where(pos => !map.IsToCloseToBoarder(pos, minDistance))
             .ToList(); //searches all possible start points that have the required distance from the edge
         int starPoint = possibleStartPos[_random.Next(0, possibleStartPos.Count)];
         map.RawMap[starPoint] = Land;
         return starPoint;
     }
 
-    
+
     /// <summary>
     /// Determines whether a given float value represents a percentage.
     /// </summary>
@@ -106,19 +108,48 @@ public class WorldGenerator : MonoBehaviour
     {
         if (!IsPercentage(percentOfLand))
             throw new ArgumentException("Argument has to be in % between 0 and 1", nameof(percentOfLand));
-        int maxLandTiles = (int)(percentOfLand * map.MapSize);
-        
+        int requestedTileCount = (int)(percentOfLand * map.MapSize);
+
         int maxPossibleTiles = map.CountTilesByRule(map.RawMap, LandTile.CheckRule);
-        int start = StartPoint(map);
-        while (map.CountTilesByType(map.RawMap, TileTypes.Beach) < maxPossibleTiles && map.CountTilesByType(map.RawMap, TileTypes.Beach) < maxLandTiles)
+        _start = StartPoint(map);
+        while (Map.CountTilesByType(map.RawMap, TileTypes.Beach) < maxPossibleTiles &&
+               Map.CountTilesByType(map.RawMap, TileTypes.Beach) < requestedTileCount)
         {
             Enumerable.Range(0, map.MapSize)
-                .Where(pos => map.IsLand(map.RawMap[pos]))
+                .Where(pos => Map.IsLand(map.RawMap[pos]))
                 .SelectMany(pos => map.GetNeighboursByCondition(pos, LandTile.CheckRule))
                 .Where(n => WillEventHappen(smoothnessOfCoast))
                 .ToList()
-                .ForEach(pos => PlaceTile(pos, map.RawMap, (TileTypes) Land));
+                .ForEach(pos => PlaceTile(pos, map.RawMap, (TileTypes)Land));
         }
+
+        return this;
+    }
+
+    //TODO clean up
+    private WorldGenerator GenerateLandScape(Map map, float percentageOfMountain = 0.15f )
+    {
+        float smoothnessOfMountain = 0.1f;
+        int requestedTileCount = (int)(percentageOfMountain * Map.CountTilesByType(map.RawMap, (TileTypes)Land));
+        int maxPossibleTiles = Map.CountTilesByType(map.RawMap, (TileTypes)Land);
+        Enumerable.Range(0, map.MapSize)
+            .Where(pos => Map.IsLand(map.RawMap[pos]))
+            .SelectMany(pos => map.GetNeighboursByCondition(pos, GrasTile.CheckRule))
+            .ToList()
+            .ForEach(pos => PlaceTile(pos, map.RawMap, TileTypes.Gras));
+
+        PlaceTile(_start, map.RawMap, TileTypes.Mountain);
+        while (Map.CountTilesByType(map.RawMap, TileTypes.Mountain) < maxPossibleTiles &&
+               Map.CountTilesByType(map.RawMap, TileTypes.Mountain) < requestedTileCount)
+        {
+            Enumerable.Range(0, map.MapSize)
+                .Where(pos => map.RawMap[pos] == (int)TileTypes.Mountain)
+                .SelectMany(pos => map.GetNeighboursByCondition(pos, MountainTile.CheckRule))
+                .Where(n => WillEventHappen(smoothnessOfMountain))
+                .ToList()
+                .ForEach(pos => PlaceTile(pos, map.RawMap, TileTypes.Mountain));
+        }
+
 
         return this;
     }
@@ -148,6 +179,8 @@ public class WorldGenerator : MonoBehaviour
         }*/
         print(_map.ToString());
         GenerateLand(_map);
+        print(_map.ToString());
+        GenerateLandScape(_map);
         print(_map.ToString());
     }
 }
