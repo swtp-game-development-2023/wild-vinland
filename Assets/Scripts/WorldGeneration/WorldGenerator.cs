@@ -24,21 +24,7 @@ public class WorldGenerator : MonoBehaviour
     /// <summary>
     /// Each piece of land is beach first.
     /// </summary>
-    private const int land = (int)TileTypes.Beach;
-
-    //TODO Move in a seperate class
-    /// <summary>
-    /// The rules for placing a land tile.
-    /// </summary>
-    /// <returns>True if a land tile may be placed.</returns>
-    private readonly TileRule _landTileRule = (tile, pos, map) =>
-    {
-        int landBoarderDistance = 0;
-        if (!map.IsOnMap(pos)) return false;
-        if (map.IsLand(map.RawMap[pos]) || map.IsToCloseToBoarder(pos,  landBoarderDistance)) return false;
-        return true;
-    };
-
+    private const int Land = (int)TileTypes.Beach;
     
     //TODO add parameterizability of probabilities for diffrent tiles
     /// <summary>
@@ -78,27 +64,11 @@ public class WorldGenerator : MonoBehaviour
             .Where(pos => !map.IsToCloseToBoarder(pos, minDistance)) 
             .ToList(); //searches all possible start points that have the required distance from the edge
         int starPoint = possibleStartPos[_random.Next(0, possibleStartPos.Count)];
-        map.RawMap[starPoint] = land;
+        map.RawMap[starPoint] = Land;
         return starPoint;
     }
 
-
-    /// <summary>
-    /// Returns a hashset of positions of all placeable neighbours of a given position on the map.
-    /// </summary>
-    /// <param name="pos">Position whose neighbors are to be checked.</param>
-    /// <param name="map">Map on which to check.</param>
-    /// <param name="isAllowedNeighbor">A function that determines whether a given neighbour is allowed or not.</param>
-    /// <returns>Set of position of all neighbors on which a tile may be positioned according to valid rules.</returns>
-    private static HashSet<int> GetPlaceableNeighbours(int pos, Map map, TileRule isAllowedNeighbor)
-    {
-        return Directions.BaseDirections
-            .ToList()
-            .Select(direction => map.GetTileNeighbourPos(pos, direction))
-            .Where(neighbourPos => isAllowedNeighbor(-1, neighbourPos, map))
-            .ToHashSet();
-    }
-
+    
     /// <summary>
     /// Determines whether a given float value represents a percentage.
     /// </summary>
@@ -140,14 +110,14 @@ public class WorldGenerator : MonoBehaviour
         
         int maxPossibleTiles = map.CountTilesByRule(map.RawMap, LandTile.CheckRule);
         int start = StartPoint(map);
-        while (map.CountTiles(map.RawMap, TileTypes.Beach) < maxPossibleTiles && map.CountTiles(map.RawMap, TileTypes.Beach) < maxLandTiles)
+        while (map.CountTilesByType(map.RawMap, TileTypes.Beach) < maxPossibleTiles && map.CountTilesByType(map.RawMap, TileTypes.Beach) < maxLandTiles)
         {
             Enumerable.Range(0, map.MapSize)
                 .Where(pos => map.IsLand(map.RawMap[pos]))
-                .SelectMany(pos => GetPlaceableNeighbours(pos, map, LandTile.CheckRule))
+                .SelectMany(pos => map.GetNeighboursByCondition(pos, LandTile.CheckRule))
                 .Where(n => WillEventHappen(smoothnessOfCoast))
                 .ToList()
-                .ForEach(pos => map.RawMap[pos] = land);
+                .ForEach(pos => PlaceTile(pos, map.RawMap, (TileTypes) Land));
         }
 
         return this;

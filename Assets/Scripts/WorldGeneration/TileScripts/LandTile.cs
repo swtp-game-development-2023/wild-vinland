@@ -6,12 +6,12 @@ namespace WorldGeneration.TileScripts
 {
     public abstract class LandTile: Tile
     {
-        public new static bool CheckRule(int tile, int pos, Map map)
+        public new static bool CheckRule(TileTypes tile, int pos, Map map)
         {
             Tile.CheckRule(tile, pos, map);
-            int landBoarderDistance = 0;
+            int landBoarderDistance = 2;
             if (!map.IsOnMap(pos)) return false;
-            if (map.IsLand(map.RawMap[pos]) || map.IsToCloseToBoarder(pos,  landBoarderDistance)) return false;
+            if (/*map.IsLand(map.RawMap[pos]) || */map.IsToCloseToBoarder(pos,  landBoarderDistance)) return false;
             return true;
         }
         

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 using Unity.VisualScripting;
 using WorldGeneration.TileScripts;
 
@@ -46,7 +48,7 @@ namespace WorldGeneration
         /// </summary>
         public const int MaxEdgeLength = 64;
 
-        public const int noTile = 0;
+        public const int NoTile = 0;
 
 
         public int MapSize => _mapSize;
@@ -60,6 +62,7 @@ namespace WorldGeneration
 
         //public int[][] StackedMap => _stackedMap;
 
+      
 
         /// <summary>
         /// Creates a new empty map.
@@ -88,7 +91,7 @@ namespace WorldGeneration
         /// <returns>True if the position is not yet occupied.</returns>
         private bool IsTileEmpty(int pos, int layer)
         {
-            return _stackedMap[pos][layer] == noTile;
+            return _stackedMap[pos][layer] == NoTile;
         }
 
         /// <summary>
@@ -108,7 +111,7 @@ namespace WorldGeneration
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < _rawMap.Length; i++)
             {
-                stringBuilder.Append((IsLand(RawMap[i]) ? "[L]" : "[W]"));
+                stringBuilder.Append((IsLand(RawMap[i]) ? "[ O ]" : "[W]"));
                 if ((i % _edgeLength) == (_edgeLength - 1)) stringBuilder.Append("\n");
             }
 
@@ -123,44 +126,58 @@ namespace WorldGeneration
         /// <param name="pos">The position from which to search for the neighbor.</param>
         /// <param name="direction">The direction in which to look for the neighbor</param>
         /// <returns>Returns the position of the neighbor, if there is no neighbor it returns -1.</returns>
-        public int GetTileNeighbourPos(int pos, Directions.AllDirections direction)
+        public int GetTileNeighbourPos(int pos, AllDirections.Directions direction)
         {
             int neighbourPos = direction switch
             {
-                Directions.AllDirections.West => pos % (_edgeLength) != 0 ? pos - 1 : -1,
-                Directions.AllDirections.North => pos - _edgeLength,
-                Directions.AllDirections.South => pos + _edgeLength,
-                Directions.AllDirections.East => (pos + 1) % _edgeLength != 0 ? pos + 1 : -1,
-                Directions.AllDirections.NorthEast => GetTileNeighbourPos(
-                    GetTileNeighbourPos(pos, Directions.AllDirections.North), Directions.AllDirections.East),
-                Directions.AllDirections.NorthWest => GetTileNeighbourPos(
-                    GetTileNeighbourPos(pos, Directions.AllDirections.North), Directions.AllDirections.West),
-                Directions.AllDirections.SouthEast => GetTileNeighbourPos(
-                    GetTileNeighbourPos(pos, Directions.AllDirections.South), Directions.AllDirections.East),
-                Directions.AllDirections.SouthWest => GetTileNeighbourPos(
-                    GetTileNeighbourPos(pos, Directions.AllDirections.South), Directions.AllDirections.West),
+                AllDirections.Directions.West => pos % (_edgeLength) != 0 ? pos - 1 : -1,
+                AllDirections.Directions.North => pos - _edgeLength,
+                AllDirections.Directions.South => pos + _edgeLength,
+                AllDirections.Directions.East => (pos + 1) % _edgeLength != 0 ? pos + 1 : -1,
+                AllDirections.Directions.NorthEast => GetTileNeighbourPos(
+                    GetTileNeighbourPos(pos, AllDirections.Directions.North), AllDirections.Directions.East),
+                AllDirections.Directions.NorthWest => GetTileNeighbourPos(
+                    GetTileNeighbourPos(pos, AllDirections.Directions.North), AllDirections.Directions.West),
+                AllDirections.Directions.SouthEast => GetTileNeighbourPos(
+                    GetTileNeighbourPos(pos, AllDirections.Directions.South), AllDirections.Directions.East),
+                AllDirections.Directions.SouthWest => GetTileNeighbourPos(
+                    GetTileNeighbourPos(pos, AllDirections.Directions.South), AllDirections.Directions.West),
                 _ => throw new ArgumentException("Invalid direction")
             };
             return IsOnMap(neighbourPos) ? neighbourPos : -1;
         }
 
+        /// <summary>
+        /// Returns a hashset of positions of all neighbours by a condition of a given position on the map.
+        /// </summary>
+        /// <param name="pos">Position whose neighbors are to be checked.</param>
+        /// <param name="isAllowedNeighbor">A function that determines whether a given neighbour is allowed or not.</param>
+        /// <param name="tile">Type of the tile, that should checked </param>
+        /// <returns>Set of position of all neighbors on which a tile may be positioned according to valid rules.</returns>
+        public HashSet<int> GetNeighboursByCondition(int pos, TileRuleCheck isAllowedNeighbor, TileTypes tile = NoTile)
+        {
+            return Enumerable.ToHashSet(AllDirections.BaseDirections
+                .ToList()
+                .Select(direction => GetTileNeighbourPos(pos, direction))
+                .Where(neighbourPos => isAllowedNeighbor(tile, neighbourPos, this)));
+        }
 
         /// <param name="tile">The tile to be checked</param>
         /// <returns>True, if it is not a sea tile.</returns>
-        public bool IsLand(int tile)
+        public static bool IsLand(int tile)
         {
             return tile != (int)TileTypes.Sea;
         }
-
+        
         /// <summary>
         /// Counts the number of tiles of a certain type.
         /// </summary>
         /// <param name="intMap">Map on which to count.</param>
         /// <param name="types">Type to be checked.</param>
         /// <returns>The number of tiles to which the condition applies.</returns>
-        public int CountTiles(int[] intMap, TileTypes types)
+        public static int CountTilesByType(int[] intMap, TileTypes types)
         {
-            return CountTilesByRule(intMap, (tile, pos, map) => tile == (int)types);
+            return intMap.Count(tiles => tiles == (int)types);
         }
 
         /// <summary>
@@ -169,7 +186,7 @@ namespace WorldGeneration
         /// <param name="intMap">The int map to search for matching tiles.</param>
         /// <param name="tileRule">The tile rule to use for matching tiles.</param>
         /// <returns>The number of tiles in the int map that match the specified tile rule.</returns>
-        public int CountTilesByRule(int[] intMap, TileRule tileRule)
+        public int CountTilesByRule(int[] intMap, TileRuleCheck tileRule)
         {
             int counter = 0;
 
@@ -177,13 +194,14 @@ namespace WorldGeneration
                 .ToList()
                 .ForEach((pos) =>
                 {
-                    if (tileRule(intMap[pos], pos, this))
+                    if (tileRule((TileTypes)intMap[pos], pos, this))
                     {
                         counter++;
                     }
                 });
 
             return counter;
+
         }
 
         /// <summary>
@@ -192,7 +210,7 @@ namespace WorldGeneration
         /// <param name="pos">Position from where to count.</param>
         /// <param name="direction">Direction in which to count.</param>
         /// <returns>the number of tiles up to the edge.</returns>
-        public int GetBoarderDistance(int pos, Directions.AllDirections direction)
+        private int GetBoarderDistance(int pos, AllDirections.Directions direction)
         {
             int counter = 0;
             while (IsOnMap(pos = GetTileNeighbourPos(pos, direction)))
@@ -211,7 +229,7 @@ namespace WorldGeneration
         /// <returns>True if the position is too close to the border.</returns>
         public bool IsToCloseToBoarder(int pos, int toleratedDistance)
         {
-            return Directions.BaseDirections.ToList()
+            return AllDirections.BaseDirections.ToList()
                 .Select(direction => GetBoarderDistance(pos, direction))
                 .Any(distance => distance < toleratedDistance);
         }
