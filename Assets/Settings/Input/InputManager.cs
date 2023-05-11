@@ -89,6 +89,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff3510a9-ce24-49bd-ae24-634eef6dabcb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -311,6 +320,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""Crouch_Stop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3376fb0b-7765-47c8-8755-1bb2dd23b4f6"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""OpenInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -404,6 +424,24 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""1b627a04-78fb-418b-900c-48511ef8c6cc"",
                     ""expectedControlType"": ""Quaternion"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""save"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""3e7c2ce6-86fb-4e9a-8162-efcbb4ac8668"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""load"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""5f22664f-0aa7-4ff0-ae16-e5f5f253169f"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -827,6 +865,72 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""75486c28-2777-4e3b-a2d9-49457682526c"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""save"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""f7c7ae30-53f5-42d0-925f-ad1427069ef9"",
+                    ""path"": ""<Keyboard>/rightCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""save"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""79d09a11-2346-465d-9c29-2741f65788e6"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""save"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""881285ec-ff5f-4d7a-9af5-219f3adf4d29"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""load"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""fa501a21-9b1d-4629-bc79-665536d47a29"",
+                    ""path"": ""<Keyboard>/rightCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""load"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""1df670e2-93f1-4296-b5ff-a66194ab716a"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""load"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -903,6 +1007,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_Player_Run_Stop = m_Player.FindAction("Run_Stop", throwIfNotFound: true);
         m_Player_Crouch_Start = m_Player.FindAction("Crouch_Start", throwIfNotFound: true);
         m_Player_Crouch_Stop = m_Player.FindAction("Crouch_Stop", throwIfNotFound: true);
+        m_Player_OpenInventory = m_Player.FindAction("OpenInventory", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -915,6 +1020,8 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        m_UI_save = m_UI.FindAction("save", throwIfNotFound: true);
+        m_UI_load = m_UI.FindAction("load", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -983,6 +1090,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Run_Stop;
     private readonly InputAction m_Player_Crouch_Start;
     private readonly InputAction m_Player_Crouch_Stop;
+    private readonly InputAction m_Player_OpenInventory;
     public struct PlayerActions
     {
         private @InputManager m_Wrapper;
@@ -994,6 +1102,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @Run_Stop => m_Wrapper.m_Player_Run_Stop;
         public InputAction @Crouch_Start => m_Wrapper.m_Player_Crouch_Start;
         public InputAction @Crouch_Stop => m_Wrapper.m_Player_Crouch_Stop;
+        public InputAction @OpenInventory => m_Wrapper.m_Player_OpenInventory;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1024,6 +1133,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Crouch_Stop.started += instance.OnCrouch_Stop;
             @Crouch_Stop.performed += instance.OnCrouch_Stop;
             @Crouch_Stop.canceled += instance.OnCrouch_Stop;
+            @OpenInventory.started += instance.OnOpenInventory;
+            @OpenInventory.performed += instance.OnOpenInventory;
+            @OpenInventory.canceled += instance.OnOpenInventory;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1049,6 +1161,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Crouch_Stop.started -= instance.OnCrouch_Stop;
             @Crouch_Stop.performed -= instance.OnCrouch_Stop;
             @Crouch_Stop.canceled -= instance.OnCrouch_Stop;
+            @OpenInventory.started -= instance.OnOpenInventory;
+            @OpenInventory.performed -= instance.OnOpenInventory;
+            @OpenInventory.canceled -= instance.OnOpenInventory;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1080,6 +1195,8 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
+    private readonly InputAction m_UI_save;
+    private readonly InputAction m_UI_load;
     public struct UIActions
     {
         private @InputManager m_Wrapper;
@@ -1094,6 +1211,8 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
+        public InputAction @save => m_Wrapper.m_UI_save;
+        public InputAction @load => m_Wrapper.m_UI_load;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1133,6 +1252,12 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
+            @save.started += instance.OnSave;
+            @save.performed += instance.OnSave;
+            @save.canceled += instance.OnSave;
+            @load.started += instance.OnLoad;
+            @load.performed += instance.OnLoad;
+            @load.canceled += instance.OnLoad;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1167,6 +1292,12 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled -= instance.OnTrackedDeviceOrientation;
+            @save.started -= instance.OnSave;
+            @save.performed -= instance.OnSave;
+            @save.canceled -= instance.OnSave;
+            @load.started -= instance.OnLoad;
+            @load.performed -= instance.OnLoad;
+            @load.canceled -= instance.OnLoad;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1238,6 +1369,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnRun_Stop(InputAction.CallbackContext context);
         void OnCrouch_Start(InputAction.CallbackContext context);
         void OnCrouch_Stop(InputAction.CallbackContext context);
+        void OnOpenInventory(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -1251,5 +1383,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+        void OnSave(InputAction.CallbackContext context);
+        void OnLoad(InputAction.CallbackContext context);
     }
 }
