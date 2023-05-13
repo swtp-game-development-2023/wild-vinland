@@ -112,16 +112,16 @@ namespace WorldGeneration
             {
                 switch (RawMap[i])
                 {
-                    case (int)TileTypes.Sea:
+                    case (int)BiomTileTypes.Sea:
                         stringBuilder.Append("[W]");
                         break;
-                    case (int)TileTypes.Beach:
+                    case (int)BiomTileTypes.Beach:
                         stringBuilder.Append("[ B ]");
                         break;
-                    case (int)TileTypes.Gras:
+                    case (int)BiomTileTypes.Gras:
                         stringBuilder.Append("[ G ]");
                         break;
-                    case (int)TileTypes.Mountain:
+                    case (int)BiomTileTypes.Mountain:
                         stringBuilder.Append("[ M ]");
                         break;
                 }
@@ -131,7 +131,7 @@ namespace WorldGeneration
 
             return stringBuilder.ToString();
         }
-        
+
         //TODO check upper and lower neighbour
 
 
@@ -166,41 +166,41 @@ namespace WorldGeneration
         /// Returns a hashset of positions of all neighbours by a condition of a given position on the map.
         /// </summary>
         /// <param name="pos">Position whose neighbors are to be checked.</param>
-        /// <param name="isAllowedNeighbor">A function that determines whether a given neighbour is allowed or not.</param>
+        /// <param name="rule">A function that determines whether a given neighbour is allowed or not.</param>
         /// <returns>Set of position of all neighbors on which a tile may be positioned according to valid rules.</returns>
-        public HashSet<int> GetNeighboursByCondition(int pos, TileRuleCheck isAllowedNeighbor)
+        public HashSet<int> GetNeighboursByRule(int pos, Func<int, int, Map, bool> rule)
         {
             return Enumerable.ToHashSet(AllDirections.BaseDirections
                 .ToList()
                 .Select(direction => GetTileNeighbourPos(pos, direction))
-                .Where(neighbourPos => isAllowedNeighbor((TileTypes)RawMap[neighbourPos], neighbourPos, this)));
+                .Where(neighbourPos => rule(RawMap[neighbourPos], neighbourPos, this)));
         }
-
+        
         /// <param name="tileType">The tile to be checked</param>
         /// <returns>True, if it is not a sea tile.</returns>
         public static bool IsLand(int tileType)
         {
-            return tileType != (int)TileTypes.Sea;
+            return tileType != (int)BiomTileTypes.Sea;
         }
 
         /// <summary>
         /// Counts the number of tiles of a certain type.
         /// </summary>
         /// <param name="intMap">Map on which to count.</param>
-        /// <param name="tileType">Type to be checked.</param>
+        /// <param name="biomTileType">Type to be checked.</param>
         /// <returns>The number of tiles to which the condition applies.</returns>
-        public static int CountTilesByType(int[] intMap, TileTypes tileType)
+        public static int CountTilesByType(int[] intMap, BiomTileTypes biomTileType)
         {
-            return intMap.Count(tiles => tiles == (int)tileType);
+            return intMap.Count(tiles => tiles == (int)biomTileType);
         }
 
         /// <summary>
         /// Counts the number of tiles in the given int map that match the specified tile rule.
         /// </summary>
         /// <param name="intMap">The int map to search for matching tiles.</param>
-        /// <param name="tileRule">The tile rule to use for matching tiles.</param>
+        /// <param name="rule">The tile rule to use for matching tiles.</param>
         /// <returns>The number of tiles in the int map that match the specified tile rule.</returns>
-        public int CountTilesByRule(int[] intMap, TileRuleCheck tileRule)
+        public int CountTilesByRule(int[] intMap, TileRule rule)
         {
             int counter = 0;
 
@@ -208,7 +208,7 @@ namespace WorldGeneration
                 .ToList()
                 .ForEach((pos) =>
                 {
-                    if (tileRule(Map.NoTile, pos, this))
+                    if (rule.Check(Map.NoTile, pos, this)) //TODO no Tile right?
                     {
                         counter++;
                     }
