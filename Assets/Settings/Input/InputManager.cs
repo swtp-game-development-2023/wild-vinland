@@ -91,9 +91,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""OpenInventory"",
+                    ""name"": ""TestGenerate"",
                     ""type"": ""Button"",
-                    ""id"": ""ff3510a9-ce24-49bd-ae24-634eef6dabcb"",
+                    ""id"": ""6af3b798-a7b2-4d72-9779-4ebfbbd87a29"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -323,12 +323,12 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3376fb0b-7765-47c8-8755-1bb2dd23b4f6"",
-                    ""path"": ""<Keyboard>/i"",
+                    ""id"": ""effc5ec8-dc91-48c2-b69c-119532c2ec20"",
+                    ""path"": ""<Keyboard>/m"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""OpenInventory"",
+                    ""groups"": """",
+                    ""action"": ""TestGenerate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -430,18 +430,18 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""save"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""3e7c2ce6-86fb-4e9a-8162-efcbb4ac8668"",
-                    ""expectedControlType"": ""Axis"",
+                    ""type"": ""Button"",
+                    ""id"": ""5d3ed907-73a2-408d-890f-f551251ba065"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""load"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""5f22664f-0aa7-4ff0-ae16-e5f5f253169f"",
-                    ""expectedControlType"": ""Axis"",
+                    ""type"": ""Button"",
+                    ""id"": ""a8102275-08dc-4e3d-8495-8ff448a6b0aa"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -867,70 +867,26 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""One Modifier"",
-                    ""id"": ""75486c28-2777-4e3b-a2d9-49457682526c"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""save"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""f7c7ae30-53f5-42d0-925f-ad1427069ef9"",
-                    ""path"": ""<Keyboard>/rightCtrl"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""save"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""79d09a11-2346-465d-9c29-2741f65788e6"",
+                    ""name"": """",
+                    ""id"": ""fc95a72f-53a9-41b8-87fb-5f20750949e6"",
                     ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""save"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""One Modifier"",
-                    ""id"": ""881285ec-ff5f-4d7a-9af5-219f3adf4d29"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""load"",
-                    ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""modifier"",
-                    ""id"": ""fa501a21-9b1d-4629-bc79-665536d47a29"",
-                    ""path"": ""<Keyboard>/rightCtrl"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""load"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""1df670e2-93f1-4296-b5ff-a66194ab716a"",
+                    ""name"": """",
+                    ""id"": ""0799ca12-2e8f-4c49-a85f-f4df66e296a9"",
                     ""path"": ""<Keyboard>/l"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""load"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1007,7 +963,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_Player_Run_Stop = m_Player.FindAction("Run_Stop", throwIfNotFound: true);
         m_Player_Crouch_Start = m_Player.FindAction("Crouch_Start", throwIfNotFound: true);
         m_Player_Crouch_Stop = m_Player.FindAction("Crouch_Stop", throwIfNotFound: true);
-        m_Player_OpenInventory = m_Player.FindAction("OpenInventory", throwIfNotFound: true);
+        m_Player_TestGenerate = m_Player.FindAction("TestGenerate", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1090,7 +1046,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Run_Stop;
     private readonly InputAction m_Player_Crouch_Start;
     private readonly InputAction m_Player_Crouch_Stop;
-    private readonly InputAction m_Player_OpenInventory;
+    private readonly InputAction m_Player_TestGenerate;
     public struct PlayerActions
     {
         private @InputManager m_Wrapper;
@@ -1102,7 +1058,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @Run_Stop => m_Wrapper.m_Player_Run_Stop;
         public InputAction @Crouch_Start => m_Wrapper.m_Player_Crouch_Start;
         public InputAction @Crouch_Stop => m_Wrapper.m_Player_Crouch_Stop;
-        public InputAction @OpenInventory => m_Wrapper.m_Player_OpenInventory;
+        public InputAction @TestGenerate => m_Wrapper.m_Player_TestGenerate;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1133,9 +1089,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Crouch_Stop.started += instance.OnCrouch_Stop;
             @Crouch_Stop.performed += instance.OnCrouch_Stop;
             @Crouch_Stop.canceled += instance.OnCrouch_Stop;
-            @OpenInventory.started += instance.OnOpenInventory;
-            @OpenInventory.performed += instance.OnOpenInventory;
-            @OpenInventory.canceled += instance.OnOpenInventory;
+            @TestGenerate.started += instance.OnTestGenerate;
+            @TestGenerate.performed += instance.OnTestGenerate;
+            @TestGenerate.canceled += instance.OnTestGenerate;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1161,9 +1117,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Crouch_Stop.started -= instance.OnCrouch_Stop;
             @Crouch_Stop.performed -= instance.OnCrouch_Stop;
             @Crouch_Stop.canceled -= instance.OnCrouch_Stop;
-            @OpenInventory.started -= instance.OnOpenInventory;
-            @OpenInventory.performed -= instance.OnOpenInventory;
-            @OpenInventory.canceled -= instance.OnOpenInventory;
+            @TestGenerate.started -= instance.OnTestGenerate;
+            @TestGenerate.performed -= instance.OnTestGenerate;
+            @TestGenerate.canceled -= instance.OnTestGenerate;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1369,7 +1325,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnRun_Stop(InputAction.CallbackContext context);
         void OnCrouch_Start(InputAction.CallbackContext context);
         void OnCrouch_Stop(InputAction.CallbackContext context);
-        void OnOpenInventory(InputAction.CallbackContext context);
+        void OnTestGenerate(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
