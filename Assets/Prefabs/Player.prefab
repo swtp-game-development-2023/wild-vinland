@@ -325,3 +325,4 @@ MonoBehaviour:
   walkSpeed: 50
   runSpeed: 100
   fastRunSpeed: 180
+  smoothRate: 0.065
