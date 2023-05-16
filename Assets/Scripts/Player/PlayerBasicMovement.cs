@@ -78,16 +78,17 @@ public class PlayerBasicMovement : MonoBehaviour {
             !animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Punch")) {
             animator.SetBool(IsMoving, true);
             
-            float tempSpeed = 1f;
+            var tempSpeed = 1f;
             if (animator.GetBool(IsRunning)) {
                 tempSpeed = runSpeed;
             }
-
-            if (animator.GetBool(IsCrouching)) {
-                tempSpeed = crouchSpeed;
-            }
             else {
-                tempSpeed = walkSpeed;
+                if (animator.GetBool(IsCrouching)) {
+                    tempSpeed = crouchSpeed;
+                }
+                else {
+                    tempSpeed = walkSpeed;
+                }
             }
             smoothedInput = Vector2.SmoothDamp(
                 smoothedInput,
