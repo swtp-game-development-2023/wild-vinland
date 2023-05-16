@@ -24758,7 +24758,7 @@ Transform:
   - {fileID: 4658300128307500733}
   - {fileID: 764852227533504385}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &1117200554720009966
 Grid:
@@ -24781,17 +24781,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4079552243611285768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8e49530df8d9ba438b2c9fbac62be26, type: 3}
+  m_Script: {fileID: 11500000, guid: 4337d3eed66a9eb42a78346c668302a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _seaMap: {fileID: 0}
-  _beachMap: {fileID: 0}
-  _grassMap: {fileID: 0}
-  _MountainMap: {fileID: 0}
-  _farmableMap: {fileID: 0}
-  _decoMap: {fileID: 0}
-  _unitMap: {fileID: 0}
-  _levelIndex: 1
+  _levelIndex: 0
 --- !u!1 &5299312973983080316
 GameObject:
   m_ObjectHideFlags: 0
