@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,34 +11,41 @@ public class PlayerBasicMovement : MonoBehaviour {
     [SerializeField] private float walkSpeed = 50f;
     [SerializeField] private float runSpeed = 100f;
     [SerializeField] private float fastRunSpeed = 180f;
+    [SerializeField] private float smoothRate = 0.05f;
+    private Vector2 smoothedInput;
+    private Vector2 smoothedInputVelocity;
     private Rigidbody2D rb;
     private InputManager input;
-    private Vector2 moveDirection = Vector2.zero;
-    private InputAction move;
-    private InputAction run;
-    private InputAction crouch;
+    private Vector2 movementVector = Vector2.zero;
+    private InputAction movementInput;
+    private InputAction runInput;
+    private InputAction crouchInput;
     private Animator animator;
     private static readonly int IsMoving = Animator.StringToHash("isMoving");
     private static readonly int IsRunning = Animator.StringToHash("isRunning");
     private static readonly int IsCrouching = Animator.StringToHash("isCrouching");
+    private static readonly int attackTrigger = Animator.StringToHash("attackTrigger");
+    private Vector2 currentInputVector;
 
     private void Awake() {
         input = new InputManager();
     }
 
     private void OnEnable() {
-        move = input.Player.Move;
-        move.Enable();
-        run = input.Player.Run_Start;
-        run.Enable();
-        crouch = input.Player.Crouch_Start;
-        crouch.Enable();
+        movementInput = input.Player.Move;
+        movementInput.Enable();
+        runInput = input.Player.Run_Start;
+        runInput.Enable();
+        crouchInput = input.Player.Crouch_Start;
+        crouchInput.Enable();
+        input.Player.Fire.Enable();
     }
 
     private void OnDisable() {
-        move.Disable();
-        run.Disable();
-        crouch.Disable();
+        movementInput.Disable();
+        runInput.Disable();
+        crouchInput.Disable();
+        input.Player.Fire.Disable();
     }
 
     private void Start() {
@@ -46,43 +54,62 @@ public class PlayerBasicMovement : MonoBehaviour {
     }
 
     private void Update() {
-        moveDirection = move.ReadValue<Vector2>();
-        animator.SetBool(IsRunning, run.IsPressed());
-        animator.SetBool(IsCrouching, crouch.IsPressed());
-
-        Debug.Log(moveDirection);
+        movementVector = movementInput.ReadValue<Vector2>();
+        animator.SetBool(IsRunning, runInput.IsPressed());
+        animator.SetBool(IsCrouching, crouchInput.IsPressed());
+        if (input.Player.Fire.IsPressed()) {
+            Fire();
+        }
     }
 
     //FixedUpdate() is called a fixed framerate
     private void FixedUpdate() {
-        float tempSpeed = 1f;
-        if (moveDirection != Vector2.zero) {
+        Movement();
+    }
+
+    private void Fire() {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Punch")) {
+            animator.SetTrigger(attackTrigger);
+        }
+    }
+
+    private void Movement() {
+        if (movementVector != Vector2.zero &&
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Punch")) {
             animator.SetBool(IsMoving, true);
+            
+            var tempSpeed = 1f;
             if (animator.GetBool(IsRunning)) {
                 tempSpeed = runSpeed;
             }
-            if (animator.GetBool(IsCrouching)) {
-                tempSpeed = crouchSpeed;
-            }
             else {
-                tempSpeed = walkSpeed;
+                if (animator.GetBool(IsCrouching)) {
+                    tempSpeed = crouchSpeed;
+                }
+                else {
+                    tempSpeed = walkSpeed;
+                }
             }
-
-            if (moveDirection.x < 0) {
-                transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-            }
-            else {
-                transform.rotation = Quaternion.Euler(0f, 0, 0f);
-            }
-            rb.velocity = moveDirection * tempSpeed * Time.fixedDeltaTime; 
+            smoothedInput = Vector2.SmoothDamp(
+                smoothedInput,
+                movementVector,
+                ref smoothedInputVelocity,
+                smoothRate);
+            rb.velocity = smoothedInput * tempSpeed * Time.fixedDeltaTime;
         }
         else {
-            rb.velocity = moveDirection;
             animator.SetBool(IsMoving, false);
+            smoothedInput = Vector2.SmoothDamp(
+                smoothedInput,
+                Vector2.zero, 
+                ref smoothedInputVelocity,
+                smoothRate);
+            rb.velocity = smoothedInput * Time.fixedDeltaTime;
         }
+        transform.rotation = movementVector.x switch {
+            < 0 => Quaternion.Euler(0f, 180f, 0f),
+            > 0 => Quaternion.Euler(0f, 0, 0f),
+            _ => transform.rotation
+        };
     }
-    
-    //TODO Movement in Funktionen auslagern
-    //TODO Movement smoother machen
-    //TODO FastRun einbauen
 }
