@@ -4,17 +4,60 @@ using System.Linq;
 using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.InputSystem;
 
 ///<summary>
 /// Class with basic load, clear and save functionality
 ///</summary>
 public class MapSaveSystem : MonoBehaviour
 {
-    [SerializeField] private Tilemap _seaMap, _beachMap, _grassMap, _MountainMap, _farmableMap, _decoMap, _unitMap;
+    private Tilemap _seaMap, _beachMap, _grassMap, _MountainMap, _farmableMap, _decoMap, _unitMap;
 
     // Variables to Link with Tilemaps in Unity
     [SerializeField] private int _levelIndex;
     // index to easly name different Save Files
+
+    private InputManager _input = null;
+    // Links up with our InputManager.inpuctactions object in Unity
+    private InputAction _save, _load;
+    
+    void Start()
+    {
+        _seaMap = transform.Find("Sea").gameObject.GetComponent<Tilemap>();
+        _beachMap = transform.Find("Beach").gameObject.GetComponent<Tilemap>();
+        _grassMap = transform.Find("Grass").gameObject.GetComponent<Tilemap>();
+        _MountainMap = transform.Find("Mountain").gameObject.GetComponent<Tilemap>();
+        _farmableMap = transform.Find("Farmables").gameObject.GetComponent<Tilemap>();
+        _decoMap = transform.Find("Deco").gameObject.GetComponent<Tilemap>();
+        _unitMap = transform.Find("Buildings").gameObject.GetComponent<Tilemap>();
+    }
+
+    private void Awake() 
+    {
+        _input = new InputManager();
+    }
+
+    private void OnEnable() 
+    {
+        _save = _input.UI.save;
+        _save.Enable();
+        _load = _input.UI.load;
+        _load.Enable();
+    }
+
+    void OnDisable()
+    {
+        _save.Disable();
+        _load.Disable();
+    }
+
+    void Update()
+    {
+        if(_save.IsPressed()) SaveMap();
+        // Saves the Tilemaps, if the save button is pressed
+        if(_load.IsPressed()) LoadMap();
+        // Loads the Tilemaps, if the load button is pressed
+    }
 
     ///<summary>
     /// saves the Tilemaps in a Json textfile in the Assets/Saves/ Folder
