@@ -21349,6 +21349,7 @@ GameObject:
   - component: {fileID: 160325150537748652}
   - component: {fileID: 6654220827396073661}
   - component: {fileID: 1095220449077209096}
+  - component: {fileID: 7040431603132894439}
   m_Layer: 0
   m_Name: Farmables
   m_TagString: Untagged
@@ -24720,6 +24721,42 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!19719996 &7040431603132894439
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3418719008571272830}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1 &4079552243611285768
 GameObject:
   m_ObjectHideFlags: 0
@@ -24730,7 +24767,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5498014601689913788}
   - component: {fileID: 1117200554720009966}
-  - component: {fileID: 804929683364882372}
   m_Layer: 0
   m_Name: WorldMapGrid
   m_TagString: Untagged
@@ -24758,7 +24794,7 @@ Transform:
   - {fileID: 4658300128307500733}
   - {fileID: 764852227533504385}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &1117200554720009966
 Grid:
@@ -30454,6 +30490,7 @@ GameObject:
   - component: {fileID: 764852227533504385}
   - component: {fileID: 6883137981183086186}
   - component: {fileID: 7277542974299823407}
+  - component: {fileID: 7827428704708728939}
   m_Layer: 0
   m_Name: Buildings
   m_TagString: Untagged
@@ -30745,6 +30782,42 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!19719996 &7827428704708728939
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6029328847901933628}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1 &6814252487134208518
 GameObject:
   m_ObjectHideFlags: 0
