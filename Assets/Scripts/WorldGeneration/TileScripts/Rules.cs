@@ -4,39 +4,84 @@ namespace WorldGeneration.TileScripts
 {
     public class Rules
     {
-        public static readonly BiomTileRule LandTileRule = new(
-            (biomTileType, pos, map) =>
-            {
-                int landBoarderDistance = 2;
-                if (!map.IsOnMap(pos)) return false;
-                if ( /*map.IsLand(map.RawMap[pos]) || */map.IsToCloseToBoarder(pos, landBoarderDistance)) return false;
-                return true;
-            }
-        );
+        private readonly TileRule _baseRule;
+        private readonly TileRule _landTileRule;
 
-        public static readonly BiomTileRule BeachTileRule = new (
-            (biomTileType, pos, map) =>
-            {
-                return LandTileRule.Check(biomTileType, pos, map) &&
-                       !(map.GetNeighboursByRule(pos, (t, p, m) => t == (int) BiomTileTypes.Mountain).Any());
-            }
-        );
+        //Biom
+        public readonly TileRule BeachTileRule;
+        public readonly TileRule GrasTileRule;
+        public readonly TileRule MountainTileRule;
 
-        public static readonly BiomTileRule GrasTileRule = new(
-            (biomTileType, pos, map) =>
-            {
-                return LandTileRule.Check(biomTileType, pos, map) &&
-                       !(map.GetNeighboursByRule(pos, (t, p, m) => t == (int) BiomTileTypes.Sea).Any());
-            }
-        );
+        //Farmables
+        public readonly TileRule WoodTileRule;
+        public readonly TileRule StoneTileRule;
+        public readonly TileRule OreTileRule;
+        
+        //Shape
+        public readonly TileRule MidTileRule;
+        public readonly TileRule NW_TileRule;
+        public readonly TileRule N_TileRule;
+        public readonly TileRule NE_TileRule;
 
-        public static readonly BiomTileRule MountainTileRule = new(
-            (biomTileType, pos, map) =>
-            {
-                return LandTileRule.Check(biomTileType, pos, map) && !(map
-                    .GetNeighboursByRule(pos, (t, p, m) => t is (int) BiomTileTypes.Sea or  (int) BiomTileTypes.Beach)
-                    .Any());
-            }
-        );
+        public Rules(Map map)
+        {
+            _baseRule = new TileRule(
+                (pos) => map.IsOnMap(pos));
+
+            _landTileRule = new(
+                (pos) =>
+                {
+                    int landBoarderDistance = 4;
+                    return _baseRule.Check(pos) && !map.IsToCloseToBoarder(pos, landBoarderDistance);
+                });
+
+            BeachTileRule = new(
+                (pos) =>
+                {
+                    return _landTileRule.Check(pos) &&
+                           !(map.GetNeighboursByRule(pos, (p) => map.BiomTileTypeMap[p] == (int)BiomTileTypes.Mountain)
+                               .Any());
+                }
+            );
+
+            GrasTileRule = new(
+                (pos) =>
+                {
+                    return _landTileRule.Check(pos) &&
+                           !(map.GetNeighboursByRule(pos, (p) => map.BiomTileTypeMap[p] == (int)BiomTileTypes.Sea)
+                               .Any());
+                }
+            );
+
+            MountainTileRule = new(
+                (pos) =>
+                {
+                    return _landTileRule.Check(pos) && !(map
+                        .GetNeighboursByRule(pos,
+                            (p) => map.BiomTileTypeMap[p] is (int)BiomTileTypes.Sea or (int)BiomTileTypes.Beach)
+                        .Any());
+                }
+            );
+            //Farmable
+            WoodTileRule = new TileRule(
+                (pos) => { return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Gras; });
+
+            StoneTileRule = new TileRule(
+                (pos) => { return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Mountain; });
+            
+            OreTileRule = new TileRule(
+                (pos) => { return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Mountain; });
+            
+            //Shape Rules
+            MidTileRule = new TileRule(
+                (pos) =>
+                {
+                    return _baseRule.Check(pos) && map
+                        .GetNeighboursByRule(pos, (p) => map.BiomTileTypeMap[pos] == map.BiomTileTypeMap[p])
+                        .Count == AllDirections.BaseDirections.Length;
+                });
+        }
+
+        //public static readonly ShapeTileRule NwRule = new ()
     }
 }

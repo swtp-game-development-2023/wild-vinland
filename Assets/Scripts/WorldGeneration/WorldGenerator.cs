@@ -19,6 +19,8 @@ public class WorldGenerator : MonoBehaviour
     /// </summary>
     private Random _random;
 
+
+    private Rules _rules;
     private int _start;
     //private const float _defaultLandProbability = 0.3f;
 
@@ -37,6 +39,7 @@ public class WorldGenerator : MonoBehaviour
     {
         _map = new Map(edgeLength, Enum.GetNames(typeof(BiomTileTypes)).Length);
         _random = new Random(seed);
+        _rules = new Rules(_map);
     }
 
     /// <summary>
@@ -65,7 +68,7 @@ public class WorldGenerator : MonoBehaviour
             .Where(pos => !map.IsToCloseToBoarder(pos, minDistance))
             .ToList(); //searches all possible start points that have the required distance from the edge
         int starPoint = possibleStartPos[_random.Next(0, possibleStartPos.Count)];
-        map.RawMap[starPoint] = Land;
+        map.BiomTileTypeMap[starPoint] = Land;
         return starPoint;
     }
 
@@ -112,17 +115,17 @@ public class WorldGenerator : MonoBehaviour
         
         int requestedTileCount = (int)(percentOfLand * map.MapSize);
 
-        int maxPossibleTiles = map.CountTilesByRule(map.RawMap, Rules.LandTileRule);
+        int maxPossibleTiles = map.CountTilesByRule(map.BiomTileTypeMap, _rules.BeachTileRule);
         _start = StartPoint(map);
-        while (Map.CountTilesByType(map.RawMap, BiomTileTypes.Beach) < maxPossibleTiles &&
-               Map.CountTilesByType(map.RawMap, BiomTileTypes.Beach) < requestedTileCount)
+        while (Map.CountTilesByType(map.BiomTileTypeMap, BiomTileTypes.Beach) < maxPossibleTiles &&
+               Map.CountTilesByType(map.BiomTileTypeMap, BiomTileTypes.Beach) < requestedTileCount)
         {
             Enumerable.Range(0, map.MapSize)
-                .Where(pos => Map.IsLand(map.RawMap[pos]))
-                .SelectMany(pos => map.GetNeighboursByRule(pos, Rules.LandTileRule.Check))
+                .Where(pos => Map.IsLand(map.BiomTileTypeMap[pos]))
+                .SelectMany(pos => map.GetNeighboursByRule(pos, _rules.BeachTileRule.Check))
                 .Where(n => WillEventHappen(smoothnessOfCoast))
                 .ToList()
-                .ForEach(pos => PlaceTile(pos, map.RawMap, (BiomTileTypes)Land));
+                .ForEach(pos => PlaceTile(pos, map.BiomTileTypeMap, (BiomTileTypes)Land));
         }
 
         return this;
@@ -141,27 +144,27 @@ public class WorldGenerator : MonoBehaviour
             throw new ArgumentException("Argument has to be in % between 0 and 1", nameof(percentageOfMountain));
         
         float smoothnessOfMountain = 0.1f;
-        int requestedTileCount = (int)(percentageOfMountain * Map.CountTilesByType(map.RawMap, (BiomTileTypes)Land));
-        int maxPossibleTiles = Map.CountTilesByType(map.RawMap, (BiomTileTypes)Land);
+        int requestedTileCount = (int)(percentageOfMountain * Map.CountTilesByType(map.BiomTileTypeMap, (BiomTileTypes)Land));
+        int maxPossibleTiles = Map.CountTilesByType(map.BiomTileTypeMap, (BiomTileTypes)Land);
         
         //Grass
         Enumerable.Range(0, map.MapSize)
-            .Where(pos => Map.IsLand(map.RawMap[pos]))
-            .SelectMany(pos => map.GetNeighboursByRule(pos, Rules.GrasTileRule.Check))
+            .Where(pos => Map.IsLand(map.BiomTileTypeMap[pos]))
+            .SelectMany(pos => map.GetNeighboursByRule(pos, _rules.GrasTileRule.Check))
             .ToList()
-            .ForEach(pos => PlaceTile(pos, map.RawMap, BiomTileTypes.Gras));
+            .ForEach(pos => PlaceTile(pos, map.BiomTileTypeMap, BiomTileTypes.Gras));
 
         //Mountain
-        PlaceTile(_start, map.RawMap, BiomTileTypes.Mountain);
-        while (Map.CountTilesByType(map.RawMap, BiomTileTypes.Mountain) < maxPossibleTiles &&
-               Map.CountTilesByType(map.RawMap, BiomTileTypes.Mountain) < requestedTileCount)
+        PlaceTile(_start, map.BiomTileTypeMap, BiomTileTypes.Mountain);
+        while (Map.CountTilesByType(map.BiomTileTypeMap, BiomTileTypes.Mountain) < maxPossibleTiles &&
+               Map.CountTilesByType(map.BiomTileTypeMap, BiomTileTypes.Mountain) < requestedTileCount)
         {
             Enumerable.Range(0, map.MapSize)
-                .Where(pos => map.RawMap[pos] == (int)BiomTileTypes.Mountain)
-                .SelectMany(pos => map.GetNeighboursByRule(pos, Rules.MountainTileRule.Check))
+                .Where(pos => map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Mountain)
+                .SelectMany(pos => map.GetNeighboursByRule(pos, _rules.MountainTileRule.Check))
                 .Where(n => WillEventHappen(smoothnessOfMountain))
                 .ToList()
-                .ForEach(pos => PlaceTile(pos, map.RawMap, BiomTileTypes.Mountain));
+                .ForEach(pos => PlaceTile(pos, map.BiomTileTypeMap, BiomTileTypes.Mountain));
         }
         return this;
     }

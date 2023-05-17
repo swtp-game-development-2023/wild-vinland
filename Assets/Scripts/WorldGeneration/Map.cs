@@ -30,7 +30,8 @@ namespace WorldGeneration
         /// <summary>
         /// A raw state of the map where basic positions are stored first. 
         /// </summary>
-        private int[] _rawMap;
+        private int[] _biomTileTypeMap;
+
 
         /// <summary>
         /// the map with its different levels.
@@ -58,8 +59,9 @@ namespace WorldGeneration
         public int EdgeLength => _edgeLength;
 
         //TODO deep copys
-        public int[] RawMap => _rawMap;
+        public int[] BiomTileTypeMap => _biomTileTypeMap;
 
+        //public int[] ShapeTileTypeMap => _shapeTileTypeMap;
         //public int[][] StackedMap => _stackedMap;
 
 
@@ -78,7 +80,7 @@ namespace WorldGeneration
             _edgeLength = edgeLength;
             _numberOfLayers = numberOfLayers;
             _mapSize = _edgeLength * _edgeLength;
-            _rawMap = new int[_mapSize];
+            _biomTileTypeMap = new int[_mapSize];
             _stackedMap = new int[_mapSize][];
         }
 
@@ -108,9 +110,9 @@ namespace WorldGeneration
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < _rawMap.Length; i++)
+            for (int i = 0; i < _biomTileTypeMap.Length; i++)
             {
-                switch (RawMap[i])
+                switch (BiomTileTypeMap[i])
                 {
                     case (int)BiomTileTypes.Sea:
                         stringBuilder.Append("[W]");
@@ -128,6 +130,28 @@ namespace WorldGeneration
 
                 if ((i % _edgeLength) == (_edgeLength - 1)) stringBuilder.Append("\n");
             }
+
+            /*stringBuilder.Append("\n\n\n");
+            for (int i = 0; i < _biomTileTypeMap.Length; i++)
+            {
+                switch (ShapeTileTypeMap[i])
+                {
+                    case ShapeTileTypes.Mid_Tile:
+                        stringBuilder.Append("[M]");
+                        break;
+                    case ShapeTileTypes.NE_Tile:
+                        stringBuilder.Append("[ NE ]");
+                        break;
+                    case ShapeTileTypes.N_Tile:
+                        stringBuilder.Append("[ N ]");
+                        break;
+                    case ShapeTileTypes.NW_Tile:
+                        stringBuilder.Append("[ NW ]");
+                        break;
+                }
+
+                if ((i % _edgeLength) == (_edgeLength - 1)) stringBuilder.Append("\n");
+            }*/
 
             return stringBuilder.ToString();
         }
@@ -166,16 +190,16 @@ namespace WorldGeneration
         /// Returns a hashset of positions of all neighbours by a condition of a given position on the map.
         /// </summary>
         /// <param name="pos">Position whose neighbors are to be checked.</param>
-        /// <param name="rule">A function that determines whether a given neighbour is allowed or not.</param>
+        /// <param name="ruleCheck">A function that determines whether a given neighbour is allowed or not.</param>
         /// <returns>Set of position of all neighbors on which a tile may be positioned according to valid rules.</returns>
-        public HashSet<int> GetNeighboursByRule(int pos, Func<int, int, Map, bool> rule)
+        public HashSet<int> GetNeighboursByRule(int pos, Func<int, bool> ruleCheck)
         {
             return Enumerable.ToHashSet(AllDirections.BaseDirections
                 .ToList()
                 .Select(direction => GetTileNeighbourPos(pos, direction))
-                .Where(neighbourPos => rule(RawMap[neighbourPos], neighbourPos, this)));
+                .Where(neighbourPos => ruleCheck(neighbourPos)));
         }
-        
+
         /// <param name="tileType">The tile to be checked</param>
         /// <returns>True, if it is not a sea tile.</returns>
         public static bool IsLand(int tileType)
@@ -208,7 +232,7 @@ namespace WorldGeneration
                 .ToList()
                 .ForEach((pos) =>
                 {
-                    if (rule.Check(Map.NoTile, pos, this)) //TODO no Tile right?
+                    if (rule.Check(pos))
                     {
                         counter++;
                     }

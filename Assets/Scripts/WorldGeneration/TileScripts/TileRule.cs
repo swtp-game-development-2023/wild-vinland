@@ -3,18 +3,14 @@ using UnityEngine;
 
 namespace WorldGeneration.TileScripts
 {
-    public abstract class TileRule
+    public class TileRule
     {
  
-        public readonly Func<int, int, Map, bool> Check;
+        public readonly Func<int, bool> Check;
         
-        protected TileRule(Func<int, int, Map, bool> check)
+        public TileRule(Func<int, bool> check)
         {
-            Check = (tileType, pos, map) =>
-            {
-                if (!map.IsOnMap(pos)) throw new ArgumentException("Position is outside of the map");
-                return check(tileType, pos, map);
-            };
+            Check = check;
         }
     }
 }
