@@ -16,7 +16,10 @@ namespace WorldGeneration.TileScripts
         public readonly TileRule WoodTileRule;
         public readonly TileRule StoneTileRule;
         public readonly TileRule OreTileRule;
-        
+
+        //Decoration
+        public readonly TileRule FlowerTileRule;
+
         //Shape
         public readonly TileRule MidTileRule;
         public readonly TileRule NW_TileRule;
@@ -64,14 +67,36 @@ namespace WorldGeneration.TileScripts
             );
             //Farmable
             WoodTileRule = new TileRule(
-                (pos) => { return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Gras; });
+                (pos) =>
+                {
+                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Gras &&
+                           map.StackedMap[pos][(int)TileType.Deco] == 0 &&
+                           map.StackedMap[pos][(int)TileType.Farmable] == 0;
+                });
 
             StoneTileRule = new TileRule(
-                (pos) => { return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Mountain; });
-            
+                (pos) =>
+                {
+                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Mountain &&
+                           map.StackedMap[pos][(int)TileType.Mountain] == 0;
+                });
+
             OreTileRule = new TileRule(
-                (pos) => { return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Mountain; });
-            
+                (pos) =>
+                {
+                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Mountain &&
+                           map.StackedMap[pos][(int)TileType.Mountain] == 0;
+                });
+
+            //Decoration
+            FlowerTileRule = new TileRule(
+                (pos) =>
+                {
+                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Gras &&
+                           map.StackedMap[pos][(int)TileType.Deco] == 0 &&
+                           map.StackedMap[pos][(int)TileType.Farmable] == 0;
+                });
+
             //Shape Rules
             MidTileRule = new TileRule(
                 (pos) =>

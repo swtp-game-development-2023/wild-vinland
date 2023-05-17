@@ -181,7 +181,7 @@ public class WorldGenerator : MonoBehaviour
         map[pos] = (int)type;
         return this;
     }
-
+    
     //just for testing
     public void OnTestGenerate()
     {

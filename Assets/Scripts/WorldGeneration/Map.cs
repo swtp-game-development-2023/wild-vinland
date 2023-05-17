@@ -62,7 +62,7 @@ namespace WorldGeneration
         public int[] BiomTileTypeMap => _biomTileTypeMap;
 
         //public int[] ShapeTileTypeMap => _shapeTileTypeMap;
-        //public int[][] StackedMap => _stackedMap;
+        public int[][] StackedMap => _stackedMap;
 
 
         /// <summary>
