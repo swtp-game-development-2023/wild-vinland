@@ -42,7 +42,7 @@ namespace WorldGeneration.TileScripts
                 (pos) =>
                 {
                     return _landTileRule.Check(pos) &&
-                           !(map.GetNeighboursByRule(pos, (p) => map.BiomTileTypeMap[p] == (int)BiomTileTypes.Mountain)
+                           !(map.GetNeighboursByRule(pos, (p) => map.BiomTileTypeMap[p] == (int)EBiomTileTypes.Mountain)
                                .Any());
                 }
             );
@@ -51,7 +51,7 @@ namespace WorldGeneration.TileScripts
                 (pos) =>
                 {
                     return _landTileRule.Check(pos) &&
-                           !(map.GetNeighboursByRule(pos, (p) => map.BiomTileTypeMap[p] == (int)BiomTileTypes.Sea)
+                           !(map.GetNeighboursByRule(pos, (p) => map.BiomTileTypeMap[p] == (int)EBiomTileTypes.Sea)
                                .Any());
                 }
             );
@@ -61,40 +61,41 @@ namespace WorldGeneration.TileScripts
                 {
                     return _landTileRule.Check(pos) && !(map
                         .GetNeighboursByRule(pos,
-                            (p) => map.BiomTileTypeMap[p] is (int)BiomTileTypes.Sea or (int)BiomTileTypes.Beach)
+                            (p) => map.BiomTileTypeMap[p] is (int)EBiomTileTypes.Sea or (int)EBiomTileTypes.Beach)
                         .Any());
                 }
             );
+            
             //Farmable
             WoodTileRule = new TileRule(
                 (pos) =>
                 {
-                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Gras &&
-                           map.StackedMap[pos][(int)TileType.Deco] == 0 &&
-                           map.StackedMap[pos][(int)TileType.Farmable] == 0;
+                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)EBiomTileTypes.Gras &&
+                           map.StackedMap[(int)TileType.Deco][pos] == 0 &&
+                           map.StackedMap[(int)TileType.Farmable][pos] == 0;
                 });
 
             StoneTileRule = new TileRule(
                 (pos) =>
                 {
-                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Mountain &&
-                           map.StackedMap[pos][(int)TileType.Mountain] == 0;
+                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)EBiomTileTypes.Mountain &&
+                           map.StackedMap[(int)TileType.Mountain][pos] == 0;
                 });
 
             OreTileRule = new TileRule(
                 (pos) =>
                 {
-                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Mountain &&
-                           map.StackedMap[pos][(int)TileType.Mountain] == 0;
+                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)EBiomTileTypes.Mountain &&
+                           map.StackedMap[(int)TileType.Mountain][pos] == 0;
                 });
 
             //Decoration
             FlowerTileRule = new TileRule(
                 (pos) =>
                 {
-                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)BiomTileTypes.Gras &&
-                           map.StackedMap[pos][(int)TileType.Deco] == 0 &&
-                           map.StackedMap[pos][(int)TileType.Farmable] == 0;
+                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)EBiomTileTypes.Gras &&
+                           map.StackedMap[(int)TileType.Deco][pos] == 0 &&
+                           map.StackedMap[(int)TileType.Farmable][pos] == 0;
                 });
 
             //Shape Rules

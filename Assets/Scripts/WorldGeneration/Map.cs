@@ -57,8 +57,7 @@ namespace WorldGeneration
         public int NumberOfLayers => _numberOfLayers;
 
         public int EdgeLength => _edgeLength;
-
-        //TODO deep copys
+        
         public int[] BiomTileTypeMap => _biomTileTypeMap;
 
         //public int[] ShapeTileTypeMap => _shapeTileTypeMap;
@@ -69,19 +68,27 @@ namespace WorldGeneration
         /// Creates a new empty map.
         /// </summary>
         /// <param name="edgeLength">the edge length of the map, this number squared is the total size of the map.</param>
-        /// <param name="numberOfLayers">the number of different levels on which tiles can be located.</param>
-        public Map(int edgeLength, int numberOfLayers)
+        public Map(int edgeLength)
         {
             if (edgeLength < MinEdgeLength || MaxEdgeLength < edgeLength)
                 throw new ArgumentOutOfRangeException(nameof(_mapSize), edgeLength,
                     "Map Size have to be between " + MinEdgeLength + " and " + MaxEdgeLength);
-            if (numberOfLayers <= 0)
-                throw new ArgumentException("The value have to be at least 1", nameof(numberOfLayers));
             _edgeLength = edgeLength;
-            _numberOfLayers = numberOfLayers;
+            _numberOfLayers = Enum.GetNames(typeof(EBiomTileTypes)).Length;
             _mapSize = _edgeLength * _edgeLength;
             _biomTileTypeMap = new int[_mapSize];
-            _stackedMap = new int[_mapSize][];
+            InitStackedMap();
+        }
+
+        private Map InitStackedMap()
+        {
+            _stackedMap = new int[_numberOfLayers][];
+            for (int i = 0; i < _numberOfLayers; i++)
+            {
+                _stackedMap[i] = new int[_mapSize];
+            }
+
+            return this;
         }
 
         /// <summary>
@@ -114,16 +121,16 @@ namespace WorldGeneration
             {
                 switch (BiomTileTypeMap[i])
                 {
-                    case (int)BiomTileTypes.Sea:
+                    case (int)EBiomTileTypes.Sea:
                         stringBuilder.Append("[W]");
                         break;
-                    case (int)BiomTileTypes.Beach:
+                    case (int)EBiomTileTypes.Beach:
                         stringBuilder.Append("[ B ]");
                         break;
-                    case (int)BiomTileTypes.Gras:
+                    case (int)EBiomTileTypes.Gras:
                         stringBuilder.Append("[ G ]");
                         break;
-                    case (int)BiomTileTypes.Mountain:
+                    case (int)EBiomTileTypes.Mountain:
                         stringBuilder.Append("[ M ]");
                         break;
                 }
@@ -131,34 +138,32 @@ namespace WorldGeneration
                 if ((i % _edgeLength) == (_edgeLength - 1)) stringBuilder.Append("\n");
             }
 
-            /*stringBuilder.Append("\n\n\n");
-            for (int i = 0; i < _biomTileTypeMap.Length; i++)
+            stringBuilder.Append("\n\n\n");
+            for (int i = 0; i < _mapSize; i++)
             {
-                switch (ShapeTileTypeMap[i])
+                switch (StackedMap[(int)EBiomTileTypes.Ressources][i])
                 {
-                    case ShapeTileTypes.Mid_Tile:
-                        stringBuilder.Append("[M]");
+                    case (int)ESpecialTiles.Wood:
+                        stringBuilder.Append("[ T ]");
                         break;
-                    case ShapeTileTypes.NE_Tile:
-                        stringBuilder.Append("[ NE ]");
+                    case (int)ESpecialTiles.Ore:
+                        stringBuilder.Append("[ O ]");
                         break;
-                    case ShapeTileTypes.N_Tile:
-                        stringBuilder.Append("[ N ]");
+                    case (int)ESpecialTiles.Stone:
+                        stringBuilder.Append("[ S ]");
                         break;
-                    case ShapeTileTypes.NW_Tile:
-                        stringBuilder.Append("[ NW ]");
+                    default:
+                        stringBuilder.Append(StackedMap[(int)EBiomTileTypes.Decoration][i] != 0 ? "[ F ]" : "[   ]");
                         break;
                 }
 
                 if ((i % _edgeLength) == (_edgeLength - 1)) stringBuilder.Append("\n");
-            }*/
+            }
+
 
             return stringBuilder.ToString();
         }
-
-        //TODO check upper and lower neighbour
-
-
+        
         /// <summary>
         /// Searches the position of the specified neighbor.
         /// </summary>
@@ -204,18 +209,18 @@ namespace WorldGeneration
         /// <returns>True, if it is not a sea tile.</returns>
         public static bool IsLand(int tileType)
         {
-            return tileType != (int)BiomTileTypes.Sea;
+            return tileType != (int)EBiomTileTypes.Sea;
         }
 
         /// <summary>
         /// Counts the number of tiles of a certain type.
         /// </summary>
         /// <param name="intMap">Map on which to count.</param>
-        /// <param name="biomTileType">Type to be checked.</param>
+        /// <param name="eBiomTileType">Type to be checked.</param>
         /// <returns>The number of tiles to which the condition applies.</returns>
-        public static int CountTilesByType(int[] intMap, BiomTileTypes biomTileType)
+        public static int CountTilesByType(int[] intMap, EBiomTileTypes eBiomTileType)
         {
-            return intMap.Count(tiles => tiles == (int)biomTileType);
+            return intMap.Count(tiles => tiles == (int)eBiomTileType);
         }
 
         /// <summary>

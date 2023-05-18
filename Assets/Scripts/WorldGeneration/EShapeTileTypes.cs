@@ -3,7 +3,7 @@ namespace WorldGeneration
 {
     //TODO in Doku mit Bild erklären
     
-    public enum ShapeTileTypes
+    public enum EShapeTileTypes
     {
         Mid_Tile,
         NW_Tile,
