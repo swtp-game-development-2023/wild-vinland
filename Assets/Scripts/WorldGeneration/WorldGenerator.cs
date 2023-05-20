@@ -8,7 +8,6 @@ using Random = System.Random;
 
 public class WorldGenerator : MonoBehaviour
 {
-    
     /// <summary>
     /// The map on which the game world is generated.
     /// </summary>
@@ -19,13 +18,16 @@ public class WorldGenerator : MonoBehaviour
     /// </summary>
     private Random _random;
 
+
+    private Rules _rules;
+
     private int _start;
     //private const float _defaultLandProbability = 0.3f;
 
     /// <summary>
     /// Each piece of land is beach first.
     /// </summary>
-    private const int Land = (int)TileTypes.Beach;
+    private const int Land = (int)EBiomTileTypes.Beach;
 
     //TODO add parameterizability of probabilities for diffrent tiles
     /// <summary>
@@ -35,8 +37,9 @@ public class WorldGenerator : MonoBehaviour
     /// <param name="seed">A seed to generate the map.</param>
     public void GenerateMap(int edgeLength, int seed)
     {
-        _map = new Map(edgeLength, Enum.GetNames(typeof(TileTypes)).Length);
+        _map = new Map(edgeLength);
         _random = new Random(seed);
+        _rules = new Rules(_map);
     }
 
     /// <summary>
@@ -65,7 +68,7 @@ public class WorldGenerator : MonoBehaviour
             .Where(pos => !map.IsToCloseToBoarder(pos, minDistance))
             .ToList(); //searches all possible start points that have the required distance from the edge
         int starPoint = possibleStartPos[_random.Next(0, possibleStartPos.Count)];
-        map.RawMap[starPoint] = Land;
+        map.BiomTileTypeMap[starPoint] = Land;
         return starPoint;
     }
 
@@ -109,20 +112,20 @@ public class WorldGenerator : MonoBehaviour
             throw new ArgumentException("Argument has to be in % between 0 and 1", nameof(percentOfLand));
         if (!IsPercentage(percentOfLand))
             throw new ArgumentException("Argument has to be in % between 0 and 1", nameof(smoothnessOfCoast));
-        
+
         int requestedTileCount = (int)(percentOfLand * map.MapSize);
 
-        int maxPossibleTiles = map.CountTilesByRule(map.RawMap, LandTile.CheckRule);
+        int maxPossibleTiles = map.CountTilesByRule(map.BiomTileTypeMap, _rules.BeachTileRule);
         _start = StartPoint(map);
-        while (Map.CountTilesByType(map.RawMap, TileTypes.Beach) < maxPossibleTiles &&
-               Map.CountTilesByType(map.RawMap, TileTypes.Beach) < requestedTileCount)
+        while (Map.CountTilesByType(map.BiomTileTypeMap, EBiomTileTypes.Beach) < maxPossibleTiles &&
+               Map.CountTilesByType(map.BiomTileTypeMap, EBiomTileTypes.Beach) < requestedTileCount)
         {
             Enumerable.Range(0, map.MapSize)
-                .Where(pos => Map.IsLand(map.RawMap[pos]))
-                .SelectMany(pos => map.GetNeighboursByCondition(pos, LandTile.CheckRule))
+                .Where(pos => Map.IsLand(map.BiomTileTypeMap[pos]))
+                .SelectMany(pos => map.GetNeighboursByRule(pos, _rules.BeachTileRule.Check))
                 .Where(n => WillEventHappen(smoothnessOfCoast))
                 .ToList()
-                .ForEach(pos => PlaceTile(pos, map.RawMap, (TileTypes)Land));
+                .ForEach(pos => PlaceTile(pos, map.BiomTileTypeMap, (EBiomTileTypes)Land));
         }
 
         return this;
@@ -135,34 +138,36 @@ public class WorldGenerator : MonoBehaviour
     /// <param name="percentageOfMountain">The desired percentage of mountain tiles, represented as a float value between 0 and 1.</param>
     /// <exception cref="ArgumentException">Thrown when the percentageOfMountain argument is not between 0 and 1.</exception>
     /// <returns>The current instance of the <see cref="WorldGenerator"/> class.</returns>
-    private WorldGenerator GenerateLandScape(Map map, float percentageOfMountain = 0.15f )
+    private WorldGenerator GenerateLandScape(Map map, float percentageOfMountain = 0.15f)
     {
         if (!IsPercentage(percentageOfMountain))
             throw new ArgumentException("Argument has to be in % between 0 and 1", nameof(percentageOfMountain));
-        
+
         float smoothnessOfMountain = 0.1f;
-        int requestedTileCount = (int)(percentageOfMountain * Map.CountTilesByType(map.RawMap, (TileTypes)Land));
-        int maxPossibleTiles = Map.CountTilesByType(map.RawMap, (TileTypes)Land);
-        
+        int requestedTileCount =
+            (int)(percentageOfMountain * Map.CountTilesByType(map.BiomTileTypeMap, (EBiomTileTypes)Land));
+        int maxPossibleTiles = Map.CountTilesByType(map.BiomTileTypeMap, (EBiomTileTypes)Land);
+
         //Grass
         Enumerable.Range(0, map.MapSize)
-            .Where(pos => Map.IsLand(map.RawMap[pos]))
-            .SelectMany(pos => map.GetNeighboursByCondition(pos, GrasTile.CheckRule))
+            .Where(pos => Map.IsLand(map.BiomTileTypeMap[pos]))
+            .SelectMany(pos => map.GetNeighboursByRule(pos, _rules.GrasTileRule.Check))
             .ToList()
-            .ForEach(pos => PlaceTile(pos, map.RawMap, TileTypes.Gras));
+            .ForEach(pos => PlaceTile(pos, map.BiomTileTypeMap, EBiomTileTypes.Gras));
 
         //Mountain
-        PlaceTile(_start, map.RawMap, TileTypes.Mountain);
-        while (Map.CountTilesByType(map.RawMap, TileTypes.Mountain) < maxPossibleTiles &&
-               Map.CountTilesByType(map.RawMap, TileTypes.Mountain) < requestedTileCount)
+        PlaceTile(_start, map.BiomTileTypeMap, EBiomTileTypes.Mountain);
+        while (Map.CountTilesByType(map.BiomTileTypeMap, EBiomTileTypes.Mountain) < maxPossibleTiles &&
+               Map.CountTilesByType(map.BiomTileTypeMap, EBiomTileTypes.Mountain) < requestedTileCount)
         {
             Enumerable.Range(0, map.MapSize)
-                .Where(pos => map.RawMap[pos] == (int)TileTypes.Mountain)
-                .SelectMany(pos => map.GetNeighboursByCondition(pos, MountainTile.CheckRule))
+                .Where(pos => map.BiomTileTypeMap[pos] == (int)EBiomTileTypes.Mountain)
+                .SelectMany(pos => map.GetNeighboursByRule(pos, _rules.MountainTileRule.Check))
                 .Where(n => WillEventHappen(smoothnessOfMountain))
                 .ToList()
-                .ForEach(pos => PlaceTile(pos, map.RawMap, TileTypes.Mountain));
+                .ForEach(pos => PlaceTile(pos, map.BiomTileTypeMap, EBiomTileTypes.Mountain));
         }
+
         return this;
     }
 
@@ -173,16 +178,47 @@ public class WorldGenerator : MonoBehaviour
     /// <param name="map">The map on which to place the tile.</param>
     /// <param name="type">The type of tile to place.</param>
     /// <returns>The current instance of the <see cref="WorldGenerator"/> class.</returns>
-    private WorldGenerator PlaceTile(int pos, int[] map, TileTypes type)
+    private WorldGenerator PlaceTile(int pos, int[] map, EBiomTileTypes type)
     {
         map[pos] = (int)type;
+        return this;
+    }
+
+    private WorldGenerator SetSpecialTiles(Map map)
+    {
+        
+        for (int i = 0; i < map.MapSize; i++)
+        {
+            //Wood
+            SetTileByRuleAndProbability(i, ESpecialTiles.Wood, map.StackedMap[(int)EBiomTileTypes.Ressources],
+                _rules.WoodTileRule.Check, 0.5f);
+            //Stone
+            SetTileByRuleAndProbability(i, ESpecialTiles.Stone, map.StackedMap[(int)EBiomTileTypes.Ressources],
+                _rules.StoneTileRule.Check, 0.5f);
+            //Ore
+            SetTileByRuleAndProbability(i, ESpecialTiles.Ore, map.StackedMap[(int)EBiomTileTypes.Ressources],
+                _rules.OreTileRule.Check, 0.3f);
+            //Flower
+            SetTileByRuleAndProbability(i, ESpecialTiles.Flowers, map.StackedMap[(int)EBiomTileTypes.Decoration],
+                _rules.FlowerTileRule.Check, 0.5f);
+        }
+
+        return this;
+    }
+
+    private WorldGenerator SetTileByRuleAndProbability(int pos, ESpecialTiles type, int[] map,
+        Func<int, bool> ruleCheck,
+        float probability)
+    {
+        if (ruleCheck(pos) && WillEventHappen(probability))
+            map[pos] = (int)type;
         return this;
     }
 
     //just for testing
     public void OnTestGenerate()
     {
-        GenerateMap(Map.MaxEdgeLength);
+        GenerateMap(32);
         /*var startPos = StartPoint(_map);
         print("start " + startPos);
         foreach (var placeableNeighbour in GetPlaceableNeighbours(startPos, _map, _landTileRule))
@@ -193,6 +229,7 @@ public class WorldGenerator : MonoBehaviour
         GenerateLand(_map);
         print(_map.ToString());
         GenerateLandScape(_map);
+        SetSpecialTiles(_map);
         print(_map.ToString());
     }
 }
