@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 using World;
 using WorldGeneration;
@@ -32,6 +33,9 @@ public class WorldGenerator : MonoBehaviour
 
     [Range(Map.MinEdgeLength, Map.MaxEdgeLength)]
     public int edgeLength = 64;
+
+    public bool useSeed = false;
+    public int seed;
 
     [Range(MinPecent, MaxPecent)] public float permittedDeviationFromMid = 0.05f;
 
@@ -336,8 +340,8 @@ public class WorldGenerator : MonoBehaviour
     public void Generate()
     {
         WorldHelper.ClearMap();
-        GenerateMap(edgeLength)
-            .GenerateLand(_map, percentOfLand, smoothnessOfCoast, permittedDeviationFromMid)
+        WorldGenerator world = useSeed ? GenerateMap(edgeLength, seed) : GenerateMap(edgeLength);
+        world.GenerateLand(_map, percentOfLand, smoothnessOfCoast, permittedDeviationFromMid)
             .GenerateLandScape(_map, percentageOfMountain)
             .SetSpecialTiles(_map, percentOfWood, percentOfStone, percentOfOre, percentOfFlowers)
             .SetupTileMaps()
