@@ -24767,6 +24767,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5498014601689913788}
   - component: {fileID: 1117200554720009966}
+  - component: {fileID: 804929683364882372}
+  - component: {fileID: 8081589437241739608}
   m_Layer: 0
   m_Name: WorldMapGrid
   m_TagString: Untagged
@@ -24794,7 +24796,7 @@ Transform:
   - {fileID: 4658300128307500733}
   - {fileID: 764852227533504385}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &1117200554720009966
 Grid:
@@ -24821,6 +24823,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelIndex: 0
+--- !u!114 &8081589437241739608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4079552243611285768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933924c1f4673fe4a94cd2529da47bcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5299312973983080316
 GameObject:
   m_ObjectHideFlags: 0

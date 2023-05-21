@@ -47,7 +47,7 @@ namespace WorldGeneration
         /// <summary>
         /// the maximum length a map can have at an edge. this number squared is the biggest possible map.
         /// </summary>
-        public const int MaxEdgeLength = 64;
+        public const int MaxEdgeLength = 256;
 
         public const int NoTile = 0;
 

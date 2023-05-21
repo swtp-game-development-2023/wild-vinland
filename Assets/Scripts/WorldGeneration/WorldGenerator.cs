@@ -1,13 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using World;
 using WorldGeneration;
 using WorldGeneration.TileScripts;
 using Random = System.Random;
 
 public class WorldGenerator : MonoBehaviour
 {
+    [SerializeField] private Sprite testSprite;
+
     /// <summary>
     /// The map on which the game world is generated.
     /// </summary>
@@ -18,6 +23,7 @@ public class WorldGenerator : MonoBehaviour
     /// </summary>
     private Random _random;
 
+    private Tilemap SeaMap, BeachMap, GrassMap, MountainMap, FarmableMap, DecoMap, UnitMap;
 
     private Rules _rules;
 
@@ -125,7 +131,7 @@ public class WorldGenerator : MonoBehaviour
                 .SelectMany(pos => map.GetNeighboursByRule(pos, _rules.BeachTileRule.Check))
                 .Where(n => WillEventHappen(smoothnessOfCoast))
                 .ToList()
-                .ForEach(pos => PlaceTile(pos, map.BiomTileTypeMap, (EBiomTileTypes)Land));
+                .ForEach(pos => PlaceBiomTile(pos, map.BiomTileTypeMap, (EBiomTileTypes)Land));
         }
 
         return this;
@@ -153,10 +159,10 @@ public class WorldGenerator : MonoBehaviour
             .Where(pos => Map.IsLand(map.BiomTileTypeMap[pos]))
             .SelectMany(pos => map.GetNeighboursByRule(pos, _rules.GrasTileRule.Check))
             .ToList()
-            .ForEach(pos => PlaceTile(pos, map.BiomTileTypeMap, EBiomTileTypes.Gras));
+            .ForEach(pos => PlaceBiomTile(pos, map.BiomTileTypeMap, EBiomTileTypes.Gras));
 
         //Mountain
-        PlaceTile(_start, map.BiomTileTypeMap, EBiomTileTypes.Mountain);
+        PlaceBiomTile(_start, map.BiomTileTypeMap, EBiomTileTypes.Mountain);
         while (Map.CountTilesByType(map.BiomTileTypeMap, EBiomTileTypes.Mountain) < maxPossibleTiles &&
                Map.CountTilesByType(map.BiomTileTypeMap, EBiomTileTypes.Mountain) < requestedTileCount)
         {
@@ -165,7 +171,7 @@ public class WorldGenerator : MonoBehaviour
                 .SelectMany(pos => map.GetNeighboursByRule(pos, _rules.MountainTileRule.Check))
                 .Where(n => WillEventHappen(smoothnessOfMountain))
                 .ToList()
-                .ForEach(pos => PlaceTile(pos, map.BiomTileTypeMap, EBiomTileTypes.Mountain));
+                .ForEach(pos => PlaceBiomTile(pos, map.BiomTileTypeMap, EBiomTileTypes.Mountain));
         }
 
         return this;
@@ -178,7 +184,7 @@ public class WorldGenerator : MonoBehaviour
     /// <param name="map">The map on which to place the tile.</param>
     /// <param name="type">The type of tile to place.</param>
     /// <returns>The current instance of the <see cref="WorldGenerator"/> class.</returns>
-    private WorldGenerator PlaceTile(int pos, int[] map, EBiomTileTypes type)
+    private WorldGenerator PlaceBiomTile(int pos, int[] map, EBiomTileTypes type)
     {
         map[pos] = (int)type;
         return this;
@@ -186,7 +192,6 @@ public class WorldGenerator : MonoBehaviour
 
     private WorldGenerator SetSpecialTiles(Map map)
     {
-        
         for (int i = 0; i < map.MapSize; i++)
         {
             //Wood
@@ -215,21 +220,88 @@ public class WorldGenerator : MonoBehaviour
         return this;
     }
 
+    private WorldGenerator SetupTileMaps()
+    {
+        SeaMap = transform.Find("Sea").gameObject.GetComponent<Tilemap>();
+        BeachMap = transform.Find("Beach").gameObject.GetComponent<Tilemap>();
+        GrassMap = transform.Find("Grass").gameObject.GetComponent<Tilemap>();
+        MountainMap = transform.Find("Mountain").gameObject.GetComponent<Tilemap>();
+        FarmableMap = transform.Find("Farmables").gameObject.GetComponent<Tilemap>();
+        DecoMap = transform.Find("Deco").gameObject.GetComponent<Tilemap>();
+        UnitMap = transform.Find("Buildings").gameObject.GetComponent<Tilemap>();
+        return this;
+    }
+
     //just for testing
     public void OnTestGenerate()
     {
-        GenerateMap(32);
-        /*var startPos = StartPoint(_map);
-        print("start " + startPos);
-        foreach (var placeableNeighbour in GetPlaceableNeighbours(startPos, _map, _landTileRule))
-        {
-            _map.RawMap[placeableNeighbour] = land;
-        }*/
-        print(_map.ToString());
+        WorldHelper.ClearMap();
+        GenerateMap(256);
         GenerateLand(_map);
-        print(_map.ToString());
         GenerateLandScape(_map);
         SetSpecialTiles(_map);
-        print(_map.ToString());
+        SetupTileMaps();
+        string tilePath = "Assets/Sprites/World/MapTiles/";
+        TileBase seaTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_76.asset");
+        TileBase grasTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_17.asset");
+        TileBase mountainTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_149.asset");
+        TileBase beachTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_154.asset");
+        TileBase[] stoneTiles =
+        {
+            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_52.asset"),
+            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_53.asset"),
+            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_54.asset"),
+            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_55.asset")
+        };
+        TileBase[] treeTiles =
+        {
+            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_22.asset"),
+            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_38.asset")
+        };
+        TileBase oreTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_109.asset");
+
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < _map.MapSize; i++)
+        {
+            if (x == (_map.EdgeLength - 1))
+            {
+                y++;
+            }
+
+            x = (i % _map.EdgeLength);
+
+
+            Vector3Int vector = new Vector3Int(x, y);
+            switch (_map.BiomTileTypeMap[i])
+            {
+                case (int)EBiomTileTypes.Sea:
+                    SeaMap.SetTile(vector, seaTile);
+                    break;
+                case (int)EBiomTileTypes.Beach:
+                    BeachMap.SetTile(vector, beachTile);
+                    break;
+                case (int)EBiomTileTypes.Gras:
+                    GrassMap.SetTile(vector, grasTile);
+                    break;
+                case (int)EBiomTileTypes.Mountain:
+                    MountainMap.SetTile(vector, mountainTile);
+                    break;
+            }
+
+            if (_map.StackedMap[(int)EBiomTileTypes.Ressources][i] == (int)ESpecialTiles.Stone)
+            {
+                FarmableMap.SetTile(vector, stoneTiles[_random.Next(0, stoneTiles.Length)]);
+            }
+            else if (_map.StackedMap[(int)EBiomTileTypes.Ressources][i] == (int)ESpecialTiles.Ore)
+            {
+                FarmableMap.SetTile(vector, oreTile);
+            }
+            else if (_map.StackedMap[(int)EBiomTileTypes.Ressources][i] == (int)ESpecialTiles.Wood)
+            {
+                FarmableMap.SetTile(vector, treeTiles[_random.Next(0, treeTiles.Length)]);
+            }
+        }
+
     }
 }
