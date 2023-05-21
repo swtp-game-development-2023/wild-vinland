@@ -24835,6 +24835,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933924c1f4673fe4a94cd2529da47bcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  edgeLength: 64
+  permittedDeviationFromMid: 0.05
+  percentageOfMountain: 0.15
+  percentOfLand: 0.45
+  smoothnessOfCoast: 0.3
+  percentOfWood: 0.5
+  percentOfStone: 0.5
+  percentOfOre: 0.1
+  percentOfFlowers: 0.5
 --- !u!1 &5299312973983080316
 GameObject:
   m_ObjectHideFlags: 0

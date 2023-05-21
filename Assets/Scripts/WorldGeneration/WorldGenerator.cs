@@ -11,8 +11,6 @@ using Random = System.Random;
 
 public class WorldGenerator : MonoBehaviour
 {
-    [SerializeField] private Sprite testSprite;
-
     /// <summary>
     /// The map on which the game world is generated.
     /// </summary>
@@ -28,7 +26,28 @@ public class WorldGenerator : MonoBehaviour
     private Rules _rules;
 
     private int _start;
-    //private const float _defaultLandProbability = 0.3f;
+
+    private const float MinPecent = 0f;
+    private const float MaxPecent = 1f;
+
+    [Range(Map.MinEdgeLength, Map.MaxEdgeLength)]
+    public int edgeLength = 64;
+
+    [Range(MinPecent, MaxPecent)] public float permittedDeviationFromMid = 0.05f;
+
+    [Range(MinPecent, MaxPecent)] public float percentageOfMountain = 0.15f;
+
+    [Range(MinPecent, MaxPecent)] public float percentOfLand = 0.45f;
+
+    [Range(MinPecent, MaxPecent)] public float smoothnessOfCoast = 0.3f;
+
+    [Range(MinPecent, MaxPecent)] public float percentOfWood = 0.5f;
+
+    [Range(MinPecent, MaxPecent)] public float percentOfStone = 0.5f;
+
+    [Range(MinPecent, MaxPecent)] public float percentOfOre = 0.1f;
+
+    [Range(MinPecent, MaxPecent)] public float percentOfFlowers = 0.5f;
 
     /// <summary>
     /// Each piece of land is beach first.
@@ -41,20 +60,21 @@ public class WorldGenerator : MonoBehaviour
     /// </summary>
     /// <param name="edgeLength">Edges length of the new map, this number squared is the total size of the map.</param>
     /// <param name="seed">A seed to generate the map.</param>
-    public void GenerateMap(int edgeLength, int seed)
+    public WorldGenerator GenerateMap(int edgeLength, int seed)
     {
         _map = new Map(edgeLength);
         _random = new Random(seed);
         _rules = new Rules(_map);
+        return this;
     }
 
     /// <summary>
     /// generates a new map when called.
     /// </summary>
     /// <param name="edgeLength"> Edges length of the new map, this number squared is the total size of the map.</param>
-    public void GenerateMap(int edgeLength)
+    public WorldGenerator GenerateMap(int edgeLength)
     {
-        GenerateMap(edgeLength, (int)DateTime.Now.Ticks);
+        return GenerateMap(edgeLength, (int)DateTime.Now.Ticks);
     }
 
     /// <summary>
@@ -112,7 +132,8 @@ public class WorldGenerator : MonoBehaviour
     /// Larger values make for smoother coasts. Smaller ones for more natural ones.</param>
     /// <exception cref="ArgumentException">Thrown when the percentOfLand argument is not between 0 and 1.</exception>
     /// <returns>The current instance of the <see cref="WorldGenerator"/> class.</returns>
-    private WorldGenerator GenerateLand(Map map, float percentOfLand = 0.45f, float smoothnessOfCoast = 0.3f)
+    private WorldGenerator GenerateLand(Map map, float percentOfLand = 0.45f, float smoothnessOfCoast = 0.3f,
+        float permittedDeviation = 0.3f)
     {
         if (!IsPercentage(percentOfLand))
             throw new ArgumentException("Argument has to be in % between 0 and 1", nameof(percentOfLand));
@@ -121,8 +142,8 @@ public class WorldGenerator : MonoBehaviour
 
         int requestedTileCount = (int)(percentOfLand * map.MapSize);
 
-        int maxPossibleTiles = map.CountTilesByRule(map.BiomTileTypeMap, _rules.BeachTileRule);
-        _start = StartPoint(map);
+        int maxPossibleTiles = Map.CountTilesByRule(map.BiomTileTypeMap, _rules.BeachTileRule);
+        _start = StartPoint(map, permittedDeviation);
         while (Map.CountTilesByType(map.BiomTileTypeMap, EBiomTileTypes.Beach) < maxPossibleTiles &&
                Map.CountTilesByType(map.BiomTileTypeMap, EBiomTileTypes.Beach) < requestedTileCount)
         {
@@ -152,7 +173,7 @@ public class WorldGenerator : MonoBehaviour
         float smoothnessOfMountain = 0.1f;
         int requestedTileCount =
             (int)(percentageOfMountain * Map.CountTilesByType(map.BiomTileTypeMap, (EBiomTileTypes)Land));
-        int maxPossibleTiles = Map.CountTilesByType(map.BiomTileTypeMap, (EBiomTileTypes)Land);
+        int maxPossibleMountainTiles;
 
         //Grass
         Enumerable.Range(0, map.MapSize)
@@ -162,8 +183,9 @@ public class WorldGenerator : MonoBehaviour
             .ForEach(pos => PlaceBiomTile(pos, map.BiomTileTypeMap, EBiomTileTypes.Gras));
 
         //Mountain
+        maxPossibleMountainTiles = Map.CountTilesByRule(map.BiomTileTypeMap, _rules.MountainTileRule);
         PlaceBiomTile(_start, map.BiomTileTypeMap, EBiomTileTypes.Mountain);
-        while (Map.CountTilesByType(map.BiomTileTypeMap, EBiomTileTypes.Mountain) < maxPossibleTiles &&
+        while (Map.CountTilesByType(map.BiomTileTypeMap, EBiomTileTypes.Mountain) < maxPossibleMountainTiles &&
                Map.CountTilesByType(map.BiomTileTypeMap, EBiomTileTypes.Mountain) < requestedTileCount)
         {
             Enumerable.Range(0, map.MapSize)
@@ -190,22 +212,23 @@ public class WorldGenerator : MonoBehaviour
         return this;
     }
 
-    private WorldGenerator SetSpecialTiles(Map map)
+    private WorldGenerator SetSpecialTiles(Map map, float woodPercent = 0.5f, float stonePercent = 0.5f,
+        float orePercent = 0.1f, float flowersPercent = 0.5f)
     {
         for (int i = 0; i < map.MapSize; i++)
         {
             //Wood
             SetTileByRuleAndProbability(i, ESpecialTiles.Wood, map.StackedMap[(int)EBiomTileTypes.Ressources],
-                _rules.WoodTileRule.Check, 0.5f);
+                _rules.WoodTileRule.Check, woodPercent);
             //Stone
             SetTileByRuleAndProbability(i, ESpecialTiles.Stone, map.StackedMap[(int)EBiomTileTypes.Ressources],
-                _rules.StoneTileRule.Check, 0.5f);
+                _rules.StoneTileRule.Check, stonePercent);
             //Ore
             SetTileByRuleAndProbability(i, ESpecialTiles.Ore, map.StackedMap[(int)EBiomTileTypes.Ressources],
-                _rules.OreTileRule.Check, 0.3f);
+                _rules.OreTileRule.Check, orePercent);
             //Flower
             SetTileByRuleAndProbability(i, ESpecialTiles.Flowers, map.StackedMap[(int)EBiomTileTypes.Decoration],
-                _rules.FlowerTileRule.Check, 0.5f);
+                _rules.FlowerTileRule.Check, flowersPercent);
         }
 
         return this;
@@ -232,15 +255,8 @@ public class WorldGenerator : MonoBehaviour
         return this;
     }
 
-    //just for testing
-    public void OnTestGenerate()
+    private WorldGenerator SetTilesInUnity()
     {
-        WorldHelper.ClearMap();
-        GenerateMap(256);
-        GenerateLand(_map);
-        GenerateLandScape(_map);
-        SetSpecialTiles(_map);
-        SetupTileMaps();
         string tilePath = "Assets/Sprites/World/MapTiles/";
         TileBase seaTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_76.asset");
         TileBase grasTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_17.asset");
@@ -260,8 +276,15 @@ public class WorldGenerator : MonoBehaviour
         };
         TileBase oreTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_109.asset");
 
+        TileBase[] flowerTiles =
+        {
+            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_7.asset"),
+            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_8.asset")
+        };
+
         int x = 0;
         int y = 0;
+
         for (int i = 0; i < _map.MapSize; i++)
         {
             if (x == (_map.EdgeLength - 1))
@@ -301,7 +324,23 @@ public class WorldGenerator : MonoBehaviour
             {
                 FarmableMap.SetTile(vector, treeTiles[_random.Next(0, treeTiles.Length)]);
             }
+
+            if (_map.StackedMap[(int)EBiomTileTypes.Decoration][i] == (int)ESpecialTiles.Flowers)
+                DecoMap.SetTile(vector, flowerTiles[_random.Next(0, flowerTiles.Length)]);
         }
 
+        return this;
+    }
+
+    //just for testing
+    public void Generate()
+    {
+        WorldHelper.ClearMap();
+        GenerateMap(edgeLength)
+            .GenerateLand(_map, percentOfLand, smoothnessOfCoast, permittedDeviationFromMid)
+            .GenerateLandScape(_map, percentageOfMountain)
+            .SetSpecialTiles(_map, percentOfWood, percentOfStone, percentOfOre, percentOfFlowers)
+            .SetupTileMaps()
+            .SetTilesInUnity();
     }
 }

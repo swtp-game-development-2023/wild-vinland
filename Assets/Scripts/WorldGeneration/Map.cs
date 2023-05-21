@@ -42,7 +42,7 @@ namespace WorldGeneration
         /// <summary>
         /// the minimum length a map can have at an edge. this number squared is the smallest possible map.
         /// </summary>
-        public const int MinEdgeLength = 10;
+        public const int MinEdgeLength = 32;
 
         /// <summary>
         /// the maximum length a map can have at an edge. this number squared is the biggest possible map.
@@ -229,7 +229,7 @@ namespace WorldGeneration
         /// <param name="intMap">The int map to search for matching tiles.</param>
         /// <param name="rule">The tile rule to use for matching tiles.</param>
         /// <returns>The number of tiles in the int map that match the specified tile rule.</returns>
-        public int CountTilesByRule(int[] intMap, TileRule rule)
+        public static int CountTilesByRule(int[] intMap, TileRule rule)
         {
             int counter = 0;
 
