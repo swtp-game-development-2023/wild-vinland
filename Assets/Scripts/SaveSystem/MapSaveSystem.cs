@@ -113,8 +113,6 @@ public class MapSaveSystem : MonoBehaviour
         {
             tilemap.ClearAllTiles();
         }
-
-        Debug.Log("Gameworld deleted!");
     }
 
     ///<summary>
@@ -122,58 +120,67 @@ public class MapSaveSystem : MonoBehaviour
     ///</summary>
     public void LoadMap()
     {
-        string json = File.ReadAllText(Application.dataPath + "/Saves/worldmap_sav_" + _levelIndex + ".json");
-        SaveGame newLoad = JsonUtility.FromJson<SaveGame>(json);
-
-        ClearMap();
-
-        List<PositionedTile>[] tilemaps =
+        try
         {
-            newLoad.SeaTiles, newLoad.BeachTiles, newLoad.GrassTiles, newLoad.MountainTiles, newLoad.FarmableTiles,
-            newLoad.DecoTiles, newLoad.UnitTiles
-        };
+            string json = File.ReadAllText(Application.dataPath + "/Saves/worldmap_sav_" + _levelIndex + ".json");
+            SaveGame newLoad = JsonUtility.FromJson<SaveGame>(json);   
+            
+            ClearMap();
 
-        foreach (var tilemap in tilemaps)
-        {
-            foreach (var savedTile in tilemap)
+            List<PositionedTile>[] tilemaps =
             {
-                switch (savedTile.Tile.Type)
+                newLoad.SeaTiles, newLoad.BeachTiles, newLoad.GrassTiles, newLoad.MountainTiles, newLoad.FarmableTiles,
+                newLoad.DecoTiles, newLoad.UnitTiles
+            };
+
+            foreach (var tilemap in tilemaps)
+            {
+                foreach (var savedTile in tilemap)
                 {
-                    case TileType.Sea:
-                        SetTile(_seaMap, savedTile);
-                        break;
-                    case TileType.Beach:
-                        SetTile(_beachMap, savedTile);
-                        break;
-                    case TileType.Grass:
-                        SetTile(_grassMap, savedTile);
-                        break;
-                    case TileType.Mountain:
-                        SetTile(_MountainMap, savedTile);
-                        break;
-                    case TileType.Farmable:
-                        SetTile(_farmableMap, savedTile);
-                        break;
-                    case TileType.Deco:
-                        SetTile(_decoMap, savedTile);
-                        break;
-                    case TileType.Player:
-                        SetTile(_unitMap, savedTile);
-                        break;
-                    case TileType.Animal:
-                        SetTile(_unitMap, savedTile);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    switch (savedTile.Tile.Type)
+                    {
+                        case TileType.Sea:
+                            SetTile(_seaMap, savedTile);
+                            break;
+                        case TileType.Beach:
+                            SetTile(_beachMap, savedTile);
+                            break;
+                        case TileType.Grass:
+                            SetTile(_grassMap, savedTile);
+                            break;
+                        case TileType.Mountain:
+                            SetTile(_MountainMap, savedTile);
+                            break;
+                        case TileType.Farmable:
+                            SetTile(_farmableMap, savedTile);
+                            break;
+                        case TileType.Deco:
+                            SetTile(_decoMap, savedTile);
+                            break;
+                        case TileType.Player:
+                            SetTile(_unitMap, savedTile);
+                            break;
+                        case TileType.Animal:
+                            SetTile(_unitMap, savedTile);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
                 }
             }
-        }
 
-        void SetTile(Tilemap map, PositionedTile tile)
+            void SetTile(Tilemap map, PositionedTile tile)
+            {
+                map.SetTile(tile.Position, tile.Tile);
+            }
+
+            Debug.Log("Gameworld loaded!");
+            
+        }
+        catch (System.Exception)
         {
-            map.SetTile(tile.Position, tile.Tile);
+            Debug.Log("Gameworld Save File not Found under /Saves/worldmap_sav_" + _levelIndex + ".json");
+            return;
         }
-
-        Debug.Log("Gameworld loaded!");
     }
 }
