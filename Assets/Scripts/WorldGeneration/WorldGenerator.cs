@@ -43,7 +43,7 @@ public class WorldGenerator : MonoBehaviour
 
     [Range(MinPecent, MaxPecent)] public float percentOfLand = 0.45f;
 
-    [Range(MinPecent, MaxPecent)] public float smoothnessOfCoast = 0.3f;
+    [Range(0.01f, MaxPecent)] public float smoothnessOfCoast = 0.3f;
 
     [Range(MinPecent, MaxPecent)] public float percentOfWood = 0.5f;
 
@@ -58,7 +58,6 @@ public class WorldGenerator : MonoBehaviour
     /// </summary>
     private const int Land = (int)EBiomTileTypes.Beach;
 
-    //TODO add parameterizability of probabilities for diffrent tiles
     /// <summary>
     /// generates a new map when called.
     /// </summary>
