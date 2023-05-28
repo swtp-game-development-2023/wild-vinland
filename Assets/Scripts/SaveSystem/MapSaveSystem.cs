@@ -76,7 +76,9 @@ public class MapSaveSystem : MonoBehaviour
         newSave.FarmableTiles = GetTilesFromMap(FarmableMap, TileType.Farmable).ToList();
         newSave.DecoTiles = GetTilesFromMap(DecoMap, TileType.Deco).ToList();
         newSave.UnitTiles = GetTilesFromMap(UnitMap, TileType.Player).ToList();
-
+        newSave.PlayerPosition = WorldHelper.GetPlayerPositon();
+        newSave.PlayerRotation = WorldHelper.GetPlayerRotation();
+        
         String json = JsonUtility.ToJson(newSave, true);
         // Saves the SaveGame object as Json textfile, second parameter formats the Json in a more readable format if true, at cost of bigger file size
         System.IO.Directory.CreateDirectory(Application.dataPath + "/Saves");
@@ -155,8 +157,8 @@ public class MapSaveSystem : MonoBehaviour
                 }
             }
 
-
-
+            WorldHelper.SetPlayerPosition(newLoad.PlayerPosition);
+            WorldHelper.SetPlayerRotation(newLoad.PlayerRotation);
             Debug.Log("Gameworld loaded!");
         }
         catch (System.Exception)
