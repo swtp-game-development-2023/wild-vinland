@@ -13,6 +13,7 @@ namespace WorldGeneration
             if (GUILayout.Button("Generate"))
             {
                 script.Generate();
+                script.init = true;
             }
         }
     }
