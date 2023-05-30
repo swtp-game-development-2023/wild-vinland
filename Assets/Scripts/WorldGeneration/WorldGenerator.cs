@@ -35,7 +35,7 @@ public class WorldGenerator : MonoBehaviour
     public int edgeLength = 64;
 
     public bool useSeed = false;
-    public bool init = false;
+    public bool generateWorldOnStart = true;
     public int seed;
 
     [Range(MinPecent, MaxPecent)] public float permittedDeviationFromMid = 0.05f;
@@ -61,7 +61,7 @@ public class WorldGenerator : MonoBehaviour
 
     void Start()
     {
-        if(! init){
+        if( generateWorldOnStart ){
             Generate();
             // generation of first Map
         }
