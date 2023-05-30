@@ -35,6 +35,7 @@ public class WorldGenerator : MonoBehaviour
     public int edgeLength = 64;
 
     public bool useSeed = false;
+    public bool generateWorldOnStart = true;
     public int seed;
 
     [Range(MinPecent, MaxPecent)] public float permittedDeviationFromMid = 0.05f;
@@ -57,6 +58,14 @@ public class WorldGenerator : MonoBehaviour
     /// Each piece of land is beach first.
     /// </summary>
     private const int Land = (int)EBiomTileTypes.Beach;
+
+    void Start()
+    {
+        if( generateWorldOnStart ){
+            Generate();
+            // generation of first Map
+        }
+    }
 
     /// <summary>
     /// generates a new map when called.
@@ -335,7 +344,9 @@ public class WorldGenerator : MonoBehaviour
         return this;
     }
 
-    //just for testing
+    /// <summary>
+    /// Generates a new WorldMap
+    /// </summary>
     public void Generate()
     {
         WorldHelper.ClearMap();
@@ -345,5 +356,8 @@ public class WorldGenerator : MonoBehaviour
             .SetSpecialTiles(_map, percentOfWood, percentOfStone, percentOfOre, percentOfFlowers)
             .SetupTileMaps()
             .SetTilesInUnity();
+
+        WorldHelper.SetPlayerPosition(WorldHelper.GetRandomTileOfMap(BeachMap));
+        //spawn player on Beach
     }
 }

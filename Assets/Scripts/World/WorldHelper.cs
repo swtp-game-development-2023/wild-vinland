@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Collections.Generic;
 
 namespace World
 {
@@ -73,6 +74,39 @@ namespace World
         public static void SetPlayerRotation(Quaternion rotation){
             GameObject player = GameObject.FindWithTag("Player");
             player.transform.rotation = rotation;
+        }
+
+        public static Vector3 GetRandomTileOfMap(Tilemap map){
+            TileBase[] allTiles = map.GetTilesBlock(map.cellBounds);
+            List<Vector3> validPositions = new List<Vector3>();
+            
+            validPositions.Add(new Vector3(0,0,0));
+            // Fallback Vector
+
+            Grid grid = GameObject.FindWithTag("World").GetComponent<Grid>() ;
+            float cs = grid.cellSize.x;
+            // add Grid CellSize
+            float offset = grid.GetCellCenterWorld(new Vector3Int(0,0,0)).x; 
+            Vector3 position = new Vector3(0,0,0);
+
+            for (int x = 0; x < map.cellBounds.size.x; x++)
+            {
+                for (int y = 0; y < map.cellBounds.size.y; y++)
+                {
+                    if( null != allTiles[x + y * map.cellBounds.size.x] )
+                    {
+                        position.x = x*cs;
+                        position.y = y*cs;
+                        offset = grid.GetCellCenterWorld(new Vector3Int(0,0,0)).x;
+                        position.x = position.x+offset;
+                        validPositions.Add(position);
+                    }
+                }
+            }
+            // collect possible positions
+
+            int randomPositonIndex = Random.Range(0, validPositions.Count);
+            return validPositions[randomPositonIndex];
         }
     }
 }

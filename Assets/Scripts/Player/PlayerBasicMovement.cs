@@ -10,7 +10,6 @@ public class PlayerBasicMovement : MonoBehaviour {
     [SerializeField] private float crouchSpeed = 20f;
     [SerializeField] private float walkSpeed = 50f;
     [SerializeField] private float runSpeed = 100f;
-    [SerializeField] private float fastRunSpeed = 180f;
     [SerializeField] private float smoothRate = 0.05f;
     private Vector2 smoothedInput;
     private Vector2 smoothedInputVelocity;
