@@ -445,6 +445,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""pauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""1d60011c-d215-48f5-a4a9-4080fba846b4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -887,6 +896,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""load"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c672d6f-de4a-4a8b-acf1-ce9638b30335"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""pauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -978,6 +998,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         m_UI_save = m_UI.FindAction("save", throwIfNotFound: true);
         m_UI_load = m_UI.FindAction("load", throwIfNotFound: true);
+        m_UI_pauseMenu = m_UI.FindAction("pauseMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1153,6 +1174,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_TrackedDeviceOrientation;
     private readonly InputAction m_UI_save;
     private readonly InputAction m_UI_load;
+    private readonly InputAction m_UI_pauseMenu;
     public struct UIActions
     {
         private @InputManager m_Wrapper;
@@ -1169,6 +1191,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
         public InputAction @save => m_Wrapper.m_UI_save;
         public InputAction @load => m_Wrapper.m_UI_load;
+        public InputAction @pauseMenu => m_Wrapper.m_UI_pauseMenu;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1214,6 +1237,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @load.started += instance.OnLoad;
             @load.performed += instance.OnLoad;
             @load.canceled += instance.OnLoad;
+            @pauseMenu.started += instance.OnPauseMenu;
+            @pauseMenu.performed += instance.OnPauseMenu;
+            @pauseMenu.canceled += instance.OnPauseMenu;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1254,6 +1280,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @load.started -= instance.OnLoad;
             @load.performed -= instance.OnLoad;
             @load.canceled -= instance.OnLoad;
+            @pauseMenu.started -= instance.OnPauseMenu;
+            @pauseMenu.performed -= instance.OnPauseMenu;
+            @pauseMenu.canceled -= instance.OnPauseMenu;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1341,5 +1370,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
         void OnSave(InputAction.CallbackContext context);
         void OnLoad(InputAction.CallbackContext context);
+        void OnPauseMenu(InputAction.CallbackContext context);
     }
 }
