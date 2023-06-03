@@ -229,23 +229,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6411342674545157278, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_Value
@@ -253,6 +253,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7908317568952433564, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_Name
+      value: SliderFlowers
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908317568952433564, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
+      propertyPath: m_TagString
       value: SliderFlowers
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -371,23 +375,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: 6411342674545157278, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_Value
@@ -395,6 +399,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7908317568952433564, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_Name
+      value: SliderStone
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908317568952433564, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
+      propertyPath: m_TagString
       value: SliderStone
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -520,23 +528,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 6127905411015081049, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_fontColor.b
@@ -572,7 +580,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7908317568952433564, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: SliderEdgeLength
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1139,23 +1147,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.38888887
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.38888887
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.38888887
       objectReference: {fileID: 0}
     - target: {fileID: 6411342674545157278, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_Value
@@ -1167,6 +1175,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7908317568952433564, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_Name
+      value: SliderLand
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908317568952433564, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
+      propertyPath: m_TagString
       value: SliderLand
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1749,23 +1761,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.15789475
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.15789475
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.15789475
       objectReference: {fileID: 0}
     - target: {fileID: 6127905411015081049, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_fontColor.b
@@ -1795,6 +1807,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SliderMountain
       objectReference: {fileID: 0}
+    - target: {fileID: 7908317568952433564, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
+      propertyPath: m_TagString
+      value: SliderMountain
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1821,7 +1837,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1518611669
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2043,23 +2059,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6411342674545157278, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_Value
@@ -2067,6 +2083,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7908317568952433564, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_Name
+      value: SliderOre
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908317568952433564, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
+      propertyPath: m_TagString
       value: SliderOre
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2303,23 +2323,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.2631579
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.2631579
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.2631579
       objectReference: {fileID: 0}
     - target: {fileID: 6411342674545157278, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_Value
@@ -2331,6 +2351,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7908317568952433564, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_Name
+      value: SliderCoast
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908317568952433564, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
+      propertyPath: m_TagString
       value: SliderCoast
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2671,23 +2695,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 2786298909287665234, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2804618380638276281, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 6411342674545157278, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_Value
@@ -2695,6 +2719,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7908317568952433564, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
       propertyPath: m_Name
+      value: SliderTrees
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908317568952433564, guid: 9515f3a5cdabcfd48aac95e9fafebdba, type: 3}
+      propertyPath: m_TagString
       value: SliderTrees
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2800,7 +2828,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5682447240291630273, guid: aed2165b07e1aa241a0fbe2bea27ca09, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7475244373546989386, guid: aed2165b07e1aa241a0fbe2bea27ca09, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size

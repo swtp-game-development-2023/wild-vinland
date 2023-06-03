@@ -10,6 +10,10 @@ TagManager:
   - SliderTrees
   - SliderStone
   - SliderOre
+  - SliderMountain
+  - SliderLand
+  - SliderCoast
+  - SliderFlowers
   layers:
   - Default
   - TransparentFX
