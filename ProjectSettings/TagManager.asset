@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - World
+  - Sea
+  - SliderEdgeLength
+  - SliderTrees
+  - SliderStone
+  - SliderOre
   layers:
   - Default
   - TransparentFX
