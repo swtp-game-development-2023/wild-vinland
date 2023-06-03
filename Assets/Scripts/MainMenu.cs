@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
@@ -28,16 +25,13 @@ public class MainMenu : MonoBehaviour
     }
     public void ClickedBtnExit()
     {
-        Debug.Log("Game Exit");
+        Debug.Log("Game Exit"); //We should keep this because in development there is no other way to detect exit.
         Application.Quit();
     }
     
     public void ToggleSound()
     {
-        Debug.Log("pre " + isSoundOn);
-
         isSoundOn = !isSoundOn;
-        Debug.Log("toggel " + isSoundOn);
         AudioListener.pause = !isSoundOn; 
     }
 }
