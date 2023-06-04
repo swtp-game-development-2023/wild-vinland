@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Cinemachine.Editor;
 using TMPro;
 using Unity.VisualScripting;
@@ -19,12 +20,11 @@ public class LoadMenuScrollList : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DirectoryInfo _directory = new DirectoryInfo(Application.dataPath + "/Saves");
-
-        _files = Array.Empty<FileInfo>();
+        _directory = new DirectoryInfo(Application.dataPath + "/Saves");
+        
         if (_directory.Exists)
         {
-            _files = _directory.GetFiles("*.json");
+            _files = _directory.GetFiles("*.json").OrderBy(p => p.LastWriteTime).Reverse().ToArray();
             foreach (var file in _files)
             {
                 var obj = Instantiate(cellPrefab, gameObject.transform, false);
