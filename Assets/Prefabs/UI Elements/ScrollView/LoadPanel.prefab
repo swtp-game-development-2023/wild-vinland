@@ -32,7 +32,7 @@ RectTransform:
   m_Children:
   - {fileID: 4043376791135481072}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 5807425657983859258}
   - component: {fileID: 9085330244875029632}
   - component: {fileID: 6607613259470635034}
-  - component: {fileID: 7984823964990029967}
+  - component: {fileID: 2548368951097365088}
   m_Layer: 5
   m_Name: Container
   m_TagString: Untagged
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
---- !u!114 &7984823964990029967
+--- !u!114 &2548368951097365088
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -328,4 +328,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74a8880f574034c47a7011cbb87c89e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CellPrefab: {fileID: 8380207086494017418, guid: d55f050762858664dbb907fb8d8d4fb0, type: 3}
+  cellPrefab: {fileID: 8380207086494017418, guid: d55f050762858664dbb907fb8d8d4fb0, type: 3}
