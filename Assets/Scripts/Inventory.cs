@@ -12,15 +12,19 @@ public class Inventory : MonoBehaviour
     private int _inventorySize = 10;
     private List<Collectable> _inventory;
     
-    
-
     public void Awake()
+    {
+        Clear();
+    }
+    
+    ///<summary>
+    /// Clears out the and resets whole Inventory to initialized state
+    ///</summary>
+    public void Clear()
     {
         Collectable[] c = new Collectable[_inventorySize];
         _inventory = c.ToList();
-
     }
-    
 
     public void Add(Collectable c, int index)
     {
@@ -64,12 +68,22 @@ public class Inventory : MonoBehaviour
     private bool IsSlotEmpty(int index)
     {
         return _inventory[index] == null;
-    }
+    } 
     
     private void OnOpenInventory()
     {   
         //TODO real UI
         print(ToString());
+    }
+
+    public List<Collectable> Get_inventory()
+    {
+        return _inventory;
+    }
+
+    public void Set_inventory(List<Collectable> inventory)
+    {
+        this._inventory = inventory;
     }
 
     public override string ToString()

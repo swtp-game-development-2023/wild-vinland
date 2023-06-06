@@ -11,4 +11,5 @@ public class SaveGame
     public List<PositionedTile> SeaTiles, BeachTiles, GrassTiles, MountainTiles, FarmableTiles, DecoTiles, UnitTiles;
     public Vector3 PlayerPosition;
     public Quaternion PlayerRotation;
+    public List<Collectable> Inventory;
 }

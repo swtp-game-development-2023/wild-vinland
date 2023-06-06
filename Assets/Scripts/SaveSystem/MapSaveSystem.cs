@@ -78,6 +78,7 @@ public class MapSaveSystem : MonoBehaviour
         newSave.UnitTiles = GetTilesFromMap(UnitMap, TileType.Player).ToList();
         newSave.PlayerPosition = WorldHelper.GetPlayerPositon();
         newSave.PlayerRotation = WorldHelper.GetPlayerRotation();
+        newSave.Inventory = Inventory.Get_inventory();
         
         String json = JsonUtility.ToJson(newSave, true);
         // Saves the SaveGame object as Json textfile, second parameter formats the Json in a more readable format if true, at cost of bigger file size
@@ -159,6 +160,7 @@ public class MapSaveSystem : MonoBehaviour
 
             WorldHelper.SetPlayerPosition(newLoad.PlayerPosition);
             WorldHelper.SetPlayerRotation(newLoad.PlayerRotation);
+            Inventory.Set_inventory(newLoad.Inventory);
             Debug.Log("Gameworld loaded!");
         }
         catch (System.Exception)
