@@ -345,7 +345,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""5bd076a0-9367-4f15-87d8-9889ed6f211b"",
                     ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": ""Press(behavior=1)"",
+                    ""interactions"": ""Press(pressPoint=1)"",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""PauseMenu"",

@@ -10,10 +10,10 @@ public class PauseMenu : MonoBehaviour
     public bool isPaused;
     private InputManager input;
     
-    // Start is called before the first frame update
     void Start()
     {
         pauseMenu.SetActive(false);
+        isPaused = false;
     }
     
     public void PauseGame()
@@ -28,6 +28,18 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
+    }
+
+    public void SaveGame()
+    {
+        //TODO open save Function
+        print("TODO save Game");
+    }
+    
+    public void LoadGame()
+    {
+        //TODO open load Function
+        print("TODO load Game");
     }
 
     public void GoToMainMenu()
