@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PauseMenu",
+                    "type": "Button",
+                    "id": "ecef0a92-24f7-4658-bc62-3d18ed93c252",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -309,6 +318,17 @@
                     "action": "TestGenerate",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5bd076a0-9367-4f15-87d8-9889ed6f211b",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "PauseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -419,15 +439,6 @@
                     "name": "load",
                     "type": "Button",
                     "id": "a8102275-08dc-4e3d-8495-8ff448a6b0aa",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "pauseMenu",
-                    "type": "Button",
-                    "id": "1d60011c-d215-48f5-a4a9-4080fba846b4",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -872,17 +883,6 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "load",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3c672d6f-de4a-4a8b-acf1-ce9638b30335",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "pauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
