@@ -1,9 +1,11 @@
 ﻿
     using Unity.VisualScripting;
 
-    public static class UI_WorldGen_DropBox
+    public static class UIWorldGenDropBox
     {
         public static bool IsFilled { get; set; }
+        
+        public static bool GenOnStart { get; set; }
         
         public static bool UseSeed { get; set; }
         public static int Seed { get; set; }

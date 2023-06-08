@@ -61,20 +61,22 @@ public class WorldGenerator : MonoBehaviour
 
     void Start()
     {
-        if (UI_WorldGen_DropBox.IsFilled)
+        if (UIWorldGenDropBox.IsFilled)
         {
-            edgeLength = UI_WorldGen_DropBox.EdgeLength;
-            percentOfWood = UI_WorldGen_DropBox.PercentOfWood;
-            percentOfStone = UI_WorldGen_DropBox.PercentOfStone;
-            percentOfOre = UI_WorldGen_DropBox.PercentOfOre;
+            generateWorldOnStart = UIWorldGenDropBox.GenOnStart;
+            edgeLength = UIWorldGenDropBox.EdgeLength;
+            percentOfWood = UIWorldGenDropBox.PercentOfWood;
+            percentOfStone = UIWorldGenDropBox.PercentOfStone;
+            percentOfOre = UIWorldGenDropBox.PercentOfOre;
 
-            percentageOfMountain = UI_WorldGen_DropBox.PercentOfMountain;
-            percentOfLand = UI_WorldGen_DropBox.PercentOfLand;
-            percentOfFlowers = UI_WorldGen_DropBox.PercentOfFlowers;
-            smoothnessOfCoast = UI_WorldGen_DropBox.SmoothnessOfCoast;
+            percentageOfMountain = UIWorldGenDropBox.PercentOfMountain;
+            percentOfLand = UIWorldGenDropBox.PercentOfLand;
+            percentOfFlowers = UIWorldGenDropBox.PercentOfFlowers;
+            smoothnessOfCoast = UIWorldGenDropBox.SmoothnessOfCoast;
 
-            useSeed = UI_WorldGen_DropBox.UseSeed;
-            seed = UI_WorldGen_DropBox.Seed;
+            useSeed = UIWorldGenDropBox.UseSeed;
+            seed = UIWorldGenDropBox.Seed;
+            UIWorldGenDropBox.IsFilled = false;
         }
 
         if (generateWorldOnStart)
