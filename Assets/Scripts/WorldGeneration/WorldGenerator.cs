@@ -61,7 +61,26 @@ public class WorldGenerator : MonoBehaviour
 
     void Start()
     {
-        if( generateWorldOnStart ){
+        if (UIWorldGenDropBox.IsFilled)
+        {
+            generateWorldOnStart = UIWorldGenDropBox.GenOnStart;
+            edgeLength = UIWorldGenDropBox.EdgeLength;
+            percentOfWood = UIWorldGenDropBox.PercentOfWood;
+            percentOfStone = UIWorldGenDropBox.PercentOfStone;
+            percentOfOre = UIWorldGenDropBox.PercentOfOre;
+
+            percentageOfMountain = UIWorldGenDropBox.PercentOfMountain;
+            percentOfLand = UIWorldGenDropBox.PercentOfLand;
+            percentOfFlowers = UIWorldGenDropBox.PercentOfFlowers;
+            smoothnessOfCoast = UIWorldGenDropBox.SmoothnessOfCoast;
+
+            useSeed = UIWorldGenDropBox.UseSeed;
+            seed = UIWorldGenDropBox.Seed;
+            UIWorldGenDropBox.IsFilled = false;
+        }
+
+        if (generateWorldOnStart)
+        {
             Generate();
             // generation of first Map
         }

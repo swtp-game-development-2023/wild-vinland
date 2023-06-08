@@ -677,14 +677,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   edgeLength: 64
   useSeed: 0
-  generateWorldOnStart: 1
+  generateWorldOnStart: 0
   seed: 0
   permittedDeviationFromMid: 0.05
-  percentageOfMountain: 0.15
-  percentOfLand: 0.45
-  smoothnessOfCoast: 0.3
-  percentOfWood: 0.5
-  percentOfStone: 0.5
+  percentageOfMountain: 0.112
+  percentOfLand: 0.232
+  smoothnessOfCoast: 0.057
+  percentOfWood: 0.123
+  percentOfStone: 0.161
   percentOfOre: 0.1
   percentOfFlowers: 0.5
 --- !u!1 &5299312973983080316
