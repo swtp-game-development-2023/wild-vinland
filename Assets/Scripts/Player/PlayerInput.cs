@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerBasicMovement : MonoBehaviour {
+public class PlayerInput : MonoBehaviour {
     
     [SerializeField] private float crouchSpeed = 20f;
     [SerializeField] private float walkSpeed = 50f;
@@ -71,7 +71,7 @@ public class PlayerBasicMovement : MonoBehaviour {
             }
         }
 
-        if (input.Player.PauseMenu.IsPressed())
+        if (input.Player.PauseMenu.WasPressedThisFrame())
         {
             PauseMenu();
         }
