@@ -65,9 +65,25 @@ public class Inventory : MonoBehaviour
     {
     }
 
+    ///<summary>
+    /// Function just to Test adding Coffee Items, calling ToString(), Deleting one calling ToString() again. Demo for Inventory. 
+    ///</summary>
+    public void Test(){
+        Add(new Coffee(),0);
+        Add(new Coffee(),1);
+        Add(new Coffee(),2);
+        Debug.Log(ToString());
+        Remove(2);
+        Debug.Log(ToString());
+    }
+
     private bool IsSlotEmpty(int index)
     {
-        return _inventory[index] == null;
+        if ( _inventory != null )
+        {
+            return _inventory[index] == null;
+        }
+        return true;
     } 
     
     private void OnOpenInventory()
@@ -78,7 +94,7 @@ public class Inventory : MonoBehaviour
 
     public List<Collectable> Get_inventory()
     {
-        return _inventory;
+        return this._inventory;
     }
 
     public void Set_inventory(List<Collectable> inventory)
@@ -91,7 +107,7 @@ public class Inventory : MonoBehaviour
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < _inventory.Count; i++)
         {
-            sb.Append(" | ").Append(!IsSlotEmpty(i)? _inventory.ToString() : "empty" );
+            sb.Append(" | ").Append(!IsSlotEmpty(i)? _inventory[i].ToString() : "empty" );
             
             if (i % 2 == 1)
             {
@@ -99,5 +115,6 @@ public class Inventory : MonoBehaviour
             }
         }
         return sb.ToString();
+        
     }
 }

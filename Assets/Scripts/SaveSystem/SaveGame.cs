@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Text;
+using System;
 using UnityEngine;
 
 ///<summary>
 /// Class to Save the World Information
 ///</summary>
+[Serializable]
 public class SaveGame
 {
     public int LevelIndex;

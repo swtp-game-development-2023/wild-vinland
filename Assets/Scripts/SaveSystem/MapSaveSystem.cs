@@ -17,7 +17,8 @@ public class MapSaveSystem : MonoBehaviour
     [SerializeField] private int _levelIndex;
     // index to easly name different Save Files
 
-    private Tilemap SeaMap, BeachMap, GrassMap, MountainMap, FarmableMap, DecoMap, UnitMap;
+    private Tilemap _seaMap, _beachMap, _grassMap, _mountainMap, _farmableMap, _decoMap, _unitMap;
+    private Inventory _inventory;
     
     private InputManager _input = null;
 
@@ -26,13 +27,14 @@ public class MapSaveSystem : MonoBehaviour
 
     void Start()
     {
-        SeaMap = transform.Find("Sea").gameObject.GetComponent<Tilemap>();
-        BeachMap = transform.Find("Beach").gameObject.GetComponent<Tilemap>();
-        GrassMap = transform.Find("Grass").gameObject.GetComponent<Tilemap>();
-        MountainMap = transform.Find("Mountain").gameObject.GetComponent<Tilemap>();
-        FarmableMap = transform.Find("Farmables").gameObject.GetComponent<Tilemap>();
-        DecoMap = transform.Find("Deco").gameObject.GetComponent<Tilemap>();
-        UnitMap = transform.Find("Buildings").gameObject.GetComponent<Tilemap>();
+        _seaMap = transform.Find("Sea").gameObject.GetComponent<Tilemap>();
+        _beachMap = transform.Find("Beach").gameObject.GetComponent<Tilemap>();
+        _grassMap = transform.Find("Grass").gameObject.GetComponent<Tilemap>();
+        _mountainMap = transform.Find("Mountain").gameObject.GetComponent<Tilemap>();
+        _farmableMap = transform.Find("Farmables").gameObject.GetComponent<Tilemap>();
+        _decoMap = transform.Find("Deco").gameObject.GetComponent<Tilemap>();
+        _unitMap = transform.Find("Buildings").gameObject.GetComponent<Tilemap>();
+        _inventory = GameObject.Find("Player").GetComponent<Inventory>();
 
         if (UILoadGameDropBox.IsFilled)
         {
@@ -76,16 +78,16 @@ public class MapSaveSystem : MonoBehaviour
         SaveGame newSave = new SaveGame();
 
         newSave.LevelIndex = _levelIndex;
-        newSave.SeaTiles = GetTilesFromMap(SeaMap, TileType.Sea).ToList();
-        newSave.BeachTiles = GetTilesFromMap(BeachMap, TileType.Beach).ToList();
-        newSave.GrassTiles = GetTilesFromMap(GrassMap, TileType.Grass).ToList();
-        newSave.MountainTiles = GetTilesFromMap(MountainMap, TileType.Mountain).ToList();
-        newSave.FarmableTiles = GetTilesFromMap(FarmableMap, TileType.Farmable).ToList();
-        newSave.DecoTiles = GetTilesFromMap(DecoMap, TileType.Deco).ToList();
-        newSave.UnitTiles = GetTilesFromMap(UnitMap, TileType.Player).ToList();
+        newSave.SeaTiles = GetTilesFromMap(_seaMap, TileType.Sea).ToList();
+        newSave.BeachTiles = GetTilesFromMap(_beachMap, TileType.Beach).ToList();
+        newSave.GrassTiles = GetTilesFromMap(_grassMap, TileType.Grass).ToList();
+        newSave.MountainTiles = GetTilesFromMap(_mountainMap, TileType.Mountain).ToList();
+        newSave.FarmableTiles = GetTilesFromMap(_farmableMap, TileType.Farmable).ToList();
+        newSave.DecoTiles = GetTilesFromMap(_decoMap, TileType.Deco).ToList();
+        newSave.UnitTiles = GetTilesFromMap(_unitMap, TileType.Player).ToList();
         newSave.PlayerPosition = WorldHelper.GetPlayerPositon();
         newSave.PlayerRotation = WorldHelper.GetPlayerRotation();
-        newSave.Inventory = Inventory.Get_inventory();
+        newSave.Inventory = _inventory.Get_inventory();
         
         String json = JsonUtility.ToJson(newSave, true);
         // Saves the SaveGame object as Json textfile, second parameter formats the Json in a more readable format if true, at cost of bigger file size
@@ -139,28 +141,28 @@ public class MapSaveSystem : MonoBehaviour
                     switch (savedTile.Tile.Type)
                     {
                         case TileType.Sea:
-                            WorldHelper.SetTile(SeaMap, savedTile);
+                            WorldHelper.SetTile(_seaMap, savedTile);
                             break;
                         case TileType.Beach:
-                            WorldHelper.SetTile(BeachMap, savedTile);
+                            WorldHelper.SetTile(_beachMap, savedTile);
                             break;
                         case TileType.Grass:
-                            WorldHelper.SetTile(GrassMap, savedTile);
+                            WorldHelper.SetTile(_grassMap, savedTile);
                             break;
                         case TileType.Mountain:
-                            WorldHelper.SetTile(MountainMap, savedTile);
+                            WorldHelper.SetTile(_mountainMap, savedTile);
                             break;
                         case TileType.Farmable:
-                            WorldHelper.SetTile(FarmableMap, savedTile);
+                            WorldHelper.SetTile(_farmableMap, savedTile);
                             break;
                         case TileType.Deco:
-                            WorldHelper.SetTile(DecoMap, savedTile);
+                            WorldHelper.SetTile(_decoMap, savedTile);
                             break;
                         case TileType.Player:
-                            WorldHelper.SetTile(UnitMap, savedTile);
+                            WorldHelper.SetTile(_unitMap, savedTile);
                             break;
                         case TileType.Animal:
-                            WorldHelper.SetTile(UnitMap, savedTile);
+                            WorldHelper.SetTile(_unitMap, savedTile);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -170,11 +172,12 @@ public class MapSaveSystem : MonoBehaviour
 
             WorldHelper.SetPlayerPosition(newLoad.PlayerPosition);
             WorldHelper.SetPlayerRotation(newLoad.PlayerRotation);
-            Inventory.Set_inventory(newLoad.Inventory);
+            _inventory.Set_inventory(newLoad.Inventory);
             Debug.Log("Gameworld loaded!");
         }
         catch (System.Exception)
         {
+            throw;
             Debug.Log("Gameworld Save File not Found under: " + saveGameName);
             return;
         }
