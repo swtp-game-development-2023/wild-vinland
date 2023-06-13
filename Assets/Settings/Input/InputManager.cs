@@ -98,6 +98,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""ecef0a92-24f7-4658-bc62-3d18ed93c252"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -329,6 +338,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""TestGenerate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5bd076a0-9367-4f15-87d8-9889ed6f211b"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": ""Press(pressPoint=1)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -964,6 +984,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_Player_Crouch_Start = m_Player.FindAction("Crouch_Start", throwIfNotFound: true);
         m_Player_Crouch_Stop = m_Player.FindAction("Crouch_Stop", throwIfNotFound: true);
         m_Player_TestGenerate = m_Player.FindAction("TestGenerate", throwIfNotFound: true);
+        m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1047,6 +1068,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Crouch_Start;
     private readonly InputAction m_Player_Crouch_Stop;
     private readonly InputAction m_Player_TestGenerate;
+    private readonly InputAction m_Player_PauseMenu;
     public struct PlayerActions
     {
         private @InputManager m_Wrapper;
@@ -1059,6 +1081,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @Crouch_Start => m_Wrapper.m_Player_Crouch_Start;
         public InputAction @Crouch_Stop => m_Wrapper.m_Player_Crouch_Stop;
         public InputAction @TestGenerate => m_Wrapper.m_Player_TestGenerate;
+        public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1092,6 +1115,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @TestGenerate.started += instance.OnTestGenerate;
             @TestGenerate.performed += instance.OnTestGenerate;
             @TestGenerate.canceled += instance.OnTestGenerate;
+            @PauseMenu.started += instance.OnPauseMenu;
+            @PauseMenu.performed += instance.OnPauseMenu;
+            @PauseMenu.canceled += instance.OnPauseMenu;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1120,6 +1146,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @TestGenerate.started -= instance.OnTestGenerate;
             @TestGenerate.performed -= instance.OnTestGenerate;
             @TestGenerate.canceled -= instance.OnTestGenerate;
+            @PauseMenu.started -= instance.OnPauseMenu;
+            @PauseMenu.performed -= instance.OnPauseMenu;
+            @PauseMenu.canceled -= instance.OnPauseMenu;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1326,6 +1355,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnCrouch_Start(InputAction.CallbackContext context);
         void OnCrouch_Stop(InputAction.CallbackContext context);
         void OnTestGenerate(InputAction.CallbackContext context);
+        void OnPauseMenu(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

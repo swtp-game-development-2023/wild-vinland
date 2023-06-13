@@ -6,19 +6,35 @@ using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[Serializable]
 public class Inventory : MonoBehaviour
 {
     [SerializeField]
     private int _inventorySize = 10;
     private List<Collectable> _inventory;
     
-    
+    public Inventory()
+    {
+        Clear();
+    }
+
+    public Inventory(int size)
+    {
+        this._inventorySize = size;
+        Clear();
+    }
 
     public void Awake()
     {
+    }
+    
+    ///<summary>
+    /// Clears out the and resets whole Inventory to initialized state
+    ///</summary>
+    public void Clear()
+    {
         Collectable[] c = new Collectable[_inventorySize];
         _inventory = c.ToList();
-
     }
 
     public void Add(Collectable c) {
@@ -64,10 +80,33 @@ public class Inventory : MonoBehaviour
     {
     }
 
+    ///<summary>
+    /// Function just to Test adding Coffee Items, calling ToString(), Deleting one calling ToString() again. Demo for Inventory. 
+    ///</summary>
+    public void Test()
+    {
+        if( _inventory.Count > 0 )
+        {        
+            Add(new Coffee(1),0);
+            Add(new Coffee(2),1);
+            Add(new Coffee(1),2);
+            Debug.Log(ToString());
+            Debug.Log("is slot 2 empty? "+IsSlotEmpty(2));
+            Remove(2);
+            Debug.Log("is slot 2 empty? "+IsSlotEmpty(2));
+        }
+        Debug.Log(ToString());
+
+    }
+
     private bool IsSlotEmpty(int index)
     {
-        return _inventory[index] == null;
-    }
+        if ( _inventory != null )
+        {
+            return _inventory[index] == null;
+        }
+        return true;
+    } 
     
     private void OnOpenInventory()
     {   
@@ -75,12 +114,46 @@ public class Inventory : MonoBehaviour
         print(ToString());
     }
 
+    public SerializedInventory Serialize()
+    {
+        List<int> inv = new List<int>();
+        List<int> amount = new List<int>();
+        for (int i = 0; i < _inventory.Count; i++)
+        {
+            Collectable item = _inventory[i];
+            if ( item != null )
+            {
+                inv.Add(item.GetId());
+                amount.Add(item.Amount);
+            }
+        }
+        return new SerializedInventory(_inventorySize,inv,amount);
+    }
+
+    public void DeSerialize(SerializedInventory serializedInventory)
+    {
+        _inventorySize = serializedInventory.inventorySize;
+        for (int i = 0; i < serializedInventory.inventory.Count; i++)
+        {
+            int item = serializedInventory.inventory[i];
+            switch (item)
+            {
+                case (int) CollectableName.Coffee:
+                    _inventory.Add(new Coffee(serializedInventory.amount[i]));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            // TODO other Items based on their Id
+        }
+    }
+
     public override string ToString()
     {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < _inventory.Count; i++)
         {
-            sb.Append(" | ").Append(!IsSlotEmpty(i)? _inventory.ToString() : "empty" );
+            sb.Append(" | ").Append(!IsSlotEmpty(i)? _inventory[i].ToString() : "empty" );
             
             if (i % 2 == 1)
             {
@@ -88,5 +161,6 @@ public class Inventory : MonoBehaviour
             }
         }
         return sb.ToString();
+        
     }
 }

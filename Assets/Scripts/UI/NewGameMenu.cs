@@ -18,7 +18,6 @@ namespace UI
             var seed = GetComponentInChildren<TMP_InputField>().text;
             UIWorldGenDropBox.UseSeed = !seed.Equals("");
             UIWorldGenDropBox.Seed =  UIWorldGenDropBox.UseSeed ? Int32.Parse(seed) : 0;
-            Debug.Log(GetComponentInChildren<TMP_InputField>().text);
             
             //Left slider
             UIWorldGenDropBox.EdgeLength = (int) FindSliderByTag("SliderEdgeLength").value;
