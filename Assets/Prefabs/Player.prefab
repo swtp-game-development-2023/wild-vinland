@@ -39,7 +39,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3751646833397341009}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 6366800812957093172}
   - component: {fileID: 3209879471124336924}
   - component: {fileID: 2969426364496398515}
-  - component: {fileID: 5244202707694790950}
+  - component: {fileID: 705861918987382225}
   m_Layer: 0
   m_Name: body
   m_TagString: Untagged
@@ -266,7 +266,7 @@ CircleCollider2D:
   m_Offset: {x: 0.045, y: 0.039}
   serializedVersion: 2
   m_Radius: 0.0493
---- !u!114 &5244202707694790950
+--- !u!114 &705861918987382225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -290,8 +290,7 @@ GameObject:
   - component: {fileID: 522227967833113918}
   - component: {fileID: 2519190307473019491}
   - component: {fileID: 1080608272208261854}
-  - component: {fileID: 166252146442028121}
-  - component: {fileID: 8978921903660617074}
+  - component: {fileID: 4232820805430264936}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -314,7 +313,7 @@ Transform:
   - {fileID: 7175208464010126947}
   - {fileID: 6966028691757246149}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2519190307473019491
 Rigidbody2D:
@@ -356,12 +355,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crouchSpeed: 20
-  walkSpeed: 50
+  walkSpeed: 28
   runSpeed: 80
   smoothRate: 0.065
---- !u!114 &166252146442028121
-  pauseMenu: {fileID: 0}
---- !u!114 &8978921903660617074
+--- !u!114 &4232820805430264936
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -374,8 +371,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inventorySize: 10
-  m_Script: {fileID: 11500000, guid: 0b5b7c35d0b761842b245d36617b9eb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 0}
-  isPaused: 0

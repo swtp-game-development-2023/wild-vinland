@@ -12,31 +12,33 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private int _inventorySize = 10;
     private List<Collectable> _inventory;
-    
-    public Inventory()
-    {
-        Clear();
-    }
 
-    public Inventory(int size)
-    {
-        this._inventorySize = size;
-        Clear();
-    }
-
-    public void Awake()
-    {
-    }
-    
     ///<summary>
     /// Clears out the and resets whole Inventory to initialized state
     ///</summary>
-    public void Clear()
+    public void Awake()
     {
         Collectable[] c = new Collectable[_inventorySize];
         _inventory = c.ToList();
     }
 
+    public int Contains(Collectable c) {
+        return _inventory.FindIndex(c2 => c2 != null && c2.ID == c.ID && c2.Amount <= c.maxAmount);
+    }
+
+    public bool Add(Collectable c) {
+        int index = Contains(c);
+        if (index != -1) {
+            _inventory[index].Amount += c.Amount;
+            return true;
+        }
+        for (int i = 0; i < _inventory.Count; i++) {
+            Add(c, i);
+            return true;
+        }
+        return false;
+    }
+    
     public void Add(Collectable c, int index)
     {
         if (IsSlotEmpty(index)) _inventory[index] = c;
@@ -79,21 +81,6 @@ public class Inventory : MonoBehaviour
     ///<summary>
     /// Function just to Test adding Coffee Items, calling ToString(), Deleting one calling ToString() again. Demo for Inventory. 
     ///</summary>
-    public void Test()
-    {
-        if( _inventory.Count > 0 )
-        {        
-            Add(new Coffee(1),0);
-            Add(new Coffee(2),1);
-            Add(new Coffee(1),2);
-            Debug.Log(ToString());
-            Debug.Log("is slot 2 empty? "+IsSlotEmpty(2));
-            Remove(2);
-            Debug.Log("is slot 2 empty? "+IsSlotEmpty(2));
-        }
-        Debug.Log(ToString());
-
-    }
 
     private bool IsSlotEmpty(int index)
     {
@@ -116,11 +103,10 @@ public class Inventory : MonoBehaviour
         List<int> amount = new List<int>();
         for (int i = 0; i < _inventory.Count; i++)
         {
-            Collectable item = _inventory[i];
-            if ( item != null )
-            {
-                inv.Add(item.GetId());
-                amount.Add(item.Amount);
+            Collectable collectable = _inventory[i];
+            if ( collectable != null ) {
+                inv.Add(collectable.ID);
+                amount.Add(collectable.Amount);
             }
         }
         return new SerializedInventory(_inventorySize,inv,amount);
@@ -134,8 +120,8 @@ public class Inventory : MonoBehaviour
             int item = serializedInventory.inventory[i];
             switch (item)
             {
-                case (int) CollectableName.Coffee:
-                    _inventory.Add(new Coffee(serializedInventory.amount[i]));
+                case (int) CollectableName.Wood:
+                    //TODO _inventory.Add(new Coffee(serializedInventory.amount[i]));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -14,6 +14,9 @@ TagManager:
   - SliderLand
   - SliderCoast
   - SliderFlowers
+  - Ore
+  - Stone
+  - Wood
   layers:
   - Default
   - TransparentFX
