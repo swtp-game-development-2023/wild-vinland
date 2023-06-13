@@ -30,13 +30,26 @@ public abstract class Collectable
         }
     }
 
+    public int GetId()
+    {
+        return _id;
+    }
+
     protected Collectable(int id)
     {
         _id = id;
     }
+    protected Collectable(int id,int amount)
+    {
+        _id = id;
+        _amount = amount;
+    }
 
+    ///<summary>
+    /// Generates a String representation of the Collectable in Format: CollectableName [Collectable Amount]
+    ///</summary>
     public override string ToString()
     {
-        return _id.ToString();
+        return ( (CollectableName) _id).ToString()+"["+_amount+"]";
     }
 }

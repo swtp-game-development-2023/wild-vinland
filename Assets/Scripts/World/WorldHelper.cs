@@ -29,13 +29,17 @@ namespace World
         }
 
         ///<summary>
+        /// Get Player GameObject
+        ///</summary>
+        public static GameObject GetPlayer(){ return GameObject.FindWithTag("Player"); }
+
+        ///<summary>
         /// Returns the Player Position as a Vector2 since we use a 2D Game World
         ///</summary>
         public static Vector2 GetPlayerPositon(){
             try
             {
-            GameObject player = GameObject.FindWithTag("Player");
-            return player.transform.position;
+            return GetPlayer().transform.position;
             }
             catch (System.Exception)
             {
@@ -50,8 +54,7 @@ namespace World
         public static Quaternion GetPlayerRotation(){
             try
             {
-              GameObject player = GameObject.FindWithTag("Player");
-              return player.transform.rotation;  
+              return GetPlayer().transform.rotation;  
             }
             catch (System.Exception)
             {
@@ -64,16 +67,14 @@ namespace World
         /// Sets the Player Position
         ///</summary>
         public static void SetPlayerPosition(Vector3 position){
-            GameObject player = GameObject.FindWithTag("Player");
-            player.transform.position = position;
+            GetPlayer().transform.position = position;
         }
 
         ///<summary>
         /// Sets the Player Rotation
         ///</summary>
         public static void SetPlayerRotation(Quaternion rotation){
-            GameObject player = GameObject.FindWithTag("Player");
-            player.transform.rotation = rotation;
+            GetPlayer().transform.rotation = rotation;
         }
 
         public static Vector3 GetRandomTileOfMap(Tilemap map){
