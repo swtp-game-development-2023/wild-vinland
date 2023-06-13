@@ -30,6 +30,11 @@ public abstract class Collectable
         }
     }
 
+    public int GetId()
+    {
+        return _id;
+    }
+
     protected Collectable(int id)
     {
         _id = id;

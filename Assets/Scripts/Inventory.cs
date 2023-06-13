@@ -6,15 +6,26 @@ using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[Serializable]
 public class Inventory : MonoBehaviour
 {
     [SerializeField]
     private int _inventorySize = 10;
     private List<Collectable> _inventory;
     
-    public void Awake()
+    public Inventory()
     {
         Clear();
+    }
+
+    public Inventory(int size)
+    {
+        this._inventorySize = size;
+        Clear();
+    }
+
+    public void Awake()
+    {
     }
     
     ///<summary>
@@ -68,13 +79,16 @@ public class Inventory : MonoBehaviour
     ///<summary>
     /// Function just to Test adding Coffee Items, calling ToString(), Deleting one calling ToString() again. Demo for Inventory. 
     ///</summary>
-    public void Test(){
-        Add(new Coffee(),0);
-        Add(new Coffee(),1);
-        Add(new Coffee(),2);
+    public void Test()
+    {
+        if( _inventory.Count > 0 )
+        {        
+            Add(new Coffee(),0);
+            Add(new Coffee(),1);
+            Add(new Coffee(),2);
+        }
         Debug.Log(ToString());
-        Remove(2);
-        Debug.Log(ToString());
+
     }
 
     private bool IsSlotEmpty(int index)
@@ -92,14 +106,27 @@ public class Inventory : MonoBehaviour
         print(ToString());
     }
 
-    public List<Collectable> Get_inventory()
+    public SerializedInventory Serialize()
     {
-        return this._inventory;
+        List<int> inv = new List<int>();
+        foreach (Collectable item in _inventory)
+        {
+            if( item != null )
+            {
+                inv.Add(item.GetId());
+            }
+        }
+        return new SerializedInventory(_inventorySize,inv);
     }
 
-    public void Set_inventory(List<Collectable> inventory)
+    public void DeSerialize(SerializedInventory serializedInventory)
     {
-        this._inventory = inventory;
+        _inventorySize = serializedInventory.inventorySize;
+        foreach (int item in serializedInventory.inventory)
+        {
+            _inventory.Add(new Coffee());
+            // TODO other Items based on their Id
+        }
     }
 
     public override string ToString()
