@@ -22,7 +22,16 @@ public class Inventory : MonoBehaviour
         _inventory = c.ToList();
     }
 
+    public int Contains(Collectable c) {
+        return _inventory.FindIndex(c2 => c2 != null && c2.ID == c.ID && c2.Amount <= c.maxAmount);
+    }
+
     public bool Add(Collectable c) {
+        int index = Contains(c);
+        if (index != -1) {
+            _inventory[index].Amount += c.Amount;
+            return true;
+        }
         for (int i = 0; i < _inventory.Count; i++) {
             Add(c, i);
             return true;

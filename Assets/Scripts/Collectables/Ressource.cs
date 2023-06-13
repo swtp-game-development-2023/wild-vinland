@@ -16,7 +16,9 @@ public class Ressource : Collectable {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.transform.parent.CompareTag("Player")) {
+            Amount++;
             inventory.Add(this);
+            Debug.Log(inventory.ToString());
         }
     }
 

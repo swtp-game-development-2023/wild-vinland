@@ -10,7 +10,6 @@ using UnityEngine;
 public abstract class Collectable : MonoBehaviour
 {
     private int _id = -1;
-
     public int maxAmount = 1;
     private int _amount = 0;
 
@@ -40,8 +39,12 @@ public abstract class Collectable : MonoBehaviour
             }
         }
     }
+    
+    ///<summary>
+    /// Generates a String representation of the Collectable in Format: CollectableName [Collectable Amount]
+    ///</summary>
     public override string ToString()
     {
-        return _id.ToString();
+        return ( (CollectableName) _id).ToString()+"["+_amount+"]";
     }
 }
