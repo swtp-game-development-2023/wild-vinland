@@ -4,5 +4,5 @@ using UnityEngine;
 
 public enum CollectableName
 {
-    Coffee = 13
+    Wood, Stone, Ore
 }

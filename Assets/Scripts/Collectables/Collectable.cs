@@ -9,7 +9,8 @@ using UnityEngine;
 
 public abstract class Collectable : MonoBehaviour
 {
-    readonly int _id;
+    private int _id = -1;
+
     public int maxAmount = 1;
     private int _amount = 0;
 
@@ -30,15 +31,15 @@ public abstract class Collectable : MonoBehaviour
         }
     }
 
-    private int GetId() {
-        return _id;
+    public int ID {
+        get => _id;
+        set
+        {
+            if (_id == -1) {
+                _id = value;
+            }
+        }
     }
-
-    protected Collectable(int id)
-    {
-        _id = id;
-    }
-
     public override string ToString()
     {
         return _id.ToString();
