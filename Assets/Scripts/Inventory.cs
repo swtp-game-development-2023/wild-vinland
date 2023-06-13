@@ -83,9 +83,13 @@ public class Inventory : MonoBehaviour
     {
         if( _inventory.Count > 0 )
         {        
-            Add(new Coffee(),0);
-            Add(new Coffee(),1);
-            Add(new Coffee(),2);
+            Add(new Coffee(1),0);
+            Add(new Coffee(2),1);
+            Add(new Coffee(1),2);
+            Debug.Log(ToString());
+            Debug.Log("is slot 2 empty? "+IsSlotEmpty(2));
+            Remove(2);
+            Debug.Log("is slot 2 empty? "+IsSlotEmpty(2));
         }
         Debug.Log(ToString());
 
@@ -109,22 +113,33 @@ public class Inventory : MonoBehaviour
     public SerializedInventory Serialize()
     {
         List<int> inv = new List<int>();
-        foreach (Collectable item in _inventory)
+        List<int> amount = new List<int>();
+        for (int i = 0; i < _inventory.Count; i++)
         {
-            if( item != null )
+            Collectable item = _inventory[i];
+            if ( item != null )
             {
                 inv.Add(item.GetId());
+                amount.Add(item.Amount);
             }
         }
-        return new SerializedInventory(_inventorySize,inv);
+        return new SerializedInventory(_inventorySize,inv,amount);
     }
 
     public void DeSerialize(SerializedInventory serializedInventory)
     {
         _inventorySize = serializedInventory.inventorySize;
-        foreach (int item in serializedInventory.inventory)
+        for (int i = 0; i < serializedInventory.inventory.Count; i++)
         {
-            _inventory.Add(new Coffee());
+            int item = serializedInventory.inventory[i];
+            switch (item)
+            {
+                case (int) CollectableName.Coffee:
+                    _inventory.Add(new Coffee(serializedInventory.amount[i]));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
             // TODO other Items based on their Id
         }
     }

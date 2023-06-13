@@ -10,9 +10,16 @@ public class Coffee : Collectable
 {
     public const double weight = 1.0;
     public const string name = "Coffee";
-    private const int id = 13;
+    private const int id = (int) CollectableName.Coffee;
+    public int amount;
+
+    public Coffee (int amount) : base(id,amount)
+    {
+        if (amount != null) amount = amount;
+    }
 
     public Coffee () : base(id)
     {
+        amount = 0;
     }
 }
