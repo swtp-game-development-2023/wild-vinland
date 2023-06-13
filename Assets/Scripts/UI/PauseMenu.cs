@@ -2,22 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using World;
 
 public class PauseMenu : MonoBehaviour
 {
     
     public GameObject pauseMenu;
+    public GameObject loadMenu;
     public bool isPaused;
     private InputManager input;
     
     void Start()
     {
         pauseMenu.SetActive(false);
+        loadMenu.SetActive(false);
         isPaused = false;
     }
     
     public void PauseGame()
     {
+        loadMenu.SetActive(false);
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
@@ -26,20 +30,15 @@ public class PauseMenu : MonoBehaviour
     public void ResumeGame()
     {
         pauseMenu.SetActive(false);
+        loadMenu.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
     }
-
-    public void SaveGame()
-    {
-        //TODO open save Function
-        print("TODO save Game");
-    }
     
-    public void LoadGame()
+    public void OpenLoadMenu()
     {
-        //TODO open load Function
-        print("TODO load Game");
+        pauseMenu.SetActive(false);
+        loadMenu.SetActive(true);
     }
 
     public void GoToMainMenu()
