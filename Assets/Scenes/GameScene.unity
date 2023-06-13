@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -370,41 +370,26 @@ PrefabInstance:
     - target: {fileID: 8978921903660617074, guid: 8c7896d543bb8424bae0e1d1fd7ae7e8, type: 3}
       propertyPath: saveMenu
       value: 
-      objectReference: {fileID: 1611010742}
+      objectReference: {fileID: 0}
     - target: {fileID: 8978921903660617074, guid: 8c7896d543bb8424bae0e1d1fd7ae7e8, type: 3}
       propertyPath: saveName
       value: 
-      objectReference: {fileID: 1611010742}
+      objectReference: {fileID: 0}
     - target: {fileID: 8978921903660617074, guid: 8c7896d543bb8424bae0e1d1fd7ae7e8, type: 3}
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 1107376278}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8978921903660617074, guid: 8c7896d543bb8424bae0e1d1fd7ae7e8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c7896d543bb8424bae0e1d1fd7ae7e8, type: 3}
---- !u!1 &1611010742 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6164723738181545735, guid: 011c8c5b4fe5b6e4e99e04d368110a60, type: 3}
-  m_PrefabInstance: {fileID: 1737966930}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1675571669 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 522227967833113918, guid: 8c7896d543bb8424bae0e1d1fd7ae7e8, type: 3}
   m_PrefabInstance: {fileID: 1344223474}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1675571670 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8978921903660617074, guid: 8c7896d543bb8424bae0e1d1fd7ae7e8, type: 3}
-  m_PrefabInstance: {fileID: 1344223474}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b5b7c35d0b761842b245d36617b9eb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1737966930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -413,30 +398,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 372497787423332774, guid: 011c8c5b4fe5b6e4e99e04d368110a60, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1675571670}
-    - target: {fileID: 3544185221501445682, guid: 011c8c5b4fe5b6e4e99e04d368110a60, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1675571670}
-    - target: {fileID: 3762444560704520813, guid: 011c8c5b4fe5b6e4e99e04d368110a60, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1675571670}
     - target: {fileID: 4664136351779195189, guid: 011c8c5b4fe5b6e4e99e04d368110a60, type: 3}
       propertyPath: m_Name
       value: PauseMenuCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 5489525221377860839, guid: 011c8c5b4fe5b6e4e99e04d368110a60, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1675571670}
-    - target: {fileID: 5634628179889013994, guid: 011c8c5b4fe5b6e4e99e04d368110a60, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1675571670}
     - target: {fileID: 7847467730544332896, guid: 011c8c5b4fe5b6e4e99e04d368110a60, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -593,7 +558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7756665595781607788, guid: 15f00f3e825f77c478d7edf0762564db, type: 3}
       propertyPath: orthographic size
-      value: 0
+      value: 5.3999996
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
