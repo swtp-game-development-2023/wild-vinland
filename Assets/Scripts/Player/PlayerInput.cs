@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerBasicMovement : MonoBehaviour {
+public class PlayerInput : MonoBehaviour {
     
     [SerializeField] private float crouchSpeed = 20f;
     [SerializeField] private float walkSpeed = 50f;
@@ -25,6 +25,8 @@ public class PlayerBasicMovement : MonoBehaviour {
     private static readonly int IsCrouching = Animator.StringToHash("isCrouching");
     private static readonly int attackTrigger = Animator.StringToHash("attackTrigger");
     private Vector2 currentInputVector;
+    
+    [SerializeField] private PauseMenu pauseMenu;
 
     private void Awake() {
         input = new InputManager();
@@ -38,6 +40,8 @@ public class PlayerBasicMovement : MonoBehaviour {
         crouchInput = input.Player.Crouch_Start;
         crouchInput.Enable();
         input.Player.Fire.Enable();
+        
+        input.Player.PauseMenu.Enable();
     }
 
     private void OnDisable() {
@@ -45,11 +49,15 @@ public class PlayerBasicMovement : MonoBehaviour {
         runInput.Disable();
         crouchInput.Disable();
         input.Player.Fire.Disable();
+        
+        input.Player.PauseMenu.Disable();
     }
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
+        
+        pauseMenu = FindObjectOfType<PauseMenu>();
     }
 
     private void Update() {
@@ -57,7 +65,15 @@ public class PlayerBasicMovement : MonoBehaviour {
         animator.SetBool(IsRunning, runInput.IsPressed());
         animator.SetBool(IsCrouching, crouchInput.IsPressed());
         if (input.Player.Fire.IsPressed()) {
-            Fire();
+            if (!pauseMenu.isPaused)
+            {
+                Fire();
+            }
+        }
+
+        if (input.Player.PauseMenu.WasPressedThisFrame())
+        {
+            PauseMenu();
         }
     }
 
@@ -65,6 +81,19 @@ public class PlayerBasicMovement : MonoBehaviour {
     private void FixedUpdate() {
         Movement();
     }
+
+    private void PauseMenu()
+    {
+        if (pauseMenu.isPaused)
+        {
+            pauseMenu.ResumeGame();
+        }
+        else
+        {
+            pauseMenu.PauseGame();
+        }
+    }
+
 
     private void Fire() {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Punch")) {
