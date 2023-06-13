@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     
     public GameObject pauseMenu;
     public GameObject loadMenu;
+    public GameObject saveMenu;
     public bool isPaused;
     private InputManager input;
     
@@ -16,6 +17,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         loadMenu.SetActive(false);
+        saveMenu.SetActive(false);
         isPaused = false;
     }
     
@@ -23,6 +25,7 @@ public class PauseMenu : MonoBehaviour
     {
         loadMenu.SetActive(false);
         pauseMenu.SetActive(true);
+        saveMenu.SetActive(false);
         Time.timeScale = 0f;
         isPaused = true;
     }
@@ -31,6 +34,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         loadMenu.SetActive(false);
+        saveMenu.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
     }
@@ -39,6 +43,14 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         loadMenu.SetActive(true);
+        saveMenu.SetActive(false);
+    }
+    
+    public void OpenSaveMenu()
+    {
+        pauseMenu.SetActive(false);
+        loadMenu.SetActive(false);
+        saveMenu.SetActive(true);
     }
 
     public void GoToMainMenu()
