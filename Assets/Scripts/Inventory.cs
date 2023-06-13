@@ -20,8 +20,11 @@ public class Inventory : MonoBehaviour
         _inventory = c.ToList();
 
     }
-    
 
+    public void Add(Collectable c) {
+        //TODO Funktion fertig schreiben
+    }
+    
     public void Add(Collectable c, int index)
     {
         if (IsSlotEmpty(index)) _inventory[index] = c;

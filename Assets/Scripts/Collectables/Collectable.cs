@@ -7,7 +7,7 @@ using UnityEngine;
 
 //This interface Collectable  guarantees that a player can collect an object.
 
-public abstract class Collectable
+public abstract class Collectable : MonoBehaviour
 {
     readonly int _id;
     public int maxAmount = 1;
@@ -28,6 +28,10 @@ public abstract class Collectable
                     "Value has to be between 0 and" + maxAmount);
             }
         }
+    }
+
+    private int GetId() {
+        return _id;
     }
 
     protected Collectable(int id)

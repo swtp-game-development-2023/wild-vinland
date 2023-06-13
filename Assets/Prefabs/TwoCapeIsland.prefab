@@ -24836,6 +24836,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   edgeLength: 64
+  useSeed: 0
+  generateWorldOnStart: 1
+  seed: 0
   permittedDeviationFromMid: 0.05
   percentageOfMountain: 0.15
   percentOfLand: 0.45
