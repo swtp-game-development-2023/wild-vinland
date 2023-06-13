@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System;
+using SceneDropBoxes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
@@ -32,6 +33,12 @@ public class MapSaveSystem : MonoBehaviour
         FarmableMap = transform.Find("Farmables").gameObject.GetComponent<Tilemap>();
         DecoMap = transform.Find("Deco").gameObject.GetComponent<Tilemap>();
         UnitMap = transform.Find("Buildings").gameObject.GetComponent<Tilemap>();
+
+        if (UILoadGameDropBox.IsFilled)
+        {
+            LoadMap(UILoadGameDropBox.SaveGameName);
+            UILoadGameDropBox.IsFilled = false;
+        }
     }
 
     private void Awake()
@@ -102,15 +109,18 @@ public class MapSaveSystem : MonoBehaviour
         Debug.Log("Gameworld saved!");
     }
 
-
+    public void LoadMap()
+    {
+        LoadMap("worldmap_sav_" + _levelIndex + ".json");
+    }
     ///<summary>
     /// Trys to load a Savegame from path (index set in the _levelIndex field): Assets/saves/worldmap_sav_<index> 
     ///</summary>
-    public void LoadMap()
+    public void LoadMap(string saveGameName)
     {
         try
         {
-            string json = File.ReadAllText(Application.dataPath + "/Saves/worldmap_sav_" + _levelIndex + ".json");
+            string json = File.ReadAllText(Application.dataPath + "/Saves/" + saveGameName );
             SaveGame newLoad = JsonUtility.FromJson<SaveGame>(json);
 
             WorldHelper.ClearMap();
@@ -163,7 +173,7 @@ public class MapSaveSystem : MonoBehaviour
         }
         catch (System.Exception)
         {
-            Debug.Log("Gameworld Save File not Found under /Saves/worldmap_sav_" + _levelIndex + ".json");
+            Debug.Log("Gameworld Save File not Found under: " + saveGameName);
             return;
         }
     }
