@@ -17,7 +17,14 @@ public class LoadGameBtn : MonoBehaviour
         UIWorldGenDropBox.IsFilled = true;
         UILoadGameDropBox.SaveGameName = SaveGameName;
         UILoadGameDropBox.IsFilled = true;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
+        if (SceneManager.GetActiveScene().buildIndex < 1)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }

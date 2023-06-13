@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: 2519190307473019491}
   - component: {fileID: 1080608272208261854}
   - component: {fileID: 166252146442028121}
+  - component: {fileID: 8978921903660617074}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -359,6 +360,8 @@ MonoBehaviour:
   runSpeed: 80
   smoothRate: 0.065
 --- !u!114 &166252146442028121
+  pauseMenu: {fileID: 0}
+--- !u!114 &8978921903660617074
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -371,3 +374,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inventorySize: 10
+  m_Script: {fileID: 11500000, guid: 0b5b7c35d0b761842b245d36617b9eb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 0}
+  isPaused: 0

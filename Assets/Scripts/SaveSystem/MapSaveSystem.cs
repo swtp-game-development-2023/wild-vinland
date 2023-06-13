@@ -70,14 +70,18 @@ public class MapSaveSystem : MonoBehaviour
         // Loads the Tilemaps, if the load button is pressed
     }
 
+    public void SaveMap()
+    {
+        SaveMap(_levelIndex.ToString());
+    }
+
     ///<summary>
     /// saves the Tilemaps in a Json textfile in the Assets/Saves/ Folder
     ///</summary>
-    public void SaveMap()
+    public void SaveMap(String saveName)
     {
         SaveGame newSave = new SaveGame();
-
-        newSave.LevelIndex = _levelIndex;
+        
         newSave.SeaTiles = GetTilesFromMap(_seaMap, TileType.Sea).ToList();
         newSave.BeachTiles = GetTilesFromMap(_beachMap, TileType.Beach).ToList();
         newSave.GrassTiles = GetTilesFromMap(_grassMap, TileType.Grass).ToList();
@@ -92,7 +96,7 @@ public class MapSaveSystem : MonoBehaviour
         String json = JsonUtility.ToJson(newSave, true);
         // Saves the SaveGame object as Json textfile, second parameter formats the Json in a more readable format if true, at cost of bigger file size
         System.IO.Directory.CreateDirectory(Application.dataPath + "/Saves");
-        File.WriteAllText(Application.dataPath + "/Saves/worldmap_sav_" + newSave.LevelIndex + ".json", json);
+        File.WriteAllText(Application.dataPath + "/Saves/worldmap_sav_" + saveName + ".json", json);
         // Writes the Json File to disk inside the Assets/save folder (folder structure needs to exit)
 
         IEnumerable<PositionedTile> GetTilesFromMap(Tilemap map, TileType tiletype)
