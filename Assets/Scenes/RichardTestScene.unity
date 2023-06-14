@@ -140,6 +140,14 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 23793721}
+    - target: {fileID: 1369920183351125384, guid: 15f00f3e825f77c478d7edf0762564db, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.154
+      objectReference: {fileID: 0}
+    - target: {fileID: 1369920183351125384, guid: 15f00f3e825f77c478d7edf0762564db, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.059
+      objectReference: {fileID: 0}
     - target: {fileID: 4298216843192279478, guid: 15f00f3e825f77c478d7edf0762564db, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -187,6 +195,14 @@ PrefabInstance:
     - target: {fileID: 4389807111893168329, guid: 15f00f3e825f77c478d7edf0762564db, type: 3}
       propertyPath: m_Name
       value: Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 7103442569148769399, guid: 15f00f3e825f77c478d7edf0762564db, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.154
+      objectReference: {fileID: 0}
+    - target: {fileID: 7103442569148769399, guid: 15f00f3e825f77c478d7edf0762564db, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.059
       objectReference: {fileID: 0}
     - target: {fileID: 7756665595781607788, guid: 15f00f3e825f77c478d7edf0762564db, type: 3}
       propertyPath: orthographic size
@@ -340,7 +356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 522227967833113918, guid: 8c7896d543bb8424bae0e1d1fd7ae7e8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.095
+      value: -0.162
       objectReference: {fileID: 0}
     - target: {fileID: 522227967833113918, guid: 8c7896d543bb8424bae0e1d1fd7ae7e8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -382,10 +398,6 @@ PrefabInstance:
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 1401344416}
-    - target: {fileID: 8005084922257935864, guid: 8c7896d543bb8424bae0e1d1fd7ae7e8, type: 3}
-      propertyPath: m_TagString
-      value: Body
-      objectReference: {fileID: 0}
     - target: {fileID: 8373912645591683004, guid: 8c7896d543bb8424bae0e1d1fd7ae7e8, type: 3}
       propertyPath: m_Name
       value: Player
@@ -608,26 +620,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2657152205800815631, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239573053717582295, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
-      propertyPath: m_Size.x
-      value: 0.06277934
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239573053717582295, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
-      propertyPath: m_Size.y
-      value: 0.08086702
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239573053717582295, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.0022609606
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239573053717582295, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
-      propertyPath: m_Offset.y
-      value: 0.041914403
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239573053717582295, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
-      propertyPath: m_Direction
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4566267646329848832, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
