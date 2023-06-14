@@ -18,6 +18,8 @@ TagManager:
   - Stone
   - Wood
   - Hitbox
+  - Tree
+  - Body
   layers:
   - Default
   - TransparentFX

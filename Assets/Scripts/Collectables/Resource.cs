@@ -26,14 +26,24 @@ public class Resource : Collectable {
 
     private void Start() {
         inventory = FindObjectOfType<Inventory>();
+        StartCoroutine(CollectableAfterTime(2));
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.transform.parent.CompareTag("Player")) {
+        if (other.CompareTag("Body")) {
             Amount++;
             inventory.Add(this);
             Destroy(gameObject);
             Debug.Log(inventory.ToString());
         }
+    }
+
+    IEnumerator CollectableAfterTime(int seconds) {
+        int counter = seconds;
+        while (counter > 0) {
+            yield return new WaitForSeconds(1);
+            counter--;
+        }
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
 }
