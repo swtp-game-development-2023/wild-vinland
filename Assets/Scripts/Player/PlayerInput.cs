@@ -80,7 +80,7 @@ public class PlayerInput : MonoBehaviour {
             PauseMenu();
         }
         
-        if (input.Player.Inventory.WasPressedThisFrame())
+        if (input.Player.Inventory.WasPressedThisFrame() && !pauseMenu.isPaused)
         {
             InventoryMenu();
         }

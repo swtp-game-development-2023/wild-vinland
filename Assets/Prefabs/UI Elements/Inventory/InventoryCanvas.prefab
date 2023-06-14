@@ -112,7 +112,7 @@ RectTransform:
   m_Children:
   - {fileID: 7291023770552584505}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryMenu: {fileID: 228727655092465947}
-  cellPrefab: {fileID: 3504497162353604634}
+  cellPrefab: {fileID: 4629609698895387670, guid: 2ed202790bbe8f142978b43e8cc720fc, type: 3}
   isInventoryOpen: 0
   inventoryGrid: {fileID: 8575373266006130512}
   emptySlot: {fileID: 21300000, guid: 70360849a23c6f2479728002c89849e8, type: 3}
@@ -619,10 +619,5 @@ PrefabInstance:
 --- !u!224 &2517665910926261921 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5939508115332471469, guid: 2ed202790bbe8f142978b43e8cc720fc, type: 3}
-  m_PrefabInstance: {fileID: 8114876196240466956}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3504497162353604634 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4629609698895387670, guid: 2ed202790bbe8f142978b43e8cc720fc, type: 3}
   m_PrefabInstance: {fileID: 8114876196240466956}
   m_PrefabAsset: {fileID: 0}

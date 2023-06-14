@@ -313,7 +313,7 @@ Transform:
   - {fileID: 7175208464010126947}
   - {fileID: 6966028691757246149}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2519190307473019491
 Rigidbody2D:
@@ -373,5 +373,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inventorySize: 20
-  isInventoryOpen: 0
-  inventoryMenu: {fileID: 0}

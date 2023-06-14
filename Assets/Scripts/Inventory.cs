@@ -24,23 +24,31 @@ public class Inventory : MonoBehaviour
     ///</summary>
     public void Awake()
     {
-        Collectable[] c = new Collectable[_inventorySize];
-        _inventory = c.ToList();
+        _inventory = new List<Collectable>(_inventorySize);
+        for (int i = 0; i < _inventorySize; i++)
+        {
+            _inventory.Add(null);
+        }
     }
 
-    public int Contains(Collectable c) {
+    public int Contains(Collectable c) 
+    {
         return _inventory.FindIndex(c2 => c2 != null && c2.ID == c.ID && c2.Amount <= c.maxAmount);
     }
 
     public bool Add(Collectable c) {
         int index = Contains(c);
-        if (index != -1) {
+        if (index != -1) 
+        {
             _inventory[index].Amount += c.Amount;
             return true;
         }
         for (int i = 0; i < _inventory.Count; i++) {
-            Add(c, i);
-            return true;
+            if (IsSlotEmpty(i))
+            {
+                Add(c, i);
+                return true;
+            }
         }
         return false;
     }
@@ -62,14 +70,13 @@ public class Inventory : MonoBehaviour
 
     public void Remove(int index, int amount)
     {
-        if (!IsSlotEmpty(index) & amount < _inventory[index].Amount)
+        if (!IsSlotEmpty(index) && amount < _inventory[index].Amount)
         {
             _inventory[index].Amount -= amount;
         }
-        else if (!IsSlotEmpty(index) & (amount == _inventory[index].Amount))
+        else if (!IsSlotEmpty(index) && (amount >= _inventory[index].Amount))
         {
             _inventory[index] = null;
-            
         }
         else
         {
@@ -96,7 +103,7 @@ public class Inventory : MonoBehaviour
 
     public bool IsSlotEmpty(int index)
     {
-        if ( _inventory != null )
+        if ( _inventory != null && index >= 0 && index < _inventorySize )
         {
             return _inventory[index] == null;
         }
