@@ -27,6 +27,7 @@ public class PlayerInput : MonoBehaviour {
     private Vector2 currentInputVector;
     
     [SerializeField] private PauseMenu pauseMenu;
+    [SerializeField] private InventoryMenu inventoryMenu;
 
     private void Awake() {
         input = new InputManager();
@@ -42,6 +43,7 @@ public class PlayerInput : MonoBehaviour {
         input.Player.Fire.Enable();
         
         input.Player.PauseMenu.Enable();
+        input.Player.Inventory.Enable();
     }
 
     private void OnDisable() {
@@ -51,6 +53,7 @@ public class PlayerInput : MonoBehaviour {
         input.Player.Fire.Disable();
         
         input.Player.PauseMenu.Disable();
+        input.Player.Inventory.Disable();
     }
 
     private void Start() {
@@ -58,6 +61,7 @@ public class PlayerInput : MonoBehaviour {
         animator = GetComponentInChildren<Animator>();
         
         pauseMenu = FindObjectOfType<PauseMenu>();
+        inventoryMenu = FindObjectOfType<InventoryMenu>();
     }
 
     private void Update() {
@@ -65,7 +69,7 @@ public class PlayerInput : MonoBehaviour {
         animator.SetBool(IsRunning, runInput.IsPressed());
         animator.SetBool(IsCrouching, crouchInput.IsPressed());
         if (input.Player.Fire.IsPressed()) {
-            if (!pauseMenu.isPaused)
+            if (!pauseMenu.isPaused && !inventoryMenu.isInventoryOpen)
             {
                 Fire();
             }
@@ -75,11 +79,29 @@ public class PlayerInput : MonoBehaviour {
         {
             PauseMenu();
         }
+        
+        if (input.Player.Inventory.WasPressedThisFrame())
+        {
+            InventoryMenu();
+        }
+        
     }
 
     //FixedUpdate() is called a fixed framerate
     private void FixedUpdate() {
         Movement();
+    }
+
+    private void InventoryMenu()
+    {
+        if (inventoryMenu.isInventoryOpen)
+        {
+            inventoryMenu.CloseInventory();
+        }
+        else
+        {
+            inventoryMenu.OpenInventory();   
+        }
     }
 
     private void PauseMenu()
