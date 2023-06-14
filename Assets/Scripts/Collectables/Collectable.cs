@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using System.Management.Instrumentation;
 using UnityEngine;
 
+public enum CollectableName
+{
+    Wood, 
+    Stone, 
+    Ore
+}
 
 //This interface Collectable  guarantees that a player can collect an object.
 

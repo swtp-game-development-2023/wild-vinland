@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7482433059039712288}
   m_Layer: 0
   m_Name: hitbox
-  m_TagString: Untagged
+  m_TagString: Hitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -313,7 +313,7 @@ Transform:
   - {fileID: 7175208464010126947}
   - {fileID: 6966028691757246149}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2519190307473019491
 Rigidbody2D:
@@ -358,6 +358,7 @@ MonoBehaviour:
   walkSpeed: 28
   runSpeed: 80
   smoothRate: 0.065
+  pauseMenu: {fileID: 0}
 --- !u!114 &4232820805430264936
 MonoBehaviour:
   m_ObjectHideFlags: 0
