@@ -12,6 +12,15 @@ public abstract class Collectable : MonoBehaviour
     private int _id = -1;
     public int maxAmount = 1;
     private int _amount = 0;
+    
+    [SerializeField]
+    private Sprite sprite;
+
+    public Sprite Sprite
+    {
+        get => sprite;
+        set => sprite = value;
+    }
 
     public int Amount
     {
@@ -25,7 +34,7 @@ public abstract class Collectable : MonoBehaviour
             else
             {
                 throw new ArgumentOutOfRangeException(nameof(_amount), value,
-                    "Value has to be between 0 and" + maxAmount);
+                    "Value has to be between 0 and " + maxAmount);
             }
         }
     }

@@ -115,8 +115,7 @@ public class PlayerInput : MonoBehaviour {
             pauseMenu.PauseGame();
         }
     }
-
-
+    
     private void Fire() {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Punch")) {
             animator.SetTrigger(attackTrigger);

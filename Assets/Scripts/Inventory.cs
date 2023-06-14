@@ -11,6 +11,12 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField]
     private int _inventorySize = 10;
+
+    public int InventorySize
+    {
+        get => _inventorySize;
+    }
+
     private List<Collectable> _inventory;
 
     ///<summary>
@@ -37,6 +43,11 @@ public class Inventory : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public Collectable Get(int i)
+    {
+        return _inventory[i];
     }
     
     public void Add(Collectable c, int index)
@@ -71,6 +82,7 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       
     }
 
     // Update is called once per frame
@@ -82,19 +94,13 @@ public class Inventory : MonoBehaviour
     /// Function just to Test adding Coffee Items, calling ToString(), Deleting one calling ToString() again. Demo for Inventory. 
     ///</summary>
 
-    private bool IsSlotEmpty(int index)
+    public bool IsSlotEmpty(int index)
     {
         if ( _inventory != null )
         {
             return _inventory[index] == null;
         }
         return true;
-    } 
-    
-    private void OnOpenInventory()
-    {   
-        //TODO real UI
-        print(ToString());
     }
 
     public SerializedInventory Serialize()
