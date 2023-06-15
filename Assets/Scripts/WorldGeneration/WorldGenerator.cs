@@ -54,6 +54,9 @@ public class WorldGenerator : MonoBehaviour
 
     [Range(MinPecent, MaxPecent)] public float percentOfFlowers = 0.5f;
 
+    //ressources
+    public GameObject treePrefab;
+    
     /// <summary>
     /// Each piece of land is beach first.
     /// </summary>
@@ -353,7 +356,10 @@ public class WorldGenerator : MonoBehaviour
             }
             else if (_map.StackedMap[(int)EBiomTileTypes.Ressources][i] == (int)ESpecialTiles.Wood)
             {
-                FarmableMap.SetTile(vector, treeTiles[_random.Next(0, treeTiles.Length)]);
+                //FarmableMap.SetTile(vector, treeTiles[_random.Next(0, treeTiles.Length)]);
+                var v = gameObject.GetComponent<Grid>().GetCellCenterWorld(vector);
+                var v2 = v - new Vector3(0f, 0.08f, 0);
+                Instantiate(treePrefab, v2, Quaternion.identity, gameObject.transform.GetChild(4).transform);
             }
 
             if (_map.StackedMap[(int)EBiomTileTypes.Decoration][i] == (int)ESpecialTiles.Flowers)
@@ -362,7 +368,6 @@ public class WorldGenerator : MonoBehaviour
 
         return this;
     }
-
     /// <summary>
     /// Generates a new WorldMap
     /// </summary>
