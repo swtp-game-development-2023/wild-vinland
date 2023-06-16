@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -55,7 +56,9 @@ public class WorldGenerator : MonoBehaviour
     [Range(MinPecent, MaxPecent)] public float percentOfFlowers = 0.5f;
 
     //ressources
-    public GameObject treePrefab;
+    public GameObject[] treePrefab;
+    public GameObject orePrefab;
+    public GameObject[] stonePrefabs;
     
     /// <summary>
     /// Each piece of land is beach first.
@@ -296,20 +299,6 @@ public class WorldGenerator : MonoBehaviour
         TileBase grasTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_17.asset");
         TileBase mountainTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_149.asset");
         TileBase beachTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_154.asset");
-        TileBase[] stoneTiles =
-        {
-            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_52.asset"),
-            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_53.asset"),
-            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_54.asset"),
-            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_55.asset")
-        };
-        TileBase[] treeTiles =
-        {
-            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_22.asset"),
-            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_38.asset")
-        };
-        TileBase oreTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_109.asset");
-
         TileBase[] flowerTiles =
         {
             AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_7.asset"),
@@ -318,7 +307,7 @@ public class WorldGenerator : MonoBehaviour
 
         int x = 0;
         int y = 0;
-
+        
         for (int i = 0; i < _map.MapSize; i++)
         {
             if (x == (_map.EdgeLength - 1))
@@ -329,45 +318,49 @@ public class WorldGenerator : MonoBehaviour
             x = (i % _map.EdgeLength);
 
 
-            Vector3Int vector = new Vector3Int(x, y);
+            Vector3Int gridVector = new Vector3Int(x, y);
+            Vector3 worldVector = gridToWorldVector(gridVector);
             switch (_map.BiomTileTypeMap[i])
             {
                 case (int)EBiomTileTypes.Sea:
-                    SeaMap.SetTile(vector, seaTile);
+                    SeaMap.SetTile(gridVector, seaTile);
                     break;
                 case (int)EBiomTileTypes.Beach:
-                    BeachMap.SetTile(vector, beachTile);
+                    BeachMap.SetTile(gridVector, beachTile);
                     break;
                 case (int)EBiomTileTypes.Gras:
-                    GrassMap.SetTile(vector, grasTile);
+                    GrassMap.SetTile(gridVector, grasTile);
                     break;
                 case (int)EBiomTileTypes.Mountain:
-                    MountainMap.SetTile(vector, mountainTile);
+                    MountainMap.SetTile(gridVector, mountainTile);
                     break;
             }
-
-            if (_map.StackedMap[(int)EBiomTileTypes.Ressources][i] == (int)ESpecialTiles.Stone)
+    
+            switch (_map.StackedMap[(int)EBiomTileTypes.Ressources][i])
             {
-                FarmableMap.SetTile(vector, stoneTiles[_random.Next(0, stoneTiles.Length)]);
-            }
-            else if (_map.StackedMap[(int)EBiomTileTypes.Ressources][i] == (int)ESpecialTiles.Ore)
-            {
-                FarmableMap.SetTile(vector, oreTile);
-            }
-            else if (_map.StackedMap[(int)EBiomTileTypes.Ressources][i] == (int)ESpecialTiles.Wood)
-            {
-                //FarmableMap.SetTile(vector, treeTiles[_random.Next(0, treeTiles.Length)]);
-                var v = gameObject.GetComponent<Grid>().GetCellCenterWorld(vector);
-                var v2 = v - new Vector3(0f, 0.08f, 0);
-                Instantiate(treePrefab, v2, Quaternion.identity, gameObject.transform.GetChild(4).transform);
+                case (int)ESpecialTiles.Stone:
+                    Instantiate(stonePrefabs[_random.Next(0, stonePrefabs.Length)], worldVector , Quaternion.identity, gameObject.transform.GetChild(4).transform);
+                    break;
+                case (int)ESpecialTiles.Ore:
+                    Instantiate(orePrefab, worldVector , Quaternion.identity, gameObject.transform.GetChild(4).transform);
+                    break;
+                case (int)ESpecialTiles.Wood:
+                    Instantiate(treePrefab[_random.Next(0, treePrefab.Length)], worldVector , Quaternion.identity, gameObject.transform.GetChild(4).transform);
+                    break;
             }
 
             if (_map.StackedMap[(int)EBiomTileTypes.Decoration][i] == (int)ESpecialTiles.Flowers)
-                DecoMap.SetTile(vector, flowerTiles[_random.Next(0, flowerTiles.Length)]);
+                DecoMap.SetTile(gridVector, flowerTiles[_random.Next(0, flowerTiles.Length)]);
         }
 
         return this;
     }
+
+    private Vector3 gridToWorldVector(Vector3Int v)
+    {
+        return (gameObject.GetComponent<Grid>().GetCellCenterWorld(v)) - new Vector3(0f, 0.08f, 0); // 0.08 half the grid size (0.16)
+    }
+    
     /// <summary>
     /// Generates a new WorldMap
     /// </summary>
@@ -381,7 +374,6 @@ public class WorldGenerator : MonoBehaviour
             .SetupTileMaps()
             .SetTilesInUnity();
 
-        WorldHelper.SetPlayerPosition(WorldHelper.GetRandomTileOfMap(BeachMap));
-        //spawn player on Beach
+        WorldHelper.SetPlayerPosition(WorldHelper.GetRandomTileOfMap(BeachMap)); //spawn player on Beach
     }
 }
