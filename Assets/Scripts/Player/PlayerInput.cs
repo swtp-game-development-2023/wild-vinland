@@ -5,8 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInput : MonoBehaviour {
-    
+public class PlayerInput : MonoBehaviour
+{
     [SerializeField] private float crouchSpeed = 20f;
     [SerializeField] private float walkSpeed = 50f;
     [SerializeField] private float runSpeed = 100f;
@@ -25,14 +25,17 @@ public class PlayerInput : MonoBehaviour {
     private static readonly int IsCrouching = Animator.StringToHash("isCrouching");
     private static readonly int attackTrigger = Animator.StringToHash("attackTrigger");
     private Vector2 currentInputVector;
-    
-    [SerializeField] private PauseMenu pauseMenu;
 
-    private void Awake() {
+    [SerializeField] private PauseMenu pauseMenu;
+    [SerializeField] private BuildMenu buildMenu;
+
+    private void Awake()
+    {
         input = new InputManager();
     }
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         movementInput = input.Player.Move;
         movementInput.Enable();
         runInput = input.Player.Run_Start;
@@ -40,31 +43,35 @@ public class PlayerInput : MonoBehaviour {
         crouchInput = input.Player.Crouch_Start;
         crouchInput.Enable();
         input.Player.Fire.Enable();
-        
+        input.UI.BuildMenu.Enable();
         input.Player.PauseMenu.Enable();
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
         movementInput.Disable();
         runInput.Disable();
         crouchInput.Disable();
         input.Player.Fire.Disable();
-        
+
         input.Player.PauseMenu.Disable();
     }
 
-    private void Start() {
+    private void Start()
+    {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
-        
+
         pauseMenu = FindObjectOfType<PauseMenu>();
     }
 
-    private void Update() {
+    private void Update()
+    {
         movementVector = movementInput.ReadValue<Vector2>();
         animator.SetBool(IsRunning, runInput.IsPressed());
         animator.SetBool(IsCrouching, crouchInput.IsPressed());
-        if (input.Player.Fire.IsPressed()) {
+        if (input.Player.Fire.IsPressed())
+        {
             if (!pauseMenu.isPaused)
             {
                 Fire();
@@ -75,10 +82,15 @@ public class PlayerInput : MonoBehaviour {
         {
             PauseMenu();
         }
+        if (input.UI.BuildMenu.WasPressedThisFrame())
+        {
+            buildMenu.ToggleBuildMenu();
+        }
     }
 
     //FixedUpdate() is called a fixed framerate
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         Movement();
     }
 
@@ -95,29 +107,38 @@ public class PlayerInput : MonoBehaviour {
     }
 
 
-    private void Fire() {
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Punch")) {
+    private void Fire()
+    {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Punch"))
+        {
             animator.SetTrigger(attackTrigger);
         }
     }
 
-    private void Movement() {
+    private void Movement()
+    {
         if (movementVector != Vector2.zero &&
-            !animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Punch")) {
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Punch"))
+        {
             animator.SetBool(IsMoving, true);
-            
+
             var tempSpeed = 1f;
-            if (animator.GetBool(IsRunning)) {
+            if (animator.GetBool(IsRunning))
+            {
                 tempSpeed = runSpeed;
             }
-            else {
-                if (animator.GetBool(IsCrouching)) {
+            else
+            {
+                if (animator.GetBool(IsCrouching))
+                {
                     tempSpeed = crouchSpeed;
                 }
-                else {
+                else
+                {
                     tempSpeed = walkSpeed;
                 }
             }
+
             smoothedInput = Vector2.SmoothDamp(
                 smoothedInput,
                 movementVector,
@@ -125,16 +146,19 @@ public class PlayerInput : MonoBehaviour {
                 smoothRate);
             rb.velocity = smoothedInput * tempSpeed * Time.fixedDeltaTime;
         }
-        else {
+        else
+        {
             animator.SetBool(IsMoving, false);
             smoothedInput = Vector2.SmoothDamp(
                 smoothedInput,
-                Vector2.zero, 
+                Vector2.zero,
                 ref smoothedInputVelocity,
                 smoothRate);
             rb.velocity = smoothedInput * Time.fixedDeltaTime;
         }
-        transform.rotation = movementVector.x switch {
+
+        transform.rotation = movementVector.x switch
+        {
             < 0 => Quaternion.Euler(0f, 180f, 0f),
             > 0 => Quaternion.Euler(0f, 0, 0f),
             _ => transform.rotation

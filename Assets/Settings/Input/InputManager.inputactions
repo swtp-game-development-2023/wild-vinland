@@ -69,15 +69,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "TestGenerate",
-                    "type": "Button",
-                    "id": "6af3b798-a7b2-4d72-9779-4ebfbbd87a29",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "PauseMenu",
                     "type": "Button",
                     "id": "ecef0a92-24f7-4658-bc62-3d18ed93c252",
@@ -310,17 +301,6 @@
                 },
                 {
                     "name": "",
-                    "id": "effc5ec8-dc91-48c2-b69c-119532c2ec20",
-                    "path": "<Keyboard>/m",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TestGenerate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "5bd076a0-9367-4f15-87d8-9889ed6f211b",
                     "path": "<Keyboard>/escape",
                     "interactions": "Press(pressPoint=1)",
@@ -439,6 +419,15 @@
                     "name": "load",
                     "type": "Button",
                     "id": "a8102275-08dc-4e3d-8495-8ff448a6b0aa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "BuildMenu",
+                    "type": "Button",
+                    "id": "2025c525-abe2-48cd-8e93-954e6f4e297c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -883,6 +872,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "load",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "df4255e1-9c78-4292-9def-a3389ba43dbd",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "BuildMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
