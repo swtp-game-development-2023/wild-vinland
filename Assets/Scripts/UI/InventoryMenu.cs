@@ -29,7 +29,7 @@ public class InventoryMenu : MonoBehaviour
     }
 
     // Update is called once per frame
-    /*void Update()
+    void Update()
     {
         for (int i = 0; i < inventory.InventorySize; i++)
         {
@@ -37,64 +37,10 @@ public class InventoryMenu : MonoBehaviour
             
             inventoryGrid.transform.GetChild(i).transform.GetChild(0).Find("AmountText").GetComponent<TMP_Text>().text = inventory.IsSlotEmpty(i)? "0" : inventory.Get(i).Amount.ToString();
             icon.sprite = inventory.IsSlotEmpty(i)? emptySlot : inventory.Get(i).Sprite;
-            if (!inventory.IsSlotEmpty(i))
-            {
-                print(icon.sprite.name);
-            }
             icon.color = inventory.IsSlotEmpty(i)? new Color32(255,255,225,100) : new Color32(255,255,225,255);
         }
     }
-    */
-    
-    void Update()
-    {
-        for (int i = 0; i < inventory.InventorySize; i++)
-        {
-            var icon = inventoryGrid.transform.GetChild(i).transform.GetChild(0).Find("Icon").GetComponent<Image>();
 
-            inventoryGrid.transform.GetChild(i).transform.GetChild(0).Find("AmountText").GetComponent<TMP_Text>().text = inventory.IsSlotEmpty(i) ? "0" : inventory.Get(i).Amount.ToString();
-
-            if (inventory.IsSlotEmpty(i))
-            {
-                if (inventory.Get(i) != null && inventory.Get(i).Sprite != null)
-                {
-                    // Find the next empty slot
-                    int nextEmptySlot = i + 1;
-                    while (nextEmptySlot < inventory.InventorySize && !inventory.IsSlotEmpty(nextEmptySlot))
-                    {
-                        nextEmptySlot++;
-                    }
-
-                    if (nextEmptySlot < inventory.InventorySize)
-                    {
-                        icon.sprite = inventory.Get(nextEmptySlot).Sprite;
-                        icon.color = new Color32(255, 255, 225, 255);
-                    }
-                    else
-                    {
-                        // No empty slots available
-                        icon.sprite = emptySlot;
-                        icon.color = new Color32(255, 255, 225, 100);
-                    }
-                }
-                else
-                {
-                    // Handle null or missing sprite
-                    icon.sprite = emptySlot;
-                    icon.color = new Color32(255, 255, 225, 100);
-                }
-            }
-            else
-            {
-                print(icon.sprite.name);
-                icon.sprite = inventory.Get(i).Sprite;
-                icon.color = new Color32(255, 255, 225, 255);
-            }
-        }
-    }
-
-    
-    
     public void OpenInventory()
     {
         isInventoryOpen = true;

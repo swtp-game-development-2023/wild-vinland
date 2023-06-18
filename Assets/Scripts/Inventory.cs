@@ -40,7 +40,7 @@ public class Inventory : MonoBehaviour
         int index = Contains(c);
         if (index != -1) 
         {
-            _inventory[index].Amount += c.Amount;
+            _inventory[index].Amount = c.Amount;
             return true;
         }
         for (int i = 0; i < _inventory.Count; i++) {

@@ -31,11 +31,13 @@ public abstract class Collectable : MonoBehaviour
             {
                 _amount = value;
             }
+            
             else
             {
                 throw new ArgumentOutOfRangeException(nameof(_amount), value,
                     "Value has to be between 0 and " + maxAmount);
             }
+            
         }
     }
 
