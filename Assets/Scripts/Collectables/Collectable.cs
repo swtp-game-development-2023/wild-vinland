@@ -1,61 +1,61 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Management.Instrumentation;
+using Unity.VisualScripting;
 using UnityEngine;
+
 
 
 //This interface Collectable  guarantees that a player can collect an object.
 
-public abstract class Collectable : MonoBehaviour
+namespace Collectables
 {
-    private int _id = -1;
-    public int maxAmount = 1;
-    private int _amount = 0;
+    public abstract class Collectable : MonoBehaviour
+    {
+        private int _id = (int) CollectableName.Empty;
+        [SerializeField]
+        protected int maxAmount = 1;
+        [SerializeField]
+        protected int amount = 0;
     
-    [SerializeField]
-    private Sprite sprite;
+        [SerializeField]
+        private Sprite sprite;
 
-    public Sprite Sprite
-    {
-        get => sprite;
-        set => sprite = value;
-    }
-
-    public int Amount
-    {
-        get => _amount;
-        set
+        public int MaxAmount => maxAmount;
+        public Sprite Sprite
         {
-            if (_amount <= maxAmount)
-            {
-                _amount = value;
-            }
-            
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(_amount), value,
-                    "Value has to be between 0 and " + maxAmount);
-            }
-            
+            get => sprite;
         }
-    }
 
-    public int ID {
-        get => _id;
-        set
+        public int Amount
         {
-            if (_id == -1) {
-                _id = value;
-            }
+            get => amount;
         }
-    }
+
+        public int Add(int amount)
+        {
+            Debug.Log("c:"+ amount);
+            var freeSpace= maxAmount - this.amount;
+            freeSpace = freeSpace < 0 ? 0 : freeSpace;
+            int addValue = freeSpace < amount ? freeSpace : amount;
+            this.amount += addValue;
+            return amount - addValue;
+        }
     
-    ///<summary>
-    /// Generates a String representation of the Collectable in Format: CollectableName [Collectable Amount]
-    ///</summary>
-    public override string ToString()
-    {
-        return ( (CollectableName) _id).ToString()+"["+_amount+"]";
+        public int ID {
+            get => _id;
+            set
+            {
+                if (_id == -1) {
+                    _id = value;
+                }
+            }
+        }
+    
+        ///<summary>
+        /// Generates a String representation of the Collectable in Format: CollectableName [Collectable Amount]
+        ///</summary>
+        public override string ToString()
+        {
+            return (CollectableName) _id +"["+amount+"]";
+        }
     }
 }
