@@ -12,13 +12,6 @@ public class BuildMenu : MonoBehaviour
         input = new InputManager();
 
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        isOpen = false;
-        buildMenu.SetActive(isOpen);
-    }
     
     public void ToggleBuildMenu()
     {
