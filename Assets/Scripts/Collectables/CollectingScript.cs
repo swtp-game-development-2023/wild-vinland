@@ -13,8 +13,10 @@ namespace Collectables
         protected Resource resource;
         protected virtual void Awake()
         {
+            
             resource = ScriptableObject.CreateInstance<Resource>();
             resource.Amount = amount;
+            resource.Sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
             //collectable = gameObject.GetComponent<ICollectable>();
             inventory = FindObjectOfType<Inventory>();
         }

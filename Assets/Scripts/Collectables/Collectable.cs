@@ -19,6 +19,7 @@ namespace Collectables
 
         public Sprite Sprite
         {
+            set { sprite = value; }
             get => sprite;
         }
 
@@ -68,6 +69,7 @@ namespace Collectables
             obj.amount = amount;
             obj._id = _id;
             obj.maxAmount = maxAmount;
+            obj.sprite = sprite;
             return obj;
         }
     }
