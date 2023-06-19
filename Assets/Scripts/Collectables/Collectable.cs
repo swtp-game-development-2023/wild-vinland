@@ -3,23 +3,20 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-
 //This interface Collectable  guarantees that a player can collect an object.
 
 namespace Collectables
 {
-    public abstract class Collectable : MonoBehaviour
+    public abstract class Collectable : ScriptableObject
     {
-        private int _id = (int) CollectableName.Empty;
-        [SerializeField]
-        protected int maxAmount = 1;
-        [SerializeField]
-        protected int amount = 0;
-    
-        [SerializeField]
-        private Sprite sprite;
+        private int _id = (int)CollectableName.Empty;
+        [SerializeField] protected int maxAmount = 1;
+        [SerializeField] protected int amount;
+
+        [SerializeField] private Sprite sprite;
 
         public int MaxAmount => maxAmount;
+
         public Sprite Sprite
         {
             get => sprite;
@@ -27,35 +24,51 @@ namespace Collectables
 
         public int Amount
         {
+            set { amount = value; }
             get => amount;
         }
 
-        public int Add(int amount)
+        public int Add(int otherAmount)
         {
-            Debug.Log("c:"+ amount);
-            var freeSpace= maxAmount - this.amount;
+            var freeSpace = maxAmount - amount;
             freeSpace = freeSpace < 0 ? 0 : freeSpace;
-            int addValue = freeSpace < amount ? freeSpace : amount;
+            int addValue = freeSpace < otherAmount ? freeSpace : otherAmount;
             this.amount += addValue;
-            return amount - addValue;
+            return otherAmount - addValue;
         }
-    
-        public int ID {
+
+        public int ID
+        {
             get => _id;
             set
             {
-                if (_id == -1) {
+                if (_id == -1)
+                {
                     _id = value;
                 }
             }
         }
-    
+
+        public bool IsMaxAmount()
+        {
+            return maxAmount <= amount;
+        }
+
         ///<summary>
         /// Generates a String representation of the Collectable in Format: CollectableName [Collectable Amount]
         ///</summary>
         public override string ToString()
         {
-            return (CollectableName) _id +"["+amount+"]";
+            return (CollectableName)_id + "[" + amount + "]";
+        }
+
+        public Collectable copy()
+        {
+            var obj = Instantiate(this);
+            obj.amount = amount;
+            obj._id = _id;
+            obj.maxAmount = maxAmount;
+            return obj;
         }
     }
 }

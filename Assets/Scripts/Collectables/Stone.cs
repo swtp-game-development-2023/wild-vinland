@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using Collectables;
-using UnityEngine;
-
-public class Stone : Ressource
+namespace Collectables
 {
-    private void Awake() {
-        ID = (int) CollectableName.Stone;
+    public class Stone : CollectingScript
+    {
+        protected override void Awake() {
+            base.Awake();
+            resource.ID = (int) CollectableName.Stone;
+        }
     }
 }

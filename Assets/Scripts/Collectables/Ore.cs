@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using Collectables;
-using UnityEngine;
-
-public class Ore : Ressource
+namespace Collectables
 {
-    private void Awake() {
-        ID = (int) CollectableName.Ore;
+    public class Ore : CollectingScript
+    {
+        protected override void Awake() {
+            base.Awake();
+            resource.ID = (int) CollectableName.Ore;
+        }
     }
 }

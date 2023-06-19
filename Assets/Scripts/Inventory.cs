@@ -6,6 +6,7 @@ using System.Text;
 using Collectables;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class Inventory : MonoBehaviour
@@ -13,11 +14,11 @@ public class Inventory : MonoBehaviour
     public class EmptySlot : Collectable
     {
     }
-    [SerializeField] private int _inventorySize = 10;
+    [SerializeField] private int inventorySize = 10;
 
     public int InventorySize
     {
-        get => _inventorySize;
+        get => inventorySize;
     }
 
     private List<Collectable> _inventory;
@@ -27,10 +28,10 @@ public class Inventory : MonoBehaviour
     ///</summary>
     public void Awake()
     {
-        _inventory = new List<Collectable>(_inventorySize);
-        for (int i = 0; i < _inventorySize; i++)
+        _inventory = new List<Collectable>(inventorySize);
+        for (int i = 0; i < inventorySize; i++)
         {
-            _inventory.Add(new EmptySlot());
+            _inventory.Add(ScriptableObject.CreateInstance<EmptySlot>());
         }
     }
 
@@ -41,26 +42,41 @@ public class Inventory : MonoBehaviour
 
     public int Add(Collectable c)
     {
+        Debug.Log(c.ID);
         int index = Contains(c);
-        int rest = c.Amount;
-        if (index != -1)
+        if (index != -1 && !_inventory[index].IsMaxAmount())
         {
-            rest = _inventory[index].Add(c.Amount);
+            c.Amount = Add(c, index);
         }
 
-        if (rest <= 0) return 0;
+        if (c.Amount <= 0) return 0;
+        index = Contains(ScriptableObject.CreateInstance<EmptySlot>());
         
-        for (int i = 0; i < _inventory.Count; i++)
+        if (index != -1)
+        {
+            var newSlot = c.copy();
+            newSlot.Amount = 0;
+            _inventory[index] = newSlot;
+            return Add(c);
+        }
+        /*for (int i = 0; i < _inventory.Count; i++)
         {
             if (IsSlotEmpty(i))
             {
-                _inventory[i] = c;
-                return 0;
+                
             }
-        }
-        return rest;
+        }*/
+        return c.Amount;
     }
 
+    public bool AllSlotsFull()
+    {
+        return _inventory.All(c => c.IsMaxAmount());
+    }
+    public int Add(Collectable c, int i)
+    {
+        return _inventory[i].Add(c.Amount);
+    }
     public Collectable Get(int i)
     {
         return _inventory[i];
@@ -113,19 +129,19 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < _inventory.Count; i++)
         {
             Collectable collectable = _inventory[i];
-            if (collectable != null)
+            if (!collectable)
             {
                 inv.Add(collectable.ID);
                 amount.Add(collectable.Amount);
             }
         }
 
-        return new SerializedInventory(_inventorySize, inv, amount);
+        return new SerializedInventory(inventorySize, inv, amount);
     }
 
     public void DeSerialize(SerializedInventory serializedInventory)
     {
-        _inventorySize = serializedInventory.inventorySize;
+        inventorySize = serializedInventory.inventorySize;
         for (int i = 0; i < serializedInventory.inventory.Count; i++)
         {
             int item = serializedInventory.inventory[i];
