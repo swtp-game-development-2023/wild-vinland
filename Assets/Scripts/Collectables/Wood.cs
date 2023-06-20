@@ -1,10 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Wood : Ressource
+namespace Collectables
 {
-    private void Awake() {
-        ID = (int) CollectableName.Wood;
+    public class Wood : CollectingScript
+    {
+        protected override void Awake()
+        {
+            base.Awake();
+            resource.ID = (int) CollectableName.Wood;
+        }
     }
 }
