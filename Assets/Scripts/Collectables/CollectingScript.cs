@@ -35,8 +35,6 @@ namespace Collectables
                     {
                         Destroy(gameObject);
                     }
-
-                    Debug.Log(inventory.ToString());
                 }
             }
         }
