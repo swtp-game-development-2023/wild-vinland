@@ -14,6 +14,12 @@ public class DockBuildScript : BuildScript
         beachMap = Grid.transform.Find("Beach").gameObject.GetComponent<Tilemap>();
         seaMap = Grid.transform.Find("Sea").gameObject.GetComponent<Tilemap>();
     }
+
+    protected new void OnDisable()
+    {
+        base.OnDisable();
+    }
+    
     protected override bool ProfBuildSpot(Vector3 v)
     {
         var gridPos = Grid.WorldToCell(v);

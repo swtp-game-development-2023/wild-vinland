@@ -4,30 +4,37 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 namespace Buildings
 {
     public abstract class BuildScript : MonoBehaviour
     {
-        [SerializeField] protected GameObject prefab;
+        [SerializeField] protected GameObject buildingPrefab;
         private GameObject objBuilding;
         private List<SpriteRenderer> buildingSprites;
         protected Grid Grid;
         private Camera mainCamera;
         private Tilemap decoMap;
+        private bool isBuild;
 
 
         protected void OnEnable()
         {
             Grid = FindObjectOfType<Grid>();
             mainCamera = Camera.main;
-            objBuilding = Instantiate(prefab, CalcGridPos(), Quaternion.identity);
+            objBuilding = Instantiate(buildingPrefab, CalcGridPos(), Quaternion.identity);
             buildingSprites = objBuilding.transform.GetComponentsInChildren<SpriteRenderer>().ToList();
             decoMap = Grid.transform.Find("Deco").gameObject.GetComponent<Tilemap>();
         }
-        
-        
+
+        protected void OnDisable()
+        {
+            if(!isBuild) Destroy(objBuilding);
+            enabled = false;
+        }
+
         void Update()
         {
             objBuilding.transform.position = CalcGridPos();
@@ -45,7 +52,8 @@ namespace Buildings
             {
                 var gridPos = Grid.WorldToCell(objBuilding.transform.position);
                 decoMap.SetTile(gridPos, null);
-                buildingSprites.ForEach(s => s.color = new Color(255, 255, 255)); 
+                buildingSprites.ForEach(s => s.color = new Color(255, 255, 255));
+                isBuild = true;
                 enabled = false;
             }
             else if (Mouse.current.rightButton.wasReleasedThisFrame)
