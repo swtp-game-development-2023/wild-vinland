@@ -91,15 +91,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""TestGenerate"",
-                    ""type"": ""Button"",
-                    ""id"": ""6af3b798-a7b2-4d72-9779-4ebfbbd87a29"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""PauseMenu"",
                     ""type"": ""Button"",
                     ""id"": ""ecef0a92-24f7-4658-bc62-3d18ed93c252"",
@@ -341,17 +332,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""effc5ec8-dc91-48c2-b69c-119532c2ec20"",
-                    ""path"": ""<Keyboard>/m"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TestGenerate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""5bd076a0-9367-4f15-87d8-9889ed6f211b"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": ""Press(pressPoint=1)"",
@@ -481,6 +461,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""name"": ""load"",
                     ""type"": ""Button"",
                     ""id"": ""a8102275-08dc-4e3d-8495-8ff448a6b0aa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BuildMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""2025c525-abe2-48cd-8e93-954e6f4e297c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -927,6 +916,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""load"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""df4255e1-9c78-4292-9def-a3389ba43dbd"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""BuildMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1003,7 +1003,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_Player_Run_Stop = m_Player.FindAction("Run_Stop", throwIfNotFound: true);
         m_Player_Crouch_Start = m_Player.FindAction("Crouch_Start", throwIfNotFound: true);
         m_Player_Crouch_Stop = m_Player.FindAction("Crouch_Stop", throwIfNotFound: true);
-        m_Player_TestGenerate = m_Player.FindAction("TestGenerate", throwIfNotFound: true);
         m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
         // UI
@@ -1020,6 +1019,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         m_UI_save = m_UI.FindAction("save", throwIfNotFound: true);
         m_UI_load = m_UI.FindAction("load", throwIfNotFound: true);
+        m_UI_BuildMenu = m_UI.FindAction("BuildMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1088,7 +1088,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Run_Stop;
     private readonly InputAction m_Player_Crouch_Start;
     private readonly InputAction m_Player_Crouch_Stop;
-    private readonly InputAction m_Player_TestGenerate;
     private readonly InputAction m_Player_PauseMenu;
     private readonly InputAction m_Player_Inventory;
     public struct PlayerActions
@@ -1102,7 +1101,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @Run_Stop => m_Wrapper.m_Player_Run_Stop;
         public InputAction @Crouch_Start => m_Wrapper.m_Player_Crouch_Start;
         public InputAction @Crouch_Stop => m_Wrapper.m_Player_Crouch_Stop;
-        public InputAction @TestGenerate => m_Wrapper.m_Player_TestGenerate;
         public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
         public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1135,9 +1133,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Crouch_Stop.started += instance.OnCrouch_Stop;
             @Crouch_Stop.performed += instance.OnCrouch_Stop;
             @Crouch_Stop.canceled += instance.OnCrouch_Stop;
-            @TestGenerate.started += instance.OnTestGenerate;
-            @TestGenerate.performed += instance.OnTestGenerate;
-            @TestGenerate.canceled += instance.OnTestGenerate;
             @PauseMenu.started += instance.OnPauseMenu;
             @PauseMenu.performed += instance.OnPauseMenu;
             @PauseMenu.canceled += instance.OnPauseMenu;
@@ -1169,9 +1164,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Crouch_Stop.started -= instance.OnCrouch_Stop;
             @Crouch_Stop.performed -= instance.OnCrouch_Stop;
             @Crouch_Stop.canceled -= instance.OnCrouch_Stop;
-            @TestGenerate.started -= instance.OnTestGenerate;
-            @TestGenerate.performed -= instance.OnTestGenerate;
-            @TestGenerate.canceled -= instance.OnTestGenerate;
             @PauseMenu.started -= instance.OnPauseMenu;
             @PauseMenu.performed -= instance.OnPauseMenu;
             @PauseMenu.canceled -= instance.OnPauseMenu;
@@ -1211,6 +1203,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_TrackedDeviceOrientation;
     private readonly InputAction m_UI_save;
     private readonly InputAction m_UI_load;
+    private readonly InputAction m_UI_BuildMenu;
     public struct UIActions
     {
         private @InputManager m_Wrapper;
@@ -1227,6 +1220,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
         public InputAction @save => m_Wrapper.m_UI_save;
         public InputAction @load => m_Wrapper.m_UI_load;
+        public InputAction @BuildMenu => m_Wrapper.m_UI_BuildMenu;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1272,6 +1266,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @load.started += instance.OnLoad;
             @load.performed += instance.OnLoad;
             @load.canceled += instance.OnLoad;
+            @BuildMenu.started += instance.OnBuildMenu;
+            @BuildMenu.performed += instance.OnBuildMenu;
+            @BuildMenu.canceled += instance.OnBuildMenu;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1312,6 +1309,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @load.started -= instance.OnLoad;
             @load.performed -= instance.OnLoad;
             @load.canceled -= instance.OnLoad;
+            @BuildMenu.started -= instance.OnBuildMenu;
+            @BuildMenu.performed -= instance.OnBuildMenu;
+            @BuildMenu.canceled -= instance.OnBuildMenu;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1383,7 +1383,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnRun_Stop(InputAction.CallbackContext context);
         void OnCrouch_Start(InputAction.CallbackContext context);
         void OnCrouch_Stop(InputAction.CallbackContext context);
-        void OnTestGenerate(InputAction.CallbackContext context);
         void OnPauseMenu(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
     }
@@ -1401,5 +1400,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
         void OnSave(InputAction.CallbackContext context);
         void OnLoad(InputAction.CallbackContext context);
+        void OnBuildMenu(InputAction.CallbackContext context);
     }
 }
