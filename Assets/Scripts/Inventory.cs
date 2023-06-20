@@ -121,7 +121,7 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < _inventory.Count; i++)
         {
             Collectable collectable = _inventory[i];
-            if (!collectable)
+            if ( collectable.Amount >= 1 )
             {
                 inv.Add(collectable.ID);
                 amount.Add(collectable.Amount);
@@ -140,12 +140,15 @@ public class Inventory : MonoBehaviour
             switch (item)
             {
                 case (int)CollectableName.Wood:
-                    //TODO _inventory.Add(new Coffee(serializedInventory.amount[i]));
+                    
+                    break;
+                case (int)CollectableName.Stone:
+                    break;
+                case (int)CollectableName.Ore:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            // TODO other Items based on their Id
         }
     }
 
