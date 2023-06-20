@@ -90,7 +90,11 @@ public class PlayerInput : MonoBehaviour
         {
             InventoryMenu();
         }
-        
+        if (input.UI.BuildMenu.WasPressedThisFrame())
+        {
+            buildMenu.ToggleBuildMenu();
+        }
+
     }
 
     //FixedUpdate() is called a fixed framerate
