@@ -42,7 +42,6 @@ public class Inventory : MonoBehaviour
 
     public int Add(Collectable c)
     {
-        Debug.Log(c.ID);
         int index = Contains(c);
         if (index != -1 && !_inventory[index].IsMaxAmount())
         {
@@ -59,13 +58,6 @@ public class Inventory : MonoBehaviour
             _inventory[index] = newSlot;
             return Add(c);
         }
-        /*for (int i = 0; i < _inventory.Count; i++)
-        {
-            if (IsSlotEmpty(i))
-            {
-                
-            }
-        }*/
         return c.Amount;
     }
 
