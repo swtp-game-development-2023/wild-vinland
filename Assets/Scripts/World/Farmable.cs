@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Collectables;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum FarmableName {
     Tree,
@@ -13,7 +15,7 @@ public enum FarmableName {
 public class Farmable : MonoBehaviour {
     [SerializeField] private int health = 1;
     [SerializeField] private int resourceAmount = 1;
-    [SerializeField] private Resource resource;
+    [SerializeField] private GameObject prefab;
     private int _id = -1;
     private SpriteRenderer _spriteRenderer;
     private bool coroutineCalled = false;
@@ -44,8 +46,8 @@ public class Farmable : MonoBehaviour {
 
     private void DropResource() {
         Transform tempTransform = transform;
-        GameObject resource2 = Instantiate(resource.gameObject, tempTransform.position, tempTransform.rotation);
-        resource2.GetComponent<Resource>().Amount = resourceAmount;
+        GameObject resource2 = Instantiate(prefab, tempTransform.position, tempTransform.rotation);
+        resource2.GetComponent<CollectingScript>().Amount = resourceAmount;
     }
 
     IEnumerator damage() {

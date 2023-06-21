@@ -2,13 +2,6 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum CollectableName
-{
-    Wood, 
-    Stone, 
-    Ore
-}
-
 //This interface Collectable  guarantees that a player can collect an object.
 
 namespace Collectables
