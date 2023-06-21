@@ -31,7 +31,7 @@ namespace Buildings
 
         protected void OnDisable()
         {
-            if(!isBuild) Destroy(objBuilding);
+            if (!isBuild) Destroy(objBuilding);
             enabled = false;
         }
 
@@ -41,11 +41,11 @@ namespace Buildings
             var canBeBuild = ProfBuildSpot(objBuilding.transform.position);
             if (canBeBuild)
             {
-                buildingSprites.ForEach(s => s.color = new Color(0, 255, 0)); 
+                buildingSprites.ForEach(s => s.color = new Color(0, 255, 0));
             }
             else
             {
-                buildingSprites.ForEach(s => s.color = new Color(255, 0, 0)); 
+                buildingSprites.ForEach(s => s.color = new Color(255, 0, 0));
             }
 
             if (Mouse.current.leftButton.wasReleasedThisFrame && canBeBuild)
@@ -54,7 +54,7 @@ namespace Buildings
                 decoMap.SetTile(gridPos, null);
                 buildingSprites.ForEach(s => s.color = new Color(255, 255, 255));
                 isBuild = true;
-                objBuilding.GetComponent<Collider2D>().enabled = true;
+                objBuilding.GetComponent<PolygonCollider2D>().enabled = true;
                 enabled = false;
             }
             else if (Mouse.current.rightButton.wasReleasedThisFrame)
@@ -66,10 +66,32 @@ namespace Buildings
 
         protected virtual bool ProfBuildSpot(Vector3 v)
         {
-            var x = objBuilding.GetComponent<Collider2D>();
-            return !x.IsTouchingLayers();
+            /*var boxCollider2D = objBuilding.GetComponent<BoxCollider2D>();
+            var polygonCollider2D = objBuilding.GetComponent<PolygonCollider2D>();
+            Collider2D collider2 = Physics2D.OverlapBox(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f);
+            if (collider2.gameObject == gameObject) collider2 = null;
+            /*Collider2D[] results = new Collider2D[] { };
+            var size = Physics2D.OverlapBoxNonAlloc(collider.bounds.center, collider.bounds.size, 0f, results);
+            #1#
+            Debug.Log(collider2 ? collider2.gameObject.name : "None");
+            return collider2 != null;*/
+            /*BoxCollider2D boxCollider = objBuilding.GetComponent<BoxCollider2D>();
+            Debug.Log("b " + boxCollider.gameObject.name);
+            Debug.Log("b " + boxCollider.gameObject.transform.position);
+            Collider2D[] colliders = Physics2D.OverlapBoxAll( boxCollider.offset, boxCollider.size, 0f , LayerMask.GetMask("Water"));
+            // Überprüfe, ob der Collider kollidiert
+            foreach (Collider2D collider in colliders)
+            {
+                Debug.Log(collider.gameObject.name);
+                Debug.Log(collider.gameObject.transform.position);
+                    //return false; // Kollision gefunden
+            }
+            */
+
+
+            return true; // Keine Kollision gefunden
         }
-        
+
 
         private Vector3 CalcGridPos()
         {
