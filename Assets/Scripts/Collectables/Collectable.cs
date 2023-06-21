@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Management.Instrumentation;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum CollectableName
@@ -13,44 +11,72 @@ public enum CollectableName
 
 //This interface Collectable  guarantees that a player can collect an object.
 
-public abstract class Collectable : MonoBehaviour
+namespace Collectables
 {
-    private int _id = -1;
-    public int maxAmount = 1;
-    private int _amount = 0;
-
-    public int Amount
+    public abstract class Collectable : ScriptableObject
     {
-        get => _amount;
-        set
+        private int _id = (int)CollectableName.Empty;
+        [SerializeField] protected int maxAmount = 1;
+        [SerializeField] protected int amount;
+
+        [SerializeField] private Sprite sprite;
+
+        public int MaxAmount => maxAmount;
+
+        public Sprite Sprite
         {
-            if (_amount <= maxAmount)
+            set { sprite = value; }
+            get => sprite;
+        }
+
+        public int Amount
+        {
+            set { amount = value; }
+            get => amount;
+        }
+
+        public int Add(int otherAmount)
+        {
+            var freeSpace = maxAmount - amount;
+            freeSpace = freeSpace < 0 ? 0 : freeSpace;
+            int addValue = freeSpace < otherAmount ? freeSpace : otherAmount;
+            this.amount += addValue;
+            return otherAmount - addValue;
+        }
+
+        public int ID
+        {
+            get => _id;
+            set
             {
-                _amount = value;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(_amount), value,
-                    "Value has to be between 0 and" + maxAmount);
+                if (_id == -1)
+                {
+                    _id = value;
+                }
             }
         }
-    }
 
-    public int ID {
-        get => _id;
-        set
+        public bool IsMaxAmount()
         {
-            if (_id == -1) {
-                _id = value;
-            }
+            return maxAmount <= amount;
         }
-    }
-    
-    ///<summary>
-    /// Generates a String representation of the Collectable in Format: CollectableName [Collectable Amount]
-    ///</summary>
-    public override string ToString()
-    {
-        return ( (CollectableName) _id).ToString()+"["+_amount+"]";
+
+        ///<summary>
+        /// Generates a String representation of the Collectable in Format: CollectableName [Collectable Amount]
+        ///</summary>
+        public override string ToString()
+        {
+            return (CollectableName)_id + "[" + amount + "]";
+        }
+
+        public Collectable copy()
+        {
+            var obj = Instantiate(this);
+            obj.amount = amount;
+            obj._id = _id;
+            obj.maxAmount = maxAmount;
+            obj.sprite = sprite;
+            return obj;
+        }
     }
 }
