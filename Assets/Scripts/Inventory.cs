@@ -3,14 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Collectables;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class Inventory : MonoBehaviour
 {
-    [SerializeField]
-    private int _inventorySize = 10;
+    public class EmptySlot : Collectable
+    {
+    }
+    [SerializeField] private int inventorySize = 10;
+
+    public int InventorySize
+    {
+        get => inventorySize;
+    }
+
     private List<Collectable> _inventory;
 
     ///<summary>
@@ -18,56 +28,74 @@ public class Inventory : MonoBehaviour
     ///</summary>
     public void Awake()
     {
-        Collectable[] c = new Collectable[_inventorySize];
-        _inventory = c.ToList();
+        _inventory = new List<Collectable>(inventorySize);
+        for (int i = 0; i < inventorySize; i++)
+        {
+            _inventory.Add(ScriptableObject.CreateInstance<EmptySlot>());
+        }
     }
 
-    public int Contains(Collectable c) {
-        return _inventory.FindIndex(c2 => c2 != null && c2.ID == c.ID && c2.Amount <= c.maxAmount);
-    }
-
-    public bool Add(Collectable c) {
-        int index = Contains(c);
-        if (index != -1) {
-            _inventory[index].Amount += c.Amount;
-            return true;
-        }
-        for (int i = 0; i < _inventory.Count; i++) {
-            Add(c, i);
-            return true;
-        }
-        return false;
-    }
-    
-    public void Add(Collectable c, int index)
+    public int Contains(Collectable c)
     {
-        if (IsSlotEmpty(index)) _inventory[index] = c;
+        return _inventory.FindIndex(c2 => c2 != null && c2.ID == c.ID && c2.Amount < c.MaxAmount);
     }
-    
-    public void Remove(int index)
+
+    public int Add(Collectable c)
+    {
+        int index = Contains(c);
+        if (index != -1 && !_inventory[index].IsMaxAmount())
+        {
+            c.Amount = Add(c, index);
+        }
+
+        if (c.Amount <= 0) return 0;
+        index = Contains(ScriptableObject.CreateInstance<EmptySlot>());
+        
+        if (index != -1)
+        {
+            var newSlot = c.copy();
+            newSlot.Amount = 0;
+            _inventory[index] = newSlot;
+            return Add(c);
+        }
+        return c.Amount;
+    }
+
+    public bool AllSlotsFull()
+    {
+        return _inventory.All(c => c.IsMaxAmount());
+    }
+    public int Add(Collectable c, int i)
+    {
+        return _inventory[i].Add(c.Amount);
+    }
+    public Collectable Get(int i)
+    {
+        return _inventory[i];
+    }
+
+    /*public void Remove(int index)
     {
         Remove(index, _inventory[index].Amount);
-    }
+    }*/
 
-    public void Remove(int index, int amount)
+    /*public void Remove(int index, int amount)
     {
-        if (!IsSlotEmpty(index) & amount < _inventory[index].Amount)
+        if (!IsSlotEmpty(index) && amount < _inventory[index].Amount)
         {
             _inventory[index].Amount -= amount;
         }
-        else if (!IsSlotEmpty(index) & (amount == _inventory[index].Amount))
+        else if (!IsSlotEmpty(index) && (amount >= _inventory[index].Amount))
         {
             _inventory[index] = null;
-            
         }
         else
         {
             throw new ArgumentOutOfRangeException(nameof(amount), amount,
                 "Value has to be between 0 and the current amount of the Item: " +_inventory[index].Amount);
         }
+    }*/
 
-    }
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -81,20 +109,9 @@ public class Inventory : MonoBehaviour
     ///<summary>
     /// Function just to Test adding Coffee Items, calling ToString(), Deleting one calling ToString() again. Demo for Inventory. 
     ///</summary>
-
-    private bool IsSlotEmpty(int index)
+    public bool IsSlotEmpty(int index)
     {
-        if ( _inventory != null )
-        {
-            return _inventory[index] == null;
-        }
-        return true;
-    } 
-    
-    private void OnOpenInventory()
-    {   
-        //TODO real UI
-        print(ToString());
+        return _inventory[index].GetType() == typeof(EmptySlot);
     }
 
     public SerializedInventory Serialize()
@@ -104,23 +121,25 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < _inventory.Count; i++)
         {
             Collectable collectable = _inventory[i];
-            if ( collectable != null ) {
+            if (!collectable)
+            {
                 inv.Add(collectable.ID);
                 amount.Add(collectable.Amount);
             }
         }
-        return new SerializedInventory(_inventorySize,inv,amount);
+
+        return new SerializedInventory(inventorySize, inv, amount);
     }
 
     public void DeSerialize(SerializedInventory serializedInventory)
     {
-        _inventorySize = serializedInventory.inventorySize;
+        inventorySize = serializedInventory.inventorySize;
         for (int i = 0; i < serializedInventory.inventory.Count; i++)
         {
             int item = serializedInventory.inventory[i];
             switch (item)
             {
-                case (int) CollectableName.Wood:
+                case (int)CollectableName.Wood:
                     //TODO _inventory.Add(new Coffee(serializedInventory.amount[i]));
                     break;
                 default:
@@ -135,14 +154,14 @@ public class Inventory : MonoBehaviour
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < _inventory.Count; i++)
         {
-            sb.Append(" | ").Append(!IsSlotEmpty(i)? _inventory[i].ToString() : "empty" );
-            
+            sb.Append(" | ").Append(_inventory[i].ToString());
+
             if (i % 2 == 1)
             {
                 sb.Append(" |\n");
             }
         }
+
         return sb.ToString();
-        
     }
 }

@@ -25,8 +25,9 @@ public class PlayerInput : MonoBehaviour
     private static readonly int IsCrouching = Animator.StringToHash("isCrouching");
     private static readonly int attackTrigger = Animator.StringToHash("attackTrigger");
     private Vector2 currentInputVector;
-
+    
     [SerializeField] private PauseMenu pauseMenu;
+    [SerializeField] private InventoryMenu inventoryMenu;
     [SerializeField] private BuildMenu buildMenu;
 
     private void Awake()
@@ -45,6 +46,7 @@ public class PlayerInput : MonoBehaviour
         input.Player.Fire.Enable();
         input.UI.BuildMenu.Enable();
         input.Player.PauseMenu.Enable();
+        input.Player.Inventory.Enable();
     }
 
     private void OnDisable()
@@ -55,6 +57,7 @@ public class PlayerInput : MonoBehaviour
         input.Player.Fire.Disable();
 
         input.Player.PauseMenu.Disable();
+        input.Player.Inventory.Disable();
     }
 
     private void Start()
@@ -63,6 +66,7 @@ public class PlayerInput : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
 
         pauseMenu = FindObjectOfType<PauseMenu>();
+        inventoryMenu = FindObjectOfType<InventoryMenu>();
     }
 
     private void Update()
@@ -70,9 +74,8 @@ public class PlayerInput : MonoBehaviour
         movementVector = movementInput.ReadValue<Vector2>();
         animator.SetBool(IsRunning, runInput.IsPressed());
         animator.SetBool(IsCrouching, crouchInput.IsPressed());
-        if (input.Player.Fire.IsPressed())
-        {
-            if (!pauseMenu.isPaused)
+        if (input.Player.Fire.IsPressed()) {
+            if (!pauseMenu.isPaused && !inventoryMenu.isInventoryOpen)
             {
                 Fire();
             }
@@ -82,16 +85,30 @@ public class PlayerInput : MonoBehaviour
         {
             PauseMenu();
         }
-        if (input.UI.BuildMenu.WasPressedThisFrame())
+        
+        if (input.Player.Inventory.WasPressedThisFrame() && !pauseMenu.isPaused)
         {
-            buildMenu.ToggleBuildMenu();
+            InventoryMenu();
         }
+        
     }
 
     //FixedUpdate() is called a fixed framerate
     private void FixedUpdate()
     {
         Movement();
+    }
+
+    private void InventoryMenu()
+    {
+        if (inventoryMenu.isInventoryOpen)
+        {
+            inventoryMenu.CloseInventory();
+        }
+        else
+        {
+            inventoryMenu.OpenInventory();   
+        }
     }
 
     private void PauseMenu()
@@ -105,12 +122,9 @@ public class PlayerInput : MonoBehaviour
             pauseMenu.PauseGame();
         }
     }
-
-
-    private void Fire()
-    {
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Punch"))
-        {
+    
+    private void Fire() {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Punch")) {
             animator.SetTrigger(attackTrigger);
         }
     }
