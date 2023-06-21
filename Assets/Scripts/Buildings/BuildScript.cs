@@ -18,7 +18,7 @@ namespace Buildings
         private Camera mainCamera;
         private Tilemap decoMap;
         private bool isBuild;
-
+        private bool isColliding;
 
         protected void OnEnable()
         {
@@ -54,6 +54,7 @@ namespace Buildings
                 decoMap.SetTile(gridPos, null);
                 buildingSprites.ForEach(s => s.color = new Color(255, 255, 255));
                 isBuild = true;
+                objBuilding.GetComponent<Collider2D>().enabled = true;
                 enabled = false;
             }
             else if (Mouse.current.rightButton.wasReleasedThisFrame)
@@ -63,7 +64,11 @@ namespace Buildings
             }
         }
 
-        protected abstract bool ProfBuildSpot(Vector3 v);
+        protected virtual bool ProfBuildSpot(Vector3 v)
+        {
+            var x = objBuilding.GetComponent<Collider2D>();
+            return !x.IsTouchingLayers();
+        }
         
 
         private Vector3 CalcGridPos()

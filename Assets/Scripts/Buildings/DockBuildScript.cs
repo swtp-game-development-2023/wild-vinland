@@ -25,6 +25,6 @@ public class DockBuildScript : BuildScript
         var gridPos = Grid.WorldToCell(v);
         var oneBelow = new Vector3Int(gridPos.x , gridPos.y -1, gridPos.z);
         var towBelow = new Vector3Int(gridPos.x , gridPos.y -2, gridPos.z);
-        return beachMap.GetTile(gridPos) && seaMap.GetTile(oneBelow) && seaMap.GetTile(towBelow);
+        return base.ProfBuildSpot(v) /*&& beachMap.GetTile(gridPos) && seaMap.GetTile(oneBelow) && seaMap.GetTile(towBelow)*/;
     }
 }
