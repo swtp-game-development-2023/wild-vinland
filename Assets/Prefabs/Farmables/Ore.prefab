@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3345085601747370966
 SpriteRenderer:
@@ -122,7 +122,7 @@ BoxCollider2D:
   m_Offset: {x: 0.004371159, y: 0.00485684}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 0.16, y: 0.16}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
@@ -179,6 +179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ce4c54707bf97438e96eac28b7a5ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
-  resourceAmount: 1
+  health: 10
+  resourceAmount: 2
   prefab: {fileID: 7805607401458173747, guid: c48a54248dd74e14d82ab7331cf900ea, type: 3}
