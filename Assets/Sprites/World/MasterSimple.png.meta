@@ -605,15 +605,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MasterSimple_22
+      name: Bush
       rect:
         serializedVersion: 2
         x: 112
         y: 224
         width: 16
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -941,7 +941,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MasterSimple_38
+      name: Tree
       rect:
         serializedVersion: 2
         x: 112
@@ -1235,15 +1235,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MasterSimple_52
+      name: Stone01
       rect:
         serializedVersion: 2
         x: 96
         y: 192
         width: 16
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1256,15 +1256,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MasterSimple_53
+      name: Stone02
       rect:
         serializedVersion: 2
         x: 112
         y: 192
         width: 16
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1277,15 +1277,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MasterSimple_54
+      name: Stone03
       rect:
         serializedVersion: 2
         x: 128
         y: 192
         width: 16
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -2432,15 +2432,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MasterSimple_109
+      name: Ore
       rect:
         serializedVersion: 2
         x: 128
         y: 128
         width: 16
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -4164,6 +4164,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Bush: 1076721907
       MasterSimple_0: 595667141
       MasterSimple_1: -1234679944
       MasterSimple_10: 40489593
@@ -4176,7 +4177,6 @@ TextureImporter:
       MasterSimple_106: 1546349592
       MasterSimple_107: 18198431
       MasterSimple_108: 2122208239
-      MasterSimple_109: 2109919865
       MasterSimple_11: -1150506251
       MasterSimple_110: -296886340
       MasterSimple_111: -135963595
@@ -4270,7 +4270,6 @@ TextureImporter:
       MasterSimple_2: 1741499302
       MasterSimple_20: 683612544
       MasterSimple_21: 2032759807
-      MasterSimple_22: 1076721907
       MasterSimple_23: -250554224
       MasterSimple_24: -1969348853
       MasterSimple_25: 195199297
@@ -4287,7 +4286,6 @@ TextureImporter:
       MasterSimple_35: -793762981
       MasterSimple_36: 1454413668
       MasterSimple_37: 1905537842
-      MasterSimple_38: -248604246
       MasterSimple_39: 1388604499
       MasterSimple_4: 1172788027
       MasterSimple_40: 1066203316
@@ -4303,9 +4301,6 @@ TextureImporter:
       MasterSimple_5: 1540323469
       MasterSimple_50: 316866716
       MasterSimple_51: 2056236599
-      MasterSimple_52: -1815312638
-      MasterSimple_53: -180738830
-      MasterSimple_54: 2059876715
       MasterSimple_55: -856468225
       MasterSimple_56: 736846382
       MasterSimple_57: 1324172470
@@ -4355,6 +4350,11 @@ TextureImporter:
       MasterSimple_97: 1936203810
       MasterSimple_98: -182472364
       MasterSimple_99: 1323381715
+      Ore: 2109919865
+      Stone01: -1815312638
+      Stone02: -180738830
+      Stone03: 2059876715
+      Tree: -248604246
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

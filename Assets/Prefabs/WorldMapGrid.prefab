@@ -436,7 +436,7 @@ Transform:
   - {fileID: 4658300128307500733}
   - {fileID: 764852227533504385}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &1117200554720009966
 Grid:
@@ -487,9 +487,13 @@ MonoBehaviour:
   percentOfStone: 0.161
   percentOfOre: 0.1
   percentOfFlowers: 0.5
-  treePrefab: {fileID: 4566267646329848832, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
-  orePrefab: {fileID: 4566267646329848832, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
-  stonePrefab: {fileID: 4566267646329848832, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
+  treePrefab:
+  - {fileID: 4566267646329848832, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
+  orePrefab: {fileID: 8937067806647536911, guid: bca6b27a99cd5e142b7d2a9c32d21197, type: 3}
+  stonePrefabs:
+  - {fileID: 6156401229786571731, guid: 4364735cbff7f4f4889655ed4b328cd4, type: 3}
+  - {fileID: 6981901538108201441, guid: 7262642611e15b24d8ff7557f0d8af5b, type: 3}
+  - {fileID: 886035082477310322, guid: 869fe66abd12bf045a07f945afbeb495, type: 3}
 --- !u!1 &5299312973983080316
 GameObject:
   m_ObjectHideFlags: 0
