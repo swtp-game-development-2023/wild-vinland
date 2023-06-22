@@ -26,9 +26,7 @@ namespace Collectables
         //should be dropable
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other is BoxCollider2D)
-            {
-                if (other.transform.parent.CompareTag("Player"))
+            if (other.CompareTag("Body")) {
                 {
                     resource.Amount = inventory.Add(resource.copy());
                     if (resource.Amount <= 0)

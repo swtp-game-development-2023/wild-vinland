@@ -17,6 +17,7 @@ TagManager:
   - Ore
   - Stone
   - Wood
+  - Body
   layers:
   - Default
   - TransparentFX
