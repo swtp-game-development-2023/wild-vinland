@@ -18,7 +18,8 @@ namespace Buildings
         private Camera mainCamera;
         private Tilemap decoMap;
         private bool isBuild;
-        private bool isColliding;
+        private CollidingChecker collidingChecker;
+        
 
         protected void OnEnable()
         {
@@ -27,6 +28,7 @@ namespace Buildings
             objBuilding = Instantiate(buildingPrefab, CalcGridPos(), Quaternion.identity);
             buildingSprites = objBuilding.transform.GetComponentsInChildren<SpriteRenderer>().ToList();
             decoMap = Grid.transform.Find("Deco").gameObject.GetComponent<Tilemap>();
+            collidingChecker = objBuilding.GetComponent<CollidingChecker>();
         }
 
         protected void OnDisable()
@@ -66,30 +68,7 @@ namespace Buildings
 
         protected virtual bool ProfBuildSpot(Vector3 v)
         {
-            /*var boxCollider2D = objBuilding.GetComponent<BoxCollider2D>();
-            var polygonCollider2D = objBuilding.GetComponent<PolygonCollider2D>();
-            Collider2D collider2 = Physics2D.OverlapBox(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f);
-            if (collider2.gameObject == gameObject) collider2 = null;
-            /*Collider2D[] results = new Collider2D[] { };
-            var size = Physics2D.OverlapBoxNonAlloc(collider.bounds.center, collider.bounds.size, 0f, results);
-            #1#
-            Debug.Log(collider2 ? collider2.gameObject.name : "None");
-            return collider2 != null;*/
-            /*BoxCollider2D boxCollider = objBuilding.GetComponent<BoxCollider2D>();
-            Debug.Log("b " + boxCollider.gameObject.name);
-            Debug.Log("b " + boxCollider.gameObject.transform.position);
-            Collider2D[] colliders = Physics2D.OverlapBoxAll( boxCollider.offset, boxCollider.size, 0f , LayerMask.GetMask("Water"));
-            // Überprüfe, ob der Collider kollidiert
-            foreach (Collider2D collider in colliders)
-            {
-                Debug.Log(collider.gameObject.name);
-                Debug.Log(collider.gameObject.transform.position);
-                    //return false; // Kollision gefunden
-            }
-            */
-
-
-            return true; // Keine Kollision gefunden
+            return !collidingChecker.IsColliding;
         }
 
 
