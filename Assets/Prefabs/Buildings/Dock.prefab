@@ -182,7 +182,6 @@ GameObject:
   - component: {fileID: 3907364723255511877}
   - component: {fileID: 2697715330933840682}
   - component: {fileID: 3819184174827633061}
-  - component: {fileID: 5322107250096289964}
   m_Layer: 0
   m_Name: Dock
   m_TagString: Untagged
@@ -312,7 +311,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0009763539, y: -0.16044718}
+  m_Offset: {x: 0, y: -0.14871311}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -323,7 +322,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1585381, y: 0.4776135}
+  m_Size: {x: 0.07133355, y: 0.4066419}
   m_EdgeRadius: 0
 --- !u!114 &2697715330933840682
 MonoBehaviour:
@@ -364,38 +363,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!70 &5322107250096289964
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8526370981950594493}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.0036047548, y: -0.086513445}
-  m_Size: {x: 0.07944858, y: 0.21176645}
-  m_Direction: 0
