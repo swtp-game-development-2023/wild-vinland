@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7482433059039712288}
   m_Layer: 0
   m_Name: hitbox
-  m_TagString: Untagged
+  m_TagString: Hitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 705861918987382225}
   m_Layer: 0
   m_Name: body
-  m_TagString: Untagged
+  m_TagString: Body
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,7 +215,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.028, y: 0.15}
@@ -313,7 +313,7 @@ Transform:
   - {fileID: 7175208464010126947}
   - {fileID: 6966028691757246149}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2519190307473019491
 Rigidbody2D:
@@ -354,12 +354,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a177ca243407f4ebc130d2937cf818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crouchSpeed: 15
-  walkSpeed: 25
-  runSpeed: 40
+  crouchSpeed: 20
+  walkSpeed: 28
+  runSpeed: 80
   smoothRate: 0.065
   pauseMenu: {fileID: 0}
-  inventoryMenu: {fileID: 0}
 --- !u!114 &4232820805430264936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,4 +371,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbc043a388065a4298161ebf6a3bd8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventorySize: 20
+  _inventorySize: 10
