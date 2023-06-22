@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
@@ -20,6 +21,22 @@ namespace Buildings
         private bool isBuild;
         private CollidingChecker collidingChecker;
         
+        public int requiredWood;
+        public int requiredStone;
+        public int requiredOre;
+        
+        protected Dictionary<CollectableName, int> RequiredResources;
+
+        private void SetRequiredResources()
+        {
+            RequiredResources = new Dictionary<CollectableName, int> { { CollectableName.Wood, requiredWood  },
+                { CollectableName.Ore, requiredOre }, { CollectableName.Stone, requiredStone } };
+        }
+
+        private void Awake()
+        {
+            SetRequiredResources();
+        }
 
         protected void OnEnable()
         {
