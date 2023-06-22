@@ -12,12 +12,7 @@ public class CollidingChecker : MonoBehaviour
         get => isColliding;
         set => isColliding = value;
     }
-
-
-    private void Update()
-    {
-        Debug.Log(IsColliding);
-    }
+    
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -28,6 +23,5 @@ public class CollidingChecker : MonoBehaviour
     void OnTriggerExit2D(Collider2D other)
     {
         isColliding = false;
-        Debug.Log(isColliding +" " + other.gameObject.name);
     }
 }
