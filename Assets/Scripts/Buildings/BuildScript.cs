@@ -18,7 +18,7 @@ namespace Buildings
         protected Grid Grid;
         private Camera mainCamera;
         private Tilemap decoMap;
-        private bool isBuild;
+        protected bool isBuild;
         private CollidingChecker collidingChecker;
         private readonly List<CollectableName> collectableNames = new List<CollectableName>((CollectableName[])Enum.GetValues(typeof(CollectableName)));
 
