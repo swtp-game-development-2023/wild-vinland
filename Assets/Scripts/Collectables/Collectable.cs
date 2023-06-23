@@ -2,7 +2,6 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-
 //This interface Collectable  guarantees that a player can collect an object.
 
 namespace Collectables
