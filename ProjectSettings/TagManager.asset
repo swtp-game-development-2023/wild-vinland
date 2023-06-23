@@ -20,6 +20,7 @@ TagManager:
   - Body
   - Hitbox
   - Tree
+  - BuildBtn
   layers:
   - Default
   - TransparentFX

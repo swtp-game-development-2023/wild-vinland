@@ -20,21 +20,31 @@ namespace Buildings
         private Tilemap decoMap;
         private bool isBuild;
         private CollidingChecker collidingChecker;
-        
-        public int requiredWood;
-        public int requiredStone;
-        public int requiredOre;
-        
-        protected Dictionary<CollectableName, int> RequiredResources;
+        private readonly List<CollectableName> collectableNames = new List<CollectableName>((CollectableName[])Enum.GetValues(typeof(CollectableName)));
+
+        [SerializeField]
+        [Range(0, 100)]
+        private int requiredWood;
+        [SerializeField]
+        [Range(0, 100)]
+        private int requiredStone;
+        [SerializeField]
+        [Range(0, 100)]
+        private int requiredOre;
+        private Inventory inventory;
+        private Dictionary<CollectableName, int> requiredResources;
+
+        public Dictionary<CollectableName, int> RequiredResources => requiredResources;
 
         private void SetRequiredResources()
         {
-            RequiredResources = new Dictionary<CollectableName, int> { { CollectableName.Wood, requiredWood  },
+            requiredResources = new Dictionary<CollectableName, int> { { CollectableName.Wood, requiredWood  },
                 { CollectableName.Ore, requiredOre }, { CollectableName.Stone, requiredStone } };
         }
 
         private void Awake()
         {
+            inventory = FindObjectOfType<Inventory>();
             SetRequiredResources();
         }
 
@@ -75,6 +85,10 @@ namespace Buildings
                 isBuild = true;
                 objBuilding.GetComponent<PolygonCollider2D>().enabled = true;
                 enabled = false;
+                foreach (var collectableName in collectableNames.Where(c => 0 < requiredResources[c] ))
+                {
+                    inventory.Remove(collectableName, requiredResources[collectableName]);
+                }
             }
             else if (Mouse.current.rightButton.wasReleasedThisFrame)
             {

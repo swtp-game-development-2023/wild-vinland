@@ -144,7 +144,7 @@ RectTransform:
   m_Children:
   - {fileID: 2480023238638280271}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1032,6 +1032,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingPrefab: {fileID: 8526370981950594493, guid: 85ee20aeec6c59042b26a15ed0d3f2c4, type: 3}
+  requiredWood: 20
+  requiredStone: 6
+  requiredOre: 12
 --- !u!1001 &7257339271972167004
 PrefabInstance:
   m_ObjectHideFlags: 0

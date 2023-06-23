@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2030913289745001009}
   m_Layer: 5
   m_Name: BtnBuild
-  m_TagString: Untagged
+  m_TagString: BuildBtn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
