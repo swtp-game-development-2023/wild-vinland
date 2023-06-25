@@ -29,6 +29,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private PauseMenu pauseMenu;
     [SerializeField] private InventoryMenu inventoryMenu;
     [SerializeField] private BuildMenu buildMenu;
+    [SerializeField] private ShipMenu shipMenu;
 
     private void Awake()
     {
@@ -47,6 +48,7 @@ public class PlayerInput : MonoBehaviour
         input.UI.BuildMenu.Enable();
         input.Player.PauseMenu.Enable();
         input.Player.Inventory.Enable();
+        input.UI.ShipMenu.Enable();
     }
 
     private void OnDisable()
@@ -58,6 +60,7 @@ public class PlayerInput : MonoBehaviour
         input.UI.BuildMenu.Disable();
         input.Player.PauseMenu.Disable();
         input.Player.Inventory.Disable();
+        input.UI.ShipMenu.Disable();
     }
 
     private void Start()
@@ -68,6 +71,7 @@ public class PlayerInput : MonoBehaviour
         pauseMenu = FindObjectOfType<PauseMenu>();
         inventoryMenu = FindObjectOfType<InventoryMenu>();
         buildMenu = FindObjectOfType<BuildMenu>();
+        shipMenu = FindObjectOfType<ShipMenu>();
     }
 
     private void Update()
@@ -95,12 +99,34 @@ public class PlayerInput : MonoBehaviour
         {
             buildMenu.ToggleBuildMenu();
         }
+
+        if (input.UI.ShipMenu.WasPressedThisFrame() && !pauseMenu.isPaused && shipMenu.isCollided)
+        {
+            shipMenu.ToggleShipMenu();
+        }
         if (pauseMenu.isPaused)
         {
             inventoryMenu.CloseInventory();
             buildMenu.CloseBuildMenu();
+            shipMenu.CloseShipMenu();
         }
 
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Dock"))
+        {
+            shipMenu.isCollided = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Dock"))
+        {
+            shipMenu.isCollided = false;
+        }
     }
 
     //FixedUpdate() is called a fixed framerate

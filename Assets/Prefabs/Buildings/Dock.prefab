@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2092585909
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: -729359378, guid: 32e3ad867f2f7224cad82645f3385368, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -155,7 +155,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2092585909
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: -1663423177, guid: 32e3ad867f2f7224cad82645f3385368, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 3819184174827633061}
   m_Layer: 0
   m_Name: Dock
-  m_TagString: Untagged
+  m_TagString: Dock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -204,7 +204,7 @@ RectTransform:
   - {fileID: 870582267239326255}
   - {fileID: 8106396018319367849}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

@@ -452,6 +452,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ShipMenu",
+                    "type": "Button",
+                    "id": "b72e1a39-f58c-496c-b111-2ec913e6a5a0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -903,6 +912,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "BuildMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "40500c0c-5599-4f7b-9ed4-a8cbe276789c",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ShipMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

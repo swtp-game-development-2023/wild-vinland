@@ -21,6 +21,7 @@ TagManager:
   - Hitbox
   - Tree
   - BuildBtn
+  - Dock
   layers:
   - Default
   - TransparentFX

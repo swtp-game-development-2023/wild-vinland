@@ -19,7 +19,7 @@ namespace Buildings
         private Camera mainCamera;
         private Tilemap decoMap;
         protected bool isBuild;
-        private CollidingChecker collidingChecker;
+        protected CollidingChecker collidingChecker;
         private readonly List<CollectableName> collectableNames = new List<CollectableName>((CollectableName[])Enum.GetValues(typeof(CollectableName)));
 
         [SerializeField]
