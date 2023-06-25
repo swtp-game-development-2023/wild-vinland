@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class BuildMenu : MonoBehaviour
 {
-    private bool isOpen;
+    public bool isOpen;
 
     public GameObject buildMenu;
     private List<BuildScript> buildScripts = new();
@@ -16,6 +16,12 @@ public class BuildMenu : MonoBehaviour
 
     private readonly List<CollectableName> collectableNames =
         new List<CollectableName>((CollectableName[])Enum.GetValues(typeof(CollectableName)));
+
+    private void Start()
+    {
+        isOpen = false;
+        buildMenu.SetActive(false);
+    }
 
     private void Awake()
     {
@@ -44,5 +50,11 @@ public class BuildMenu : MonoBehaviour
     {
         isOpen = !isOpen;
         buildMenu.SetActive(isOpen);
+    }
+    
+    public void CloseBuildMenu()
+    {
+        isOpen = false;
+        buildMenu.SetActive(false);
     }
 }

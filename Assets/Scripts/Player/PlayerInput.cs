@@ -55,7 +55,7 @@ public class PlayerInput : MonoBehaviour
         runInput.Disable();
         crouchInput.Disable();
         input.Player.Fire.Disable();
-
+        input.UI.BuildMenu.Disable();
         input.Player.PauseMenu.Disable();
         input.Player.Inventory.Disable();
     }
@@ -67,6 +67,7 @@ public class PlayerInput : MonoBehaviour
 
         pauseMenu = FindObjectOfType<PauseMenu>();
         inventoryMenu = FindObjectOfType<InventoryMenu>();
+        buildMenu = FindObjectOfType<BuildMenu>();
     }
 
     private void Update()
@@ -75,7 +76,7 @@ public class PlayerInput : MonoBehaviour
         animator.SetBool(IsRunning, runInput.IsPressed());
         animator.SetBool(IsCrouching, crouchInput.IsPressed());
         if (input.Player.Fire.IsPressed()) {
-            if (!pauseMenu.isPaused && !inventoryMenu.isInventoryOpen)
+            if (!pauseMenu.isPaused && !inventoryMenu.isInventoryOpen && !buildMenu.isOpen)
             {
                 Fire();
             }
@@ -90,9 +91,14 @@ public class PlayerInput : MonoBehaviour
         {
             InventoryMenu();
         }
-        if (input.UI.BuildMenu.WasPressedThisFrame())
+        if (input.UI.BuildMenu.WasPressedThisFrame() && !pauseMenu.isPaused)
         {
             buildMenu.ToggleBuildMenu();
+        }
+        if (pauseMenu.isPaused)
+        {
+            inventoryMenu.CloseInventory();
+            buildMenu.CloseBuildMenu();
         }
 
     }

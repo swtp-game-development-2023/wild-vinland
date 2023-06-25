@@ -152,7 +152,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -110336027
-  m_SortingLayer: 8
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 969538377, guid: 51ef68ffe30f5964498531407b09b8f9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -354,11 +354,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a177ca243407f4ebc130d2937cf818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crouchSpeed: 20
-  walkSpeed: 28
-  runSpeed: 80
+  crouchSpeed: 14
+  walkSpeed: 25
+  runSpeed: 40
   smoothRate: 0.065
   pauseMenu: {fileID: 0}
+  inventoryMenu: {fileID: 0}
   buildMenu: {fileID: 0}
 --- !u!114 &4232820805430264936
 MonoBehaviour:
@@ -372,4 +373,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbc043a388065a4298161ebf6a3bd8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventorySize: 10
+  inventorySize: 20

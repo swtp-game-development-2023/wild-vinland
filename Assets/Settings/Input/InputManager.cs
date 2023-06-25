@@ -469,7 +469,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""BuildMenu"",
                     ""type"": ""Button"",
-                    ""id"": ""2025c525-abe2-48cd-8e93-954e6f4e297c"",
+                    ""id"": ""27fab820-71fe-47b2-bf9f-58926f1b0c30"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -919,7 +919,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""df4255e1-9c78-4292-9def-a3389ba43dbd"",
+                    ""id"": ""9d2b610f-6eb9-42ac-9b0b-7d16b11c2159"",
                     ""path"": ""<Keyboard>/b"",
                     ""interactions"": """",
                     ""processors"": """",
