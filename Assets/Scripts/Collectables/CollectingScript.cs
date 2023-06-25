@@ -18,46 +18,45 @@ namespace Collectables
             resource.Amount = amount;
             resource.Sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
             inventory = FindObjectOfType<Inventory>();
-            StartCoroutine(CollectableAfterTime(2));
         }
 
         public int Amount
         {
             get => amount;
-            set  {
-            amount = value;
-            resource.Amount = value;
-        }
-    }
-
-    //player can walk over collectable
-    //collectible should be destroyed if collected
-    //should be dropable
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Body"))
-        {
+            set
             {
-                resource.Amount = inventory.Add(resource.copy());
-                if (resource.Amount <= 0)
+                amount = value;
+                resource.Amount = value;
+            }
+        }
+
+        //player can walk over collectable
+        //collectible should be destroyed if collected
+        //should be dropable
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Body"))
+            {
                 {
-                    Destroy(gameObject);
+                    resource.Amount = inventory.Add(resource.copy());
+                    if (resource.Amount <= 0)
+                    {
+                        Destroy(gameObject);
+                    }
                 }
             }
         }
-    }
 
-    IEnumerator CollectableAfterTime(int seconds)
-    {
-        int counter = seconds;
-        while (counter > 0)
+        IEnumerator CollectableAfterTime(int seconds)
         {
-            yield return new WaitForSeconds(1);
-            counter--;
+            int counter = seconds;
+            while (counter > 0)
+            {
+                yield return new WaitForSeconds(1);
+                counter--;
+            }
+
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
         }
-
-        gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
-}
-
 }

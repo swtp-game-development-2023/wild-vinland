@@ -436,7 +436,7 @@ Transform:
   - {fileID: 4658300128307500733}
   - {fileID: 764852227533504385}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &1117200554720009966
 Grid:
@@ -475,20 +475,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933924c1f4673fe4a94cd2529da47bcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  edgeLength: 32
+  edgeLength: 64
   useSeed: 0
-  generateWorldOnStart: 1
+  generateWorldOnStart: 0
   seed: 0
   permittedDeviationFromMid: 0.05
-  percentageOfMountain: 0.112
-  percentOfLand: 0.232
-  smoothnessOfCoast: 0.057
-  percentOfWood: 0.194
-  percentOfStone: 0.161
+  percentageOfMountain: 0.15
+  percentOfLand: 0.45
+  smoothnessOfCoast: 0.3
+  percentOfWood: 0.5
+  percentOfStone: 0.5
   percentOfOre: 0.1
   percentOfFlowers: 0.5
   treePrefab:
   - {fileID: 4566267646329848832, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
+  - {fileID: 4566267646329848832, guid: 482a4e2a431eeed47ae3a697e399417c, type: 3}
   orePrefab: {fileID: 8937067806647536911, guid: bca6b27a99cd5e142b7d2a9c32d21197, type: 3}
   stonePrefabs:
   - {fileID: 6156401229786571731, guid: 4364735cbff7f4f4889655ed4b328cd4, type: 3}

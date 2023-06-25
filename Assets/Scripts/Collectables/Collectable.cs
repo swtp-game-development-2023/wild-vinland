@@ -8,7 +8,7 @@ namespace Collectables
 {
     public abstract class Collectable : ScriptableObject
     {
-        private int _id = (int)CollectableName.Empty;
+        private int _id = -1;
         [SerializeField] protected int maxAmount = 1;
         [SerializeField] protected int amount;
 
@@ -47,6 +47,14 @@ namespace Collectables
                     _id = value;
                 }
             }
+        }
+        
+        public int Remove(int amount)
+        {
+            int removeValue = Math.Min(this.amount, amount);
+            this.amount -= removeValue;
+            int remainder = amount - removeValue;
+            return remainder;
         }
 
         public bool IsMaxAmount()
