@@ -99,11 +99,7 @@ public class PlayerInput : MonoBehaviour
         {
             buildMenu.ToggleBuildMenu();
         }
-
-        if (input.UI.ShipMenu.WasPressedThisFrame() && !pauseMenu.isPaused && shipMenu.isCollided)
-        {
-            shipMenu.ToggleShipMenu();
-        }
+        
         if (pauseMenu.isPaused)
         {
             inventoryMenu.CloseInventory();
@@ -111,23 +107,6 @@ public class PlayerInput : MonoBehaviour
             shipMenu.CloseShipMenu();
         }
 
-    }
-    
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Dock"))
-        {
-            shipMenu.isCollided = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Dock"))
-        {
-            shipMenu.isCollided = false;
-            shipMenu.CloseShipMenu();
-        }
     }
 
     //FixedUpdate() is called a fixed framerate

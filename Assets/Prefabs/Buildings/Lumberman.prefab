@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 263586228341210405, guid: 85ee20aeec6c59042b26a15ed0d3f2c4, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 263586228341210405, guid: 85ee20aeec6c59042b26a15ed0d3f2c4, type: 3}
       propertyPath: m_AnchorMax.x
@@ -252,7 +252,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lumberman
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8526370981950594493, guid: 85ee20aeec6c59042b26a15ed0d3f2c4, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1713357817771001708, guid: 85ee20aeec6c59042b26a15ed0d3f2c4, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6022865981855558702, guid: 85ee20aeec6c59042b26a15ed0d3f2c4, type: 3}
     m_AddedGameObjects: []
