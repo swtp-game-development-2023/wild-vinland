@@ -126,6 +126,7 @@ public class PlayerInput : MonoBehaviour
         if (other.CompareTag("Dock"))
         {
             shipMenu.isCollided = false;
+            shipMenu.CloseShipMenu();
         }
     }
 

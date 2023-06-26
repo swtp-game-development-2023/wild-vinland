@@ -212,10 +212,14 @@ PrefabInstance:
     - target: {fileID: 1827538372833680183, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 70360849a23c6f2479728002c89849e8, type: 3}
+      objectReference: {fileID: 1709118631, guid: 7d68eaee7cc708841a727f058e68ba53, type: 3}
     - target: {fileID: 1827538372833680183, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
       propertyPath: m_Color.a
       value: 0.12156863
+      objectReference: {fileID: 0}
+    - target: {fileID: 1882065938949185639, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
+      propertyPath: m_Name
+      value: BtnBuildShip
       objectReference: {fileID: 0}
     - target: {fileID: 2030913289745001009, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
       propertyPath: m_Interactable
@@ -225,9 +229,37 @@ PrefabInstance:
       propertyPath: m_Colors.m_ColorMultiplier
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2030913289745001009, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2030913289745001009, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2030913289745001009, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1857957104802460975}
+    - target: {fileID: 2030913289745001009, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2030913289745001009, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_enabled
+      objectReference: {fileID: 0}
+    - target: {fileID: 2030913289745001009, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.Behaviour, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2030913289745001009, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3120660577807104081, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
       propertyPath: m_text
-      value: '?'
+      value: Ship
       objectReference: {fileID: 0}
     - target: {fileID: 3120660577807104081, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
       propertyPath: m_fontSize
@@ -235,7 +267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5218615258229357559, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
       propertyPath: m_Name
-      value: BuildingSlot (6)
+      value: Ship
       objectReference: {fileID: 0}
     - target: {fileID: 6862237391488486148, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
       propertyPath: m_Pivot.x
@@ -336,8 +368,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1882065938949185639, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1857957104802460975}
   m_SourcePrefab: {fileID: 100100000, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
+--- !u!1 &1328812201180158650 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1882065938949185639, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}
+  m_PrefabInstance: {fileID: 607585005612432093}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1857957104802460975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328812201180158650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df0aa9e42a6177f4a9e1d5b45741f872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingPrefab: {fileID: 0}
+  requiredWood: 0
+  requiredStone: 0
+  requiredOre: 0
 --- !u!224 &6292940294165033433 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6862237391488486148, guid: f07a81738b109be48bec5d3a2a0df2e0, type: 3}

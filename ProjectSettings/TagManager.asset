@@ -22,6 +22,7 @@ TagManager:
   - Tree
   - BuildBtn
   - Dock
+  - Ship
   layers:
   - Default
   - TransparentFX
