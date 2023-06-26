@@ -117,6 +117,15 @@ public class Inventory : MonoBehaviour
         return _inventory[index].Remove(amount);
     }
 
+    public void ClearSlots()
+    {
+        _inventory.Clear();
+        for (int i = 0; i < inventorySize; i++)
+        {
+            _inventory.Add(ScriptableObject.CreateInstance<EmptySlot>());
+        }
+    }
+
     ///<summary>
     /// Function just to Test adding Coffee Items, calling ToString(), Deleting one calling ToString() again. Demo for Inventory. 
     ///</summary>
@@ -145,21 +154,27 @@ public class Inventory : MonoBehaviour
     public void DeSerialize(SerializedInventory serializedInventory)
     {
         inventorySize = serializedInventory.inventorySize;
+        Resource resource;
+        resource = ScriptableObject.CreateInstance<Resource>();
         for (int i = 0; i < serializedInventory.inventory.Count; i++)
         {
-            int item = serializedInventory.inventory[i];
-            switch (item)
+            resource.ID = serializedInventory.inventory[i];
+            resource.Amount = serializedInventory.amount[i];
+            switch (resource.ID)
             {
                 case (int)CollectableName.Wood:
-                    
+                    resource.Sprite = Resources.Load<Sprite>("Assets/Sprites/Icons_Wood.png");
                     break;
                 case (int)CollectableName.Stone:
+                    resource.Sprite = Resources.Load<Sprite>("Assets/Sprites/Icons_Stone.png");
                     break;
                 case (int)CollectableName.Ore:
+                    resource.Sprite = Resources.Load<Sprite>("Assets/Sprites/Icons_Ore.png");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            this.Add(resource.copy());
         }
     }
 

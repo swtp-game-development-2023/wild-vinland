@@ -17,7 +17,17 @@ namespace World
             foreach (var tilemap in maps)
             {
                 tilemap.ClearAllTiles();
+
+                if(tilemap.transform.childCount > 0)
+                {
+                    foreach (Transform gamobjectInTilemap in tilemap.transform)
+                    {
+                        Destroy(gamobjectInTilemap.gameObject);
+                    }
+                }
             }
+            SetPlayerPosition(new Vector3(0,0,0));
+            GetPlayer().GetComponent<Inventory>().ClearSlots();
         }
 
         ///<summary>
