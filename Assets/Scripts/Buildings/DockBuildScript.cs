@@ -16,8 +16,12 @@ public class DockBuildScript : BuildScript
         seaMap = Grid.transform.Find("Sea").gameObject.GetComponent<Tilemap>();
     }
     
-    protected new void OnDisable()
+    protected override void OnDisable()
     {
+        if (isBuild)
+        {
+            objBuilding.GetComponent<CircleCollider2D>().enabled = true;
+        }
         base.OnDisable();
     }
     

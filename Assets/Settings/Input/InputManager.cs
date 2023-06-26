@@ -474,6 +474,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShipMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""b72e1a39-f58c-496c-b111-2ec913e6a5a0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -927,6 +936,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""BuildMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""40500c0c-5599-4f7b-9ed4-a8cbe276789c"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ShipMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1020,6 +1040,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_UI_save = m_UI.FindAction("save", throwIfNotFound: true);
         m_UI_load = m_UI.FindAction("load", throwIfNotFound: true);
         m_UI_BuildMenu = m_UI.FindAction("BuildMenu", throwIfNotFound: true);
+        m_UI_ShipMenu = m_UI.FindAction("ShipMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1204,6 +1225,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_save;
     private readonly InputAction m_UI_load;
     private readonly InputAction m_UI_BuildMenu;
+    private readonly InputAction m_UI_ShipMenu;
     public struct UIActions
     {
         private @InputManager m_Wrapper;
@@ -1221,6 +1243,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @save => m_Wrapper.m_UI_save;
         public InputAction @load => m_Wrapper.m_UI_load;
         public InputAction @BuildMenu => m_Wrapper.m_UI_BuildMenu;
+        public InputAction @ShipMenu => m_Wrapper.m_UI_ShipMenu;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1269,6 +1292,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @BuildMenu.started += instance.OnBuildMenu;
             @BuildMenu.performed += instance.OnBuildMenu;
             @BuildMenu.canceled += instance.OnBuildMenu;
+            @ShipMenu.started += instance.OnShipMenu;
+            @ShipMenu.performed += instance.OnShipMenu;
+            @ShipMenu.canceled += instance.OnShipMenu;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1312,6 +1338,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @BuildMenu.started -= instance.OnBuildMenu;
             @BuildMenu.performed -= instance.OnBuildMenu;
             @BuildMenu.canceled -= instance.OnBuildMenu;
+            @ShipMenu.started -= instance.OnShipMenu;
+            @ShipMenu.performed -= instance.OnShipMenu;
+            @ShipMenu.canceled -= instance.OnShipMenu;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1401,5 +1430,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnSave(InputAction.CallbackContext context);
         void OnLoad(InputAction.CallbackContext context);
         void OnBuildMenu(InputAction.CallbackContext context);
+        void OnShipMenu(InputAction.CallbackContext context);
     }
 }

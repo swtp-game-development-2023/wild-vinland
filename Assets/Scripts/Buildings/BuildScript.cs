@@ -13,13 +13,13 @@ namespace Buildings
     public abstract class BuildScript : MonoBehaviour
     {
         [SerializeField] protected GameObject buildingPrefab;
-        private GameObject objBuilding;
+        protected GameObject objBuilding;
         private List<SpriteRenderer> buildingSprites;
         protected Grid Grid;
         private Camera mainCamera;
         private Tilemap decoMap;
         protected bool isBuild;
-        private CollidingChecker collidingChecker;
+        protected CollidingChecker collidingChecker;
         private readonly List<CollectableName> collectableNames = new List<CollectableName>((CollectableName[])Enum.GetValues(typeof(CollectableName)));
 
         [SerializeField]
@@ -58,7 +58,7 @@ namespace Buildings
             collidingChecker = objBuilding.GetComponent<CollidingChecker>();
         }
 
-        protected void OnDisable()
+        protected virtual void OnDisable()
         {
             if (!isBuild) Destroy(objBuilding);
             enabled = false;
