@@ -104,7 +104,6 @@ public class PlayerInput : MonoBehaviour
         {
             inventoryMenu.CloseInventory();
             buildMenu.CloseBuildMenu();
-            shipMenu.CloseShipMenu();
         }
 
     }

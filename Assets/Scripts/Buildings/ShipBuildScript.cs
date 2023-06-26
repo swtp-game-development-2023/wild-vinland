@@ -24,7 +24,7 @@ public class ShipBuildScript : MonoBehaviour
 
     private void OnEnable()
     {
-        dock = transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject;
+        dock = transform.root.gameObject;
         Grid = FindObjectOfType<Grid>();
     }
     
