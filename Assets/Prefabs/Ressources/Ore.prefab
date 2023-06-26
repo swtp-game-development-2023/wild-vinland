@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3307591487340392057}
   - component: {fileID: 2685647415950483087}
   - component: {fileID: 965662520358490488}
-  - component: {fileID: 620723051127540342}
+  - component: {fileID: 3844000057777159232}
   m_Layer: 0
   m_Name: Ore
   m_TagString: Ore
@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3307591487340392057
 SpriteRenderer:
@@ -153,7 +153,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.085, y: 0.097}
   m_EdgeRadius: 0
---- !u!114 &620723051127540342
+--- !u!114 &3844000057777159232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

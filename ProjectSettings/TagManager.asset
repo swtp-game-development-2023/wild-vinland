@@ -17,6 +17,10 @@ TagManager:
   - Ore
   - Stone
   - Wood
+  - Body
+  - Hitbox
+  - Tree
+  - BuildBtn
   layers:
   - Default
   - TransparentFX
@@ -72,9 +76,9 @@ TagManager:
   - name: Farmabels
     uniqueID: 1031047101
     locked: 0
-  - name: Buildings
-    uniqueID: 2092585909
-    locked: 0
   - name: Player
     uniqueID: 4184631269
+    locked: 0
+  - name: Buildings
+    uniqueID: 2092585909
     locked: 0

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public enum CollectableName
 {
-    Empty = -1,
     Wood,
     Stone,
     Ore

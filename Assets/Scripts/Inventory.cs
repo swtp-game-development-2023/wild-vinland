@@ -13,7 +13,12 @@ public class Inventory : MonoBehaviour
 {
     public class EmptySlot : Collectable
     {
+        private void Awake()
+        {
+            ID = -1;
+        }
     }
+
     [SerializeField] private int inventorySize = 10;
 
     public int InventorySize
@@ -35,22 +40,27 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public int Contains(Collectable c)
+    public int ContainsStackableSlot(Collectable c)
     {
-        return _inventory.FindIndex(c2 => c2 != null && c2.ID == c.ID && c2.Amount < c.MaxAmount);
+        return _inventory.FindIndex(c2 => c2 != null && c.ID == c2.ID && c2.Amount < c2.MaxAmount);
+    }
+
+    public int Contains(CollectableName collectableName)
+    {
+        return _inventory.FindIndex(c => c != null && c.ID == (int)collectableName);
     }
 
     public int Add(Collectable c)
     {
-        int index = Contains(c);
+        int index = ContainsStackableSlot(c);
         if (index != -1 && !_inventory[index].IsMaxAmount())
         {
             c.Amount = Add(c, index);
         }
 
         if (c.Amount <= 0) return 0;
-        index = Contains(ScriptableObject.CreateInstance<EmptySlot>());
-        
+        index = ContainsStackableSlot(ScriptableObject.CreateInstance<EmptySlot>());
+
         if (index != -1)
         {
             var newSlot = c.copy();
@@ -58,6 +68,7 @@ public class Inventory : MonoBehaviour
             _inventory[index] = newSlot;
             return Add(c);
         }
+
         return c.Amount;
     }
 
@@ -65,45 +76,45 @@ public class Inventory : MonoBehaviour
     {
         return _inventory.All(c => c.IsMaxAmount());
     }
+
     public int Add(Collectable c, int i)
     {
         return _inventory[i].Add(c.Amount);
     }
+
     public Collectable Get(int i)
     {
         return _inventory[i];
     }
 
-    /*public void Remove(int index)
+    public int GetTotalAmount(CollectableName collectableName)
     {
-        Remove(index, _inventory[index].Amount);
-    }*/
-
-    /*public void Remove(int index, int amount)
-    {
-        if (!IsSlotEmpty(index) && amount < _inventory[index].Amount)
-        {
-            _inventory[index].Amount -= amount;
-        }
-        else if (!IsSlotEmpty(index) && (amount >= _inventory[index].Amount))
-        {
-            _inventory[index] = null;
-        }
-        else
-        {
-            throw new ArgumentOutOfRangeException(nameof(amount), amount,
-                "Value has to be between 0 and the current amount of the Item: " +_inventory[index].Amount);
-        }
-    }*/
-
-    // Start is called before the first frame update
-    void Start()
-    {
+        return _inventory.FindAll(c => c.ID == (int)collectableName).Sum(c => c.Amount);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Remove(CollectableName collectableName, int amount)
     {
+        int index = Contains(collectableName);
+        if (index == -1 || _inventory[index].Amount <= 0)
+            throw new Exception("Try to remove more from Inventory than it contains");
+        var rest = Remove(amount, index);
+
+        if ( _inventory[index].Amount <= 0)
+        {
+            _inventory[index] = ScriptableObject.CreateInstance<EmptySlot>();
+        }
+        
+        if (0 < rest)
+        {
+            Remove(collectableName, rest);
+        }
+
+
+    }
+
+    public int Remove(int amount, int index)
+    {
+        return _inventory[index].Remove(amount);
     }
 
     ///<summary>
