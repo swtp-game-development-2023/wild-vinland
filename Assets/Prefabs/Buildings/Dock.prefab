@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 2697715330933840682}
   - component: {fileID: 3819184174827633061}
   - component: {fileID: 7067528267120389205}
+  - component: {fileID: 4741707132919460331}
   m_Layer: 0
   m_Name: Dock
   m_TagString: Dock
@@ -377,6 +378,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e21adcd01cfeb9f4d9b4e97edc023f0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &4741707132919460331
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8526370981950594493}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.2
 --- !u!1001 &4171093833367380598
 PrefabInstance:
   m_ObjectHideFlags: 0
