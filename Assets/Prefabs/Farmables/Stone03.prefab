@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 5658423146773661967}
   - component: {fileID: 3133101800363623772}
   - component: {fileID: 7447403993826093820}
-  - component: {fileID: 2438597610297633398}
   - component: {fileID: 254291004157074819}
+  - component: {fileID: 7551367147230017859}
   m_Layer: 0
   m_Name: Stone03
   m_TagString: Stone
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -110336027
-  m_SortingLayer: 8
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 2059876715, guid: 32e3ad867f2f7224cad82645f3385368, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -132,8 +132,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.1499337}
   m_EdgeRadius: 0
---- !u!70 &2438597610297633398
-CapsuleCollider2D:
+--- !u!114 &254291004157074819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886035082477310322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ce4c54707bf97438e96eac28b7a5ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 8
+  resourceAmount: 6
+  prefab: {fileID: 1567678664710285137, guid: c2683e1d837a90842b93ce0c60f4d9b4, type: 3}
+--- !u!60 &7551367147230017859
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -164,21 +179,28 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.008388601, y: -0.016217932}
-  m_Size: {x: 0.087298885, y: 0.10295758}
-  m_Direction: 0
---- !u!114 &254291004157074819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886035082477310322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07ce4c54707bf97438e96eac28b7a5ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 8
-  resourceAmount: 6
-  prefab: {fileID: 1567678664710285137, guid: c2683e1d837a90842b93ce0c60f4d9b4, type: 3}
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.05906239, y: 0.11914612}
+      - {x: -0.07760083, y: 0.0849502}
+      - {x: -0.079036064, y: 0.03301166}
+      - {x: -0.06314778, y: 0.02144829}
+      - {x: 0.044793665, y: 0.013931589}
+      - {x: 0.054976996, y: 0.023490982}
+      - {x: 0.07634561, y: 0.03642563}
+      - {x: 0.075914614, y: 0.05710342}
+      - {x: 0.059817012, y: 0.07215923}
+      - {x: 0.04840652, y: 0.08818042}
+      - {x: 0.026644718, y: 0.09250082}
+      - {x: 0.01365844, y: 0.11812475}
+  m_UseDelaunayMesh: 0

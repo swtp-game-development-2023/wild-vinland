@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3384104793605010774}
   - component: {fileID: 3345085601747370966}
   - component: {fileID: 7826284045832663897}
-  - component: {fileID: 3195840520964321574}
   - component: {fileID: 9065257313626500063}
+  - component: {fileID: 9018146114180221063}
   m_Layer: 0
   m_Name: Ore
   m_TagString: Ore
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -110336027
-  m_SortingLayer: 8
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 2109919865, guid: 32e3ad867f2f7224cad82645f3385368, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -132,8 +132,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.15125768, y: 0.13085896}
   m_EdgeRadius: 0
---- !u!70 &3195840520964321574
-CapsuleCollider2D:
+--- !u!114 &9065257313626500063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8937067806647536911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ce4c54707bf97438e96eac28b7a5ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  resourceAmount: 2
+  prefab: {fileID: 7805607401458173747, guid: c48a54248dd74e14d82ab7331cf900ea, type: 3}
+--- !u!60 &9018146114180221063
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -164,21 +179,22 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0019427314, y: -0.027683988}
-  m_Size: {x: 0.058977738, y: 0.061891854}
-  m_Direction: 0
---- !u!114 &9065257313626500063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8937067806647536911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07ce4c54707bf97438e96eac28b7a5ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 10
-  resourceAmount: 2
-  prefab: {fileID: 7805607401458173747, guid: c48a54248dd74e14d82ab7331cf900ea, type: 3}
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.057432428, y: 0.1098498}
+      - {x: -0.07047148, y: 0.05156458}
+      - {x: -0.048997, y: 0.019558571}
+      - {x: 0.05548648, y: 0.021063084}
+      - {x: 0.077993974, y: 0.041063078}
+      - {x: 0.06996997, y: 0.109348305}
+  m_UseDelaunayMesh: 0
