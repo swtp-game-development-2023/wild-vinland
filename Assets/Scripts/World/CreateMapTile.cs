@@ -1,4 +1,6 @@
-using UnityEditor.Tilemaps;
+/*
+ TODO ask tim why?
+ using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -16,4 +18,4 @@ public class CreateMapTile
         mapTile.Type = 0;
         return mapTile;
     }
-}
+}*/

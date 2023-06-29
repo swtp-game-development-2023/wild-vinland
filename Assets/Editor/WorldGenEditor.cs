@@ -4,7 +4,7 @@ using UnityEngine;
 namespace WorldGeneration
 {
     [CustomEditor(typeof(WorldGenerator))]
-    public class WorldGenInterface : Editor
+    public class WorldGenEditor : Editor
     {
         public override void OnInspectorGUI()
         {
