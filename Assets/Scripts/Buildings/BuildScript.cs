@@ -36,7 +36,7 @@ namespace Buildings
 
         public Dictionary<CollectableName, int> RequiredResources => requiredResources;
 
-        private void SetRequiredResources()
+        public void SetRequiredResources()
         {
             requiredResources = new Dictionary<CollectableName, int> { { CollectableName.Wood, requiredWood  },
                 { CollectableName.Ore, requiredOre }, { CollectableName.Stone, requiredStone } };
