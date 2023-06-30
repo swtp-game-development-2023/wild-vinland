@@ -8,6 +8,7 @@ stages:
 variables:
   BUILD_NAME: wild-vinland
   UNITY_ACTIVATION_FILE: ./unity3d.alf
+  UNITY_VERSION: "2022.2.16f1"
   IMAGE: unityci/editor # https://hub.docker.com/r/unityci/editor
   IMAGE_VERSION: 1 # This will automatically use latest v1.x.x, see https://github.com/game-ci/docker/releases
   UNITY_DIR: $CI_PROJECT_DIR # this needs to be an absolute path. Defaults to the root of your tree.
