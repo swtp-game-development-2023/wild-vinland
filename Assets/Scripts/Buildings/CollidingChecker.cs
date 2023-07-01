@@ -25,12 +25,18 @@ public class CollidingChecker : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        collider2Ds.Push(other);
+        if (other is BoxCollider2D)
+        {
+            collider2Ds.Push(other);
+        }
     }
     
 
     void OnTriggerExit2D(Collider2D other)
     {
-        collider2Ds.Pop();
+        if (other is BoxCollider2D)
+        {
+            collider2Ds.Pop();   
+        }
     }
 }

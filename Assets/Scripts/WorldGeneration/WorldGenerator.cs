@@ -294,15 +294,15 @@ public class WorldGenerator : MonoBehaviour
 
     private WorldGenerator SetTilesInUnity()
     {
-        string tilePath = "Assets/Sprites/World/MapTiles/";
-        TileBase seaTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_76.asset");
-        TileBase grasTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_17.asset");
-        TileBase mountainTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_149.asset");
-        TileBase beachTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_154.asset");
+        string tilePath = "World/MapTiles/";
+        TileBase seaTile = Resources.Load<TileBase>(tilePath + "MasterSimple_76");
+        TileBase grasTile = Resources.Load<TileBase>(tilePath + "MasterSimple_17");
+        TileBase mountainTile = Resources.Load<TileBase>(tilePath + "MasterSimple_149");
+        TileBase beachTile = Resources.Load<TileBase>(tilePath + "MasterSimple_154");
         TileBase[] flowerTiles =
         {
-            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_7.asset"),
-            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_8.asset")
+            Resources.Load<TileBase>(tilePath + "MasterSimple_7"),
+            Resources.Load<TileBase>(tilePath + "MasterSimple_8")
         };
 
         int x = 0;
