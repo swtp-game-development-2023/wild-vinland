@@ -20,7 +20,7 @@ public class LoadMenuScrollList : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _directory = new DirectoryInfo(Application.dataPath + "/Saves");
+        _directory = new DirectoryInfo(Application.persistentDataPath + "/Saves");
         
         if (_directory.Exists)
         {

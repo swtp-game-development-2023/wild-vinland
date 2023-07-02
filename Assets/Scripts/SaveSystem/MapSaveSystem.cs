@@ -35,7 +35,7 @@ public class MapSaveSystem : MonoBehaviour
         _decoMap = transform.Find("Deco").gameObject.GetComponent<Tilemap>();
         _unitMap = transform.Find("Buildings").gameObject.GetComponent<Tilemap>();
         _inventory = GameObject.Find("Player").GetComponent<Inventory>();
-
+        
         if (UILoadGameDropBox.IsFilled)
         {
             LoadMap(UILoadGameDropBox.SaveGameName);
@@ -95,8 +95,8 @@ public class MapSaveSystem : MonoBehaviour
         
         String json = JsonUtility.ToJson(newSave, true);
         // Saves the SaveGame object as Json textfile, second parameter formats the Json in a more readable format if true, at cost of bigger file size
-        System.IO.Directory.CreateDirectory(Application.dataPath + "/Saves");
-        File.WriteAllText(Application.dataPath + "/Saves/worldmap_sav_" + saveName + ".json", json);
+        System.IO.Directory.CreateDirectory(Application.persistentDataPath + "/Saves");
+        File.WriteAllText(Application.persistentDataPath + "/Saves/sav_" + saveName + ".json", json);
         // Writes the Json File to disk inside the Assets/save folder (folder structure needs to exit)
 
         IEnumerable<PositionedTile> GetTilesFromMap(Tilemap map, TileType tiletype)
@@ -118,7 +118,7 @@ public class MapSaveSystem : MonoBehaviour
 
     public void LoadMap()
     {
-        LoadMap("worldmap_sav_" + _levelIndex + ".json");
+        LoadMap("sav_" + _levelIndex + ".json");
     }
     ///<summary>
     /// Trys to load a Savegame from path (index set in the _levelIndex field): Assets/saves/worldmap_sav_<index> 
@@ -127,7 +127,7 @@ public class MapSaveSystem : MonoBehaviour
     {
         try
         {
-            string json = File.ReadAllText(Application.dataPath + "/Saves/" + saveGameName );
+            string json = File.ReadAllText(Application.persistentDataPath + "/Saves/" + saveGameName );
             SaveGame newLoad = JsonUtility.FromJson<SaveGame>(json);
 
             WorldHelper.ClearMap();
@@ -181,8 +181,7 @@ public class MapSaveSystem : MonoBehaviour
         }
         catch (System.Exception)
         {
-            throw;
-            Debug.Log("Gameworld Save File not Found under: " + saveGameName);
+            Debug.Log("Gameworld Save File not Found under: "+Application.persistentDataPath + "/Saves/sav_" + saveGameName);
             return;
         }
     }
