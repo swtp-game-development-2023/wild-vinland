@@ -119,10 +119,13 @@ public class Inventory : MonoBehaviour
 
     public void ClearSlots()
     {
-        _inventory.Clear();
-        for (int i = 0; i < inventorySize; i++)
+        if (null != _inventory)
         {
-            _inventory.Add(ScriptableObject.CreateInstance<EmptySlot>());
+            _inventory.Clear();
+            for (int i = 0; i < inventorySize; i++)
+            {
+                _inventory.Add(ScriptableObject.CreateInstance<EmptySlot>());
+            }   
         }
     }
 

@@ -1,5 +1,4 @@
-/*
- TODO ask tim why?
+#if ( UNITY_EDITOR )
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -18,4 +17,5 @@ public class CreateMapTile
         mapTile.Type = 0;
         return mapTile;
     }
-}*/
+}
+#endif

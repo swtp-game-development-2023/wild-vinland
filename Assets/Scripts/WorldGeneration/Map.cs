@@ -124,7 +124,7 @@ namespace WorldGeneration
                     case (int)EBiomTileTypes.Beach:
                         stringBuilder.Append("[ B ]");
                         break;
-                    case (int)EBiomTileTypes.Gras:
+                    case (int)EBiomTileTypes.Grass:
                         stringBuilder.Append("[ G ]");
                         break;
                     case (int)EBiomTileTypes.Mountain:
@@ -140,13 +140,13 @@ namespace WorldGeneration
             {
                 switch (StackedMap[(int)EBiomTileTypes.Ressources][i])
                 {
-                    case (int)ESpecialTiles.Wood:
+                    case (int)EGameObjectType.Tree:
                         stringBuilder.Append("[ T ]");
                         break;
-                    case (int)ESpecialTiles.Ore:
+                    case (int)EGameObjectType.Ore:
                         stringBuilder.Append("[ O ]");
                         break;
-                    case (int)ESpecialTiles.Stone:
+                    case (int)EGameObjectType.Stone01:
                         stringBuilder.Append("[ S ]");
                         break;
                     default:

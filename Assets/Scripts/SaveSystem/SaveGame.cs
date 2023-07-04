@@ -10,7 +10,8 @@ using UnityEngine;
 public class SaveGame
 {
     public int LevelIndex;
-    public List<PositionedTile> SeaTiles, BeachTiles, GrassTiles, MountainTiles, FarmableTiles, DecoTiles, UnitTiles;
+    public List<PositionedTile> SeaTiles, BeachTiles, GrassTiles, MountainTiles, DecoTiles;
+    public List<PositionedGameObject> FarmableObjects, UnitObjects;
     public SerializedInventory Inventory;
     public Vector3 PlayerPosition;
     public Quaternion PlayerRotation;

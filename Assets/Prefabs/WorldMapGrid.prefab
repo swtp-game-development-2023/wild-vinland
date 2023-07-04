@@ -436,7 +436,7 @@ Transform:
   - {fileID: 4658300128307500733}
   - {fileID: 764852227533504385}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &1117200554720009966
 Grid:
@@ -463,6 +463,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelIndex: 0
+  orePrefab: {fileID: 8937067806647536911, guid: bca6b27a99cd5e142b7d2a9c32d21197, type: 3}
+  treePrefab:
+  - {fileID: 4566267646329848832, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
+  - {fileID: 4566267646329848832, guid: 482a4e2a431eeed47ae3a697e399417c, type: 3}
+  stonePrefabs:
+  - {fileID: 6156401229786571731, guid: 4364735cbff7f4f4889655ed4b328cd4, type: 3}
+  - {fileID: 6981901538108201441, guid: 7262642611e15b24d8ff7557f0d8af5b, type: 3}
+  - {fileID: 886035082477310322, guid: 869fe66abd12bf045a07f945afbeb495, type: 3}
+  buildingPrefabs:
+  - {fileID: 8526370981950594493, guid: 85ee20aeec6c59042b26a15ed0d3f2c4, type: 3}
+  - {fileID: 4088997613552050299, guid: 43f701a837456fe4ab0499a87df8c880, type: 3}
+  - {fileID: 5612150732984137243, guid: f420aa843257c87469b34bd3708d92c6, type: 3}
+  - {fileID: 5712280442731200174, guid: bdf39753fc2c79a4e9f8caa6e5400ba1, type: 3}
+  - {fileID: 9121574842424298668, guid: b3c999ee52daa7447b6b089acb6af617, type: 3}
 --- !u!114 &8081589437241739608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,7 +740,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2092585909
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 4
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

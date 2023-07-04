@@ -2,9 +2,8 @@
 {
     public enum ESpecialTiles
     {
-        Wood = 1,
-        Ore = 2,
-        Stone = 3,
-        Flowers = 4
+        WildMeadow = 101,
+        HighGrass = 100,
+        Flowers = 102
     }
 }

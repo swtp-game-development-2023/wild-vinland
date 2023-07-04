@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 using World;
+using WorldGeneration;
 
 ///<summary>
 /// Class with basic load, clear and save functionality
@@ -18,7 +19,10 @@ public class MapSaveSystem : MonoBehaviour
     // index to easly name different Save Files
 
     private Tilemap _seaMap, _beachMap, _grassMap, _mountainMap, _farmableMap, _decoMap, _unitMap;
+    public GameObject orePrefab;
+    public GameObject[] treePrefab, stonePrefabs, buildingPrefabs;
     private Inventory _inventory;
+    private TilePlacer tilePlacer;
     
     private InputManager _input = null;
 
@@ -34,6 +38,8 @@ public class MapSaveSystem : MonoBehaviour
         _farmableMap = transform.Find("Farmables").gameObject.GetComponent<Tilemap>();
         _decoMap = transform.Find("Deco").gameObject.GetComponent<Tilemap>();
         _unitMap = transform.Find("Buildings").gameObject.GetComponent<Tilemap>();
+        tilePlacer = new TilePlacer(_seaMap, _beachMap, _grassMap, _mountainMap, _decoMap);
+
         _inventory = GameObject.Find("Player").GetComponent<Inventory>();
 
         if (UILoadGameDropBox.IsFilled)
@@ -82,13 +88,15 @@ public class MapSaveSystem : MonoBehaviour
     {
         SaveGame newSave = new SaveGame();
         
-        newSave.SeaTiles = GetTilesFromMap(_seaMap, TileType.Sea).ToList();
-        newSave.BeachTiles = GetTilesFromMap(_beachMap, TileType.Beach).ToList();
-        newSave.GrassTiles = GetTilesFromMap(_grassMap, TileType.Grass).ToList();
-        newSave.MountainTiles = GetTilesFromMap(_mountainMap, TileType.Mountain).ToList();
-        newSave.FarmableTiles = GetTilesFromMap(_farmableMap, TileType.Farmable).ToList();
-        newSave.DecoTiles = GetTilesFromMap(_decoMap, TileType.Deco).ToList();
-        newSave.UnitTiles = GetTilesFromMap(_unitMap, TileType.Player).ToList();
+        newSave.SeaTiles = GetTilesFromMap(_seaMap).ToList();
+        newSave.BeachTiles = GetTilesFromMap(_beachMap).ToList();
+        newSave.GrassTiles = GetTilesFromMap(_grassMap).ToList();
+        newSave.MountainTiles = GetTilesFromMap(_mountainMap).ToList();
+        newSave.DecoTiles = GetTilesFromMap(_decoMap).ToList();
+        
+        newSave.FarmableObjects = GetGameObjectsFromMap(_farmableMap).ToList();
+        newSave.UnitObjects = GetGameObjectsFromMap(_unitMap).ToList();
+
         newSave.PlayerPosition = WorldHelper.GetPlayerPositon();
         newSave.PlayerRotation = WorldHelper.GetPlayerRotation();
         newSave.Inventory = _inventory.Serialize();
@@ -96,19 +104,80 @@ public class MapSaveSystem : MonoBehaviour
         String json = JsonUtility.ToJson(newSave, true);
         // Saves the SaveGame object as Json textfile, second parameter formats the Json in a more readable format if true, at cost of bigger file size
         System.IO.Directory.CreateDirectory(Application.dataPath + "/Saves");
-        File.WriteAllText(Application.dataPath + "/Saves/worldmap_sav_" + saveName + ".json", json);
+        File.WriteAllText(Application.dataPath + "/Saves/sav_" + saveName + ".json", json);
         // Writes the Json File to disk inside the Assets/save folder (folder structure needs to exit)
 
-        IEnumerable<PositionedTile> GetTilesFromMap(Tilemap map, TileType tiletype)
+        IEnumerable<PositionedTile> GetTilesFromMap(Tilemap map)
         {
             // gathers the MapTiles and their Positions in the Tilemap to save them as PositionedTile Objects
             foreach (var pos in map.cellBounds.allPositionsWithin)
             {
                 if (map.HasTile(pos))
                 {
-                    var mapTile = map.GetTile<MapTile>(pos);
-                    mapTile.Type = tiletype;
-                    yield return new PositionedTile(pos, mapTile);
+                    MapTile mapTile = map.GetTile<MapTile>(pos);
+                    switch (mapTile.sprite.name)
+                    {
+                        case "MasterSimple_76":
+                            mapTile.Type = EBiomTileTypes.Sea;
+                            yield return new PositionedTile(pos, EBiomTileTypes.Sea);
+                            break;
+                        case "MasterSimple_17":
+                            mapTile.Type = EBiomTileTypes.Grass;
+                            yield return new PositionedTile(pos, EBiomTileTypes.Grass);
+                            break;
+                        case "MasterSimple_149":
+                            mapTile.Type = EBiomTileTypes.Mountain;
+                            yield return new PositionedTile(pos, EBiomTileTypes.Mountain);
+                            break;
+                        case "MasterSimple_154":
+                            mapTile.Type = EBiomTileTypes.Beach;
+                            yield return new PositionedTile(pos, EBiomTileTypes.Beach);
+                            break;
+                        case "MasterSimple_7":
+                            mapTile.SpecialType = ESpecialTiles.HighGrass;
+                            yield return new PositionedTile(pos, ESpecialTiles.HighGrass);
+                            break;
+                        case "MasterSimple_8":
+                            mapTile.SpecialType = ESpecialTiles.Flowers;
+                            yield return new PositionedTile(pos, ESpecialTiles.Flowers);
+                            break;
+                    }
+                    Debug.Log(mapTile.sprite.name);
+                }
+            }
+        }
+        IEnumerable<PositionedGameObject> GetGameObjectsFromMap(Tilemap map)
+        {
+            if(map.transform.childCount > 0)
+            {
+                foreach (Transform gamobjectInTilemap in map.transform)
+                {
+                    EGameObjectType type = EGameObjectType.Tree;
+                    switch (gamobjectInTilemap.gameObject.GetComponent<SpriteRenderer>().sprite.name)
+                    {
+                        case "Tree":
+                            type = EGameObjectType.Tree;
+                            break;
+                        case "Bush":
+                            type = EGameObjectType.Bush;
+                            break;
+                        case "Ore":
+                            type = EGameObjectType.Ore;
+                            break;
+                        case "Stone01":
+                            type = EGameObjectType.Stone01;
+                            break;
+                        case "Stone02":
+                            type = EGameObjectType.Stone02;
+                            break;
+                        case "Stone03":
+                            type = EGameObjectType.Stone03;
+                            break;
+                    }
+                    // TODO check witch type of object
+                    yield return new PositionedGameObject(
+                        gamobjectInTilemap.gameObject.transform.position, 
+                        type);
                 }
             }
         }
@@ -118,7 +187,7 @@ public class MapSaveSystem : MonoBehaviour
 
     public void LoadMap()
     {
-        LoadMap("worldmap_sav_" + _levelIndex + ".json");
+        LoadMap("sav_" + _levelIndex + ".json");
     }
     ///<summary>
     /// Trys to load a Savegame from path (index set in the _levelIndex field): Assets/saves/worldmap_sav_<index> 
@@ -134,42 +203,53 @@ public class MapSaveSystem : MonoBehaviour
 
             List<PositionedTile>[] tilemaps =
             {
-                newLoad.SeaTiles, newLoad.BeachTiles, newLoad.GrassTiles, newLoad.MountainTiles, newLoad.FarmableTiles,
-                newLoad.DecoTiles, newLoad.UnitTiles
+                newLoad.SeaTiles, newLoad.BeachTiles, newLoad.GrassTiles, newLoad.MountainTiles
             };
-
-            foreach (var tilemap in tilemaps)
+            List<PositionedGameObject>[] gameobjectslist =
             {
-                foreach (var savedTile in tilemap)
+                newLoad.FarmableObjects, newLoad.UnitObjects
+            };
+            
+            // Placing regular Tiles
+            foreach (List<PositionedTile> tilemap in tilemaps)
+            {
+                foreach (PositionedTile savedTile in tilemap)
                 {
-                    switch (savedTile.Tile.Type)
+                    tilePlacer.Place((int)savedTile.Type, savedTile.Position);
+                }
+            }
+
+            // Placing special Tiles
+            foreach (var savedTile in newLoad.DecoTiles)
+            {
+                tilePlacer.PlaceDecoration((int)savedTile.SpecialType, savedTile.Position);
+            }
+
+            // Placing GameObjects
+            foreach (List<PositionedGameObject> gameObjects in gameobjectslist)
+            {
+                foreach (PositionedGameObject gameObject in gameObjects)
+                {
+                    switch (gameObject.Type)
                     {
-                        case TileType.Sea:
-                            WorldHelper.SetTile(_seaMap, savedTile);
+                        case EGameObjectType.Tree:
+                            Instantiate(treePrefab[0], gameObject.Position, Quaternion.identity, _farmableMap.transform);
                             break;
-                        case TileType.Beach:
-                            WorldHelper.SetTile(_beachMap, savedTile);
+                        case EGameObjectType.Bush:
+                            Instantiate(treePrefab[1], gameObject.Position, Quaternion.identity, _farmableMap.transform);
                             break;
-                        case TileType.Grass:
-                            WorldHelper.SetTile(_grassMap, savedTile);
+                        case EGameObjectType.Ore:
+                            Instantiate(orePrefab, gameObject.Position, Quaternion.identity, _farmableMap.transform);
                             break;
-                        case TileType.Mountain:
-                            WorldHelper.SetTile(_mountainMap, savedTile);
+                        case EGameObjectType.Stone01:
+                            Instantiate(stonePrefabs[0], gameObject.Position, Quaternion.identity, _farmableMap.transform);
                             break;
-                        case TileType.Farmable:
-                            WorldHelper.SetTile(_farmableMap, savedTile);
+                        case EGameObjectType.Stone02:
+                            Instantiate(stonePrefabs[1], gameObject.Position, Quaternion.identity, _farmableMap.transform);
                             break;
-                        case TileType.Deco:
-                            WorldHelper.SetTile(_decoMap, savedTile);
+                        case EGameObjectType.Stone03:
+                            Instantiate(stonePrefabs[2], gameObject.Position, Quaternion.identity, _farmableMap.transform);
                             break;
-                        case TileType.Player:
-                            WorldHelper.SetTile(_unitMap, savedTile);
-                            break;
-                        case TileType.Animal:
-                            WorldHelper.SetTile(_unitMap, savedTile);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
                     }
                 }
             }
@@ -181,7 +261,6 @@ public class MapSaveSystem : MonoBehaviour
         }
         catch (System.Exception)
         {
-            throw;
             Debug.Log("Gameworld Save File not Found under: " + saveGameName);
             return;
         }

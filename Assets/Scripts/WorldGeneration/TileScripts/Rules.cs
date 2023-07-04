@@ -70,32 +70,32 @@ namespace WorldGeneration.TileScripts
             WoodTileRule = new TileRule(
                 (pos) =>
                 {
-                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)EBiomTileTypes.Gras &&
-                           map.StackedMap[(int)TileType.Deco][pos] == 0 &&
-                           map.StackedMap[(int)TileType.Farmable][pos] == 0;
+                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)EBiomTileTypes.Grass &&
+                           map.StackedMap[(int)EBiomTileTypes.Decoration][pos] == 0 &&
+                           map.StackedMap[(int)EBiomTileTypes.Farmable][pos] == 0;
                 });
 
             StoneTileRule = new TileRule(
                 (pos) =>
                 {
                     return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)EBiomTileTypes.Mountain &&
-                           map.StackedMap[(int)TileType.Mountain][pos] == 0;
+                           map.StackedMap[(int)EBiomTileTypes.Mountain][pos] == 0;
                 });
 
             OreTileRule = new TileRule(
                 (pos) =>
                 {
                     return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)EBiomTileTypes.Mountain &&
-                           map.StackedMap[(int)TileType.Mountain][pos] == 0;
+                           map.StackedMap[(int)EBiomTileTypes.Mountain][pos] == 0;
                 });
 
             //Decoration
             FlowerTileRule = new TileRule(
                 (pos) =>
                 {
-                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)EBiomTileTypes.Gras &&
-                           map.StackedMap[(int)TileType.Deco][pos] == 0 &&
-                           map.StackedMap[(int)TileType.Farmable][pos] == 0;
+                    return _baseRule.Check(pos) && map.BiomTileTypeMap[pos] == (int)EBiomTileTypes.Grass &&
+                           map.StackedMap[(int)EBiomTileTypes.Decoration][pos] == 0 &&
+                           map.StackedMap[(int)EBiomTileTypes.Farmable][pos] == 0;
                 });
 
             //Shape Rules
