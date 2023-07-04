@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using Palmmedia.ReportGenerator.Core.Parser.Analysis;
-using Unity.VisualScripting;
 using WorldGeneration.TileScripts;
 
 namespace WorldGeneration
@@ -127,7 +124,7 @@ namespace WorldGeneration
                     case (int)EBiomTileTypes.Beach:
                         stringBuilder.Append("[ B ]");
                         break;
-                    case (int)EBiomTileTypes.Gras:
+                    case (int)EBiomTileTypes.Grass:
                         stringBuilder.Append("[ G ]");
                         break;
                     case (int)EBiomTileTypes.Mountain:
@@ -143,13 +140,13 @@ namespace WorldGeneration
             {
                 switch (StackedMap[(int)EBiomTileTypes.Ressources][i])
                 {
-                    case (int)ESpecialTiles.Wood:
+                    case (int)EGameObjectType.Tree:
                         stringBuilder.Append("[ T ]");
                         break;
-                    case (int)ESpecialTiles.Ore:
+                    case (int)EGameObjectType.Ore:
                         stringBuilder.Append("[ O ]");
                         break;
-                    case (int)ESpecialTiles.Stone:
+                    case (int)EGameObjectType.Stone01:
                         stringBuilder.Append("[ S ]");
                         break;
                     default:
