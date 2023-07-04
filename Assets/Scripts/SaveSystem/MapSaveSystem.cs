@@ -142,7 +142,6 @@ public class MapSaveSystem : MonoBehaviour
                             yield return new PositionedTile(pos, ESpecialTiles.Flowers);
                             break;
                     }
-                    Debug.Log(mapTile.sprite.name);
                 }
             }
         }
