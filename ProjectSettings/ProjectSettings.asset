@@ -12,9 +12,9 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: wild-vinland
-  defaultCursor: {fileID: 2800000, guid: 50a0d2ae1b2ee2443beac3f9b0fb4ba6, type: 3}
+  companyName: SWTP-Team
+  productName: Wild-Vinland
+  defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -160,7 +160,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.DefaultCompany.wild-vinland
+    Standalone: com.SWTP-Team.Wild-Vinland
   buildNumber:
     Standalone: 0
     iPhone: 0

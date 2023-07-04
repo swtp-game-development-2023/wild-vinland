@@ -41,7 +41,7 @@ public class MapSaveSystem : MonoBehaviour
         tilePlacer = new TilePlacer(_seaMap, _beachMap, _grassMap, _mountainMap, _decoMap);
 
         _inventory = GameObject.Find("Player").GetComponent<Inventory>();
-
+        
         if (UILoadGameDropBox.IsFilled)
         {
             LoadMap(UILoadGameDropBox.SaveGameName);
@@ -103,8 +103,8 @@ public class MapSaveSystem : MonoBehaviour
         
         String json = JsonUtility.ToJson(newSave, true);
         // Saves the SaveGame object as Json textfile, second parameter formats the Json in a more readable format if true, at cost of bigger file size
-        System.IO.Directory.CreateDirectory(Application.dataPath + "/Saves");
-        File.WriteAllText(Application.dataPath + "/Saves/sav_" + saveName + ".json", json);
+        System.IO.Directory.CreateDirectory(Application.persistentDataPath + "/Saves");
+        File.WriteAllText(Application.persistentDataPath + "/Saves/sav_" + saveName + ".json", json);
         // Writes the Json File to disk inside the Assets/save folder (folder structure needs to exit)
 
         IEnumerable<PositionedTile> GetTilesFromMap(Tilemap map)
@@ -195,7 +195,7 @@ public class MapSaveSystem : MonoBehaviour
     {
         try
         {
-            string json = File.ReadAllText(Application.dataPath + "/Saves/" + saveGameName );
+            string json = File.ReadAllText(Application.persistentDataPath + "/Saves/" + saveGameName );
             SaveGame newLoad = JsonUtility.FromJson<SaveGame>(json);
 
             WorldHelper.ClearMap();
@@ -260,7 +260,7 @@ public class MapSaveSystem : MonoBehaviour
         }
         catch (System.Exception)
         {
-            Debug.Log("Gameworld Save File not Found under: " + saveGameName);
+            Debug.Log("Gameworld Save File not Found under: "+Application.persistentDataPath + "/Saves/sav_" + saveGameName);
             return;
         }
     }
