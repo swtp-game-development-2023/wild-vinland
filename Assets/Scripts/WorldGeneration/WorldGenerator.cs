@@ -259,13 +259,13 @@ public class WorldGenerator : MonoBehaviour
         for (int i = 0; i < map.MapSize; i++)
         {
             //Wood
-            SetTileByRuleAndProbability(i, (int)EGameObjectType.Tree, map.StackedMap[(int)EBiomTileTypes.Ressources],
+            SetTileByRuleAndProbability(i, (int)EGameObjectType.Tree, map.StackedMap[(int)EBiomTileTypes.Farmable],
                 _rules.WoodTileRule.Check, woodPercent);
             //Stone
-            SetTileByRuleAndProbability(i, (int)EGameObjectType.Stone01, map.StackedMap[(int)EBiomTileTypes.Ressources],
+            SetTileByRuleAndProbability(i, (int)EGameObjectType.Stone01, map.StackedMap[(int)EBiomTileTypes.Farmable],
                 _rules.StoneTileRule.Check, stonePercent);
             //Ore
-            SetTileByRuleAndProbability(i, (int)EGameObjectType.Ore, map.StackedMap[(int)EBiomTileTypes.Ressources],
+            SetTileByRuleAndProbability(i, (int)EGameObjectType.Ore, map.StackedMap[(int)EBiomTileTypes.Farmable],
                 _rules.OreTileRule.Check, orePercent);
             //Flower
             SetTileByRuleAndProbability(i, (int)ESpecialTiles.WildMeadow, map.StackedMap[(int)EBiomTileTypes.Decoration],
@@ -279,7 +279,7 @@ public class WorldGenerator : MonoBehaviour
         float probability)
     {
         if (ruleCheck(pos) && WillEventHappen(probability))
-            map[pos] = (int)type;
+            map[pos] = type;
         return this;
     }
 
@@ -313,9 +313,9 @@ public class WorldGenerator : MonoBehaviour
             Vector3Int gridVector = new Vector3Int(x, y);
             Vector3 worldVector = gridToWorldVector(gridVector);
             tilePlacer.Place(_map.BiomTileTypeMap[i], gridVector);
-            tilePlacer.PlaceDecoration(_map.StackedMap[(int)EBiomTileTypes.Decoration][i], gridVector);
             
-            switch (_map.StackedMap[(int)EBiomTileTypes.Ressources][i])
+            
+            switch (_map.StackedMap[(int)EBiomTileTypes.Farmable][i])
             {
                 case (int)EGameObjectType.Stone01:
                     Instantiate(stonePrefabs[_random.Next(0, stonePrefabs.Length)], worldVector , Quaternion.identity, gameObject.transform.GetChild(4).transform);
@@ -327,8 +327,8 @@ public class WorldGenerator : MonoBehaviour
                     Instantiate(treePrefab[_random.Next(0, treePrefab.Length)], worldVector , Quaternion.identity, gameObject.transform.GetChild(4).transform);
                     break;
             }
+            tilePlacer.PlaceDecoration(_map.StackedMap[(int)EBiomTileTypes.Decoration][i], gridVector);
         }
-
         return this;
     }
 
