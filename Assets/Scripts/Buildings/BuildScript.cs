@@ -52,7 +52,7 @@ namespace Buildings
         {
             Grid = FindObjectOfType<Grid>();
             mainCamera = Camera.main;
-            objBuilding = Instantiate(buildingPrefab, CalcGridPos(), Quaternion.identity);
+            objBuilding = Instantiate(buildingPrefab, CalcGridPos(), Quaternion.identity, Grid.transform.Find("Buildings").gameObject.GetComponent<Tilemap>().transform);
             buildingSprites = objBuilding.transform.GetComponentsInChildren<SpriteRenderer>().ToList();
             decoMap = Grid.transform.Find("Deco").gameObject.GetComponent<Tilemap>();
             collidingChecker = objBuilding.GetComponent<CollidingChecker>();

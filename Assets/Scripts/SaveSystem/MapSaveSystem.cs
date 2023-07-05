@@ -18,7 +18,7 @@ public class MapSaveSystem : MonoBehaviour
     [SerializeField] private int _levelIndex;
     // index to easly name different Save Files
 
-    private Tilemap _seaMap, _beachMap, _grassMap, _mountainMap, _farmableMap, _decoMap, _unitMap;
+    private Tilemap _seaMap, _beachMap, _grassMap, _mountainMap, _farmableMap, _decoMap, _buildingMap;
     public GameObject orePrefab;
     public GameObject[] treePrefab, stonePrefabs, buildingPrefabs;
     private Inventory _inventory;
@@ -37,7 +37,7 @@ public class MapSaveSystem : MonoBehaviour
         _mountainMap = transform.Find("Mountain").gameObject.GetComponent<Tilemap>();
         _farmableMap = transform.Find("Farmables").gameObject.GetComponent<Tilemap>();
         _decoMap = transform.Find("Deco").gameObject.GetComponent<Tilemap>();
-        _unitMap = transform.Find("Buildings").gameObject.GetComponent<Tilemap>();
+        _buildingMap = transform.Find("Buildings").gameObject.GetComponent<Tilemap>();
         tilePlacer = new TilePlacer(_seaMap, _beachMap, _grassMap, _mountainMap, _decoMap);
 
         _inventory = GameObject.Find("Player").GetComponent<Inventory>();
@@ -95,7 +95,7 @@ public class MapSaveSystem : MonoBehaviour
         newSave.DecoTiles = GetTilesFromMap(_decoMap).ToList();
         
         newSave.FarmableObjects = GetGameObjectsFromMap(_farmableMap).ToList();
-        newSave.UnitObjects = GetGameObjectsFromMap(_unitMap).ToList();
+        newSave.BuildingObjects = GetGameObjectsFromMap(_buildingMap).ToList();
 
         newSave.PlayerPosition = WorldHelper.GetPlayerPositon();
         newSave.PlayerRotation = WorldHelper.GetPlayerRotation();
@@ -152,7 +152,15 @@ public class MapSaveSystem : MonoBehaviour
                 foreach (Transform gamobjectInTilemap in map.transform)
                 {
                     EGameObjectType type = EGameObjectType.Tree;
-                    switch (gamobjectInTilemap.gameObject.GetComponent<SpriteRenderer>().sprite.name)
+                    String spritename;
+                    if(gamobjectInTilemap.gameObject.GetComponent<SpriteRenderer>().Equals(null))
+                    {
+                        spritename = gamobjectInTilemap.gameObject.GetComponentInChildren<SpriteRenderer>().sprite.name;
+                    }else{
+                        spritename = gamobjectInTilemap.gameObject.GetComponent<SpriteRenderer>().sprite.name;
+                    }
+                    Debug.Log(spritename);
+                    switch (spritename)
                     {
                         case "Tree":
                             type = EGameObjectType.Tree;
@@ -172,10 +180,24 @@ public class MapSaveSystem : MonoBehaviour
                         case "Stone03":
                             type = EGameObjectType.Stone03;
                             break;
+                        case "MasterSimple_41":
+                            type = EGameObjectType.Dock;
+                            break;
+                        case "MasterSimple_40":
+                            type = EGameObjectType.Windmill;
+                            break;
+                        case "MasterSimple_25":
+                            type = EGameObjectType.Lumberjack;
+                            break;
+                        case "MasterSimple_10":
+                            type = EGameObjectType.Stonecutter;
+                            break;
+                        case "ship_strip16 1_4":
+                            type = EGameObjectType.Ship;
+                            break;
                     }
-                    // TODO check witch type of object
                     yield return new PositionedGameObject(
-                        gamobjectInTilemap.gameObject.transform.position, 
+                        gamobjectInTilemap.transform.position, 
                         type);
                 }
             }
@@ -206,7 +228,7 @@ public class MapSaveSystem : MonoBehaviour
             };
             List<PositionedGameObject>[] gameobjectslist =
             {
-                newLoad.FarmableObjects, newLoad.UnitObjects
+                newLoad.FarmableObjects, newLoad.BuildingObjects
             };
             
             // Placing regular Tiles
@@ -248,6 +270,21 @@ public class MapSaveSystem : MonoBehaviour
                             break;
                         case EGameObjectType.Stone03:
                             Instantiate(stonePrefabs[2], gameObject.Position, Quaternion.identity, _farmableMap.transform);
+                            break;
+                        case EGameObjectType.Dock:
+                            Instantiate(buildingPrefabs[0], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            break;
+                        case EGameObjectType.Windmill:
+                            Instantiate(buildingPrefabs[1], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            break;
+                        case EGameObjectType.Lumberjack:
+                            Instantiate(buildingPrefabs[2], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            break;
+                        case EGameObjectType.Stonecutter:
+                            Instantiate(buildingPrefabs[3], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            break;
+                        case EGameObjectType.Ship:
+                            Instantiate(buildingPrefabs[4], gameObject.Position, Quaternion.identity, _buildingMap.transform);
                             break;
                     }
                 }
