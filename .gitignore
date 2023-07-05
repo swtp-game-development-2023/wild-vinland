@@ -73,10 +73,6 @@ crashlytics-build.properties
 # Custom
 bin
 
-# saves
-Assets/Saves/*.*
-Assets/Saves.meta
-
 # vs stuff
 .vsconfig
 

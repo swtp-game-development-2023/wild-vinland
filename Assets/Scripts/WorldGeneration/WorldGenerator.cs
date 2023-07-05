@@ -25,6 +25,8 @@ public class WorldGenerator : MonoBehaviour
 
     private Tilemap SeaMap, BeachMap, GrassMap, MountainMap, FarmableMap, DecoMap, UnitMap;
 
+    private TilePlacer tilePlacer;
+
     private Rules _rules;
 
     private int _start;
@@ -60,6 +62,8 @@ public class WorldGenerator : MonoBehaviour
     public GameObject orePrefab;
     public GameObject[] stonePrefabs;
     
+
+
     /// <summary>
     /// Each piece of land is beach first.
     /// </summary>
@@ -217,7 +221,7 @@ public class WorldGenerator : MonoBehaviour
             .Where(pos => Map.IsLand(map.BiomTileTypeMap[pos]))
             .SelectMany(pos => map.GetNeighboursByRule(pos, _rules.GrasTileRule.Check))
             .ToList()
-            .ForEach(pos => PlaceBiomTile(pos, map.BiomTileTypeMap, EBiomTileTypes.Gras));
+            .ForEach(pos => PlaceBiomTile(pos, map.BiomTileTypeMap, EBiomTileTypes.Grass));
 
         //Mountain
         maxPossibleMountainTiles = Map.CountTilesByRule(map.BiomTileTypeMap, _rules.MountainTileRule);
@@ -255,28 +259,27 @@ public class WorldGenerator : MonoBehaviour
         for (int i = 0; i < map.MapSize; i++)
         {
             //Wood
-            SetTileByRuleAndProbability(i, ESpecialTiles.Wood, map.StackedMap[(int)EBiomTileTypes.Ressources],
+            SetTileByRuleAndProbability(i, (int)EGameObjectType.Tree, map.StackedMap[(int)EBiomTileTypes.Farmable],
                 _rules.WoodTileRule.Check, woodPercent);
             //Stone
-            SetTileByRuleAndProbability(i, ESpecialTiles.Stone, map.StackedMap[(int)EBiomTileTypes.Ressources],
+            SetTileByRuleAndProbability(i, (int)EGameObjectType.Stone01, map.StackedMap[(int)EBiomTileTypes.Farmable],
                 _rules.StoneTileRule.Check, stonePercent);
             //Ore
-            SetTileByRuleAndProbability(i, ESpecialTiles.Ore, map.StackedMap[(int)EBiomTileTypes.Ressources],
+            SetTileByRuleAndProbability(i, (int)EGameObjectType.Ore, map.StackedMap[(int)EBiomTileTypes.Farmable],
                 _rules.OreTileRule.Check, orePercent);
             //Flower
-            SetTileByRuleAndProbability(i, ESpecialTiles.Flowers, map.StackedMap[(int)EBiomTileTypes.Decoration],
+            SetTileByRuleAndProbability(i, (int)ESpecialTiles.WildMeadow, map.StackedMap[(int)EBiomTileTypes.Decoration],
                 _rules.FlowerTileRule.Check, flowersPercent);
         }
-
         return this;
     }
 
-    private WorldGenerator SetTileByRuleAndProbability(int pos, ESpecialTiles type, int[] map,
+    private WorldGenerator SetTileByRuleAndProbability(int pos, int type, int[] map,
         Func<int, bool> ruleCheck,
         float probability)
     {
         if (ruleCheck(pos) && WillEventHappen(probability))
-            map[pos] = (int)type;
+            map[pos] = type;
         return this;
     }
 
@@ -294,17 +297,6 @@ public class WorldGenerator : MonoBehaviour
 
     private WorldGenerator SetTilesInUnity()
     {
-        string tilePath = "Assets/Sprites/World/MapTiles/";
-        TileBase seaTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_76.asset");
-        TileBase grasTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_17.asset");
-        TileBase mountainTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_149.asset");
-        TileBase beachTile = AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_154.asset");
-        TileBase[] flowerTiles =
-        {
-            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_7.asset"),
-            AssetDatabase.LoadAssetAtPath<TileBase>(tilePath + "MasterSimple_8.asset")
-        };
-
         int x = 0;
         int y = 0;
         
@@ -320,39 +312,23 @@ public class WorldGenerator : MonoBehaviour
 
             Vector3Int gridVector = new Vector3Int(x, y);
             Vector3 worldVector = gridToWorldVector(gridVector);
-            switch (_map.BiomTileTypeMap[i])
+            tilePlacer.Place(_map.BiomTileTypeMap[i], gridVector);
+            
+            
+            switch (_map.StackedMap[(int)EBiomTileTypes.Farmable][i])
             {
-                case (int)EBiomTileTypes.Sea:
-                    SeaMap.SetTile(gridVector, seaTile);
-                    break;
-                case (int)EBiomTileTypes.Beach:
-                    BeachMap.SetTile(gridVector, beachTile);
-                    break;
-                case (int)EBiomTileTypes.Gras:
-                    GrassMap.SetTile(gridVector, grasTile);
-                    break;
-                case (int)EBiomTileTypes.Mountain:
-                    MountainMap.SetTile(gridVector, mountainTile);
-                    break;
-            }
-    
-            switch (_map.StackedMap[(int)EBiomTileTypes.Ressources][i])
-            {
-                case (int)ESpecialTiles.Stone:
+                case (int)EGameObjectType.Stone01:
                     Instantiate(stonePrefabs[_random.Next(0, stonePrefabs.Length)], worldVector , Quaternion.identity, gameObject.transform.GetChild(4).transform);
                     break;
-                case (int)ESpecialTiles.Ore:
+                case (int)EGameObjectType.Ore:
                     Instantiate(orePrefab, worldVector , Quaternion.identity, gameObject.transform.GetChild(4).transform);
                     break;
-                case (int)ESpecialTiles.Wood:
+                case (int)EGameObjectType.Tree:
                     Instantiate(treePrefab[_random.Next(0, treePrefab.Length)], worldVector , Quaternion.identity, gameObject.transform.GetChild(4).transform);
                     break;
             }
-
-            if (_map.StackedMap[(int)EBiomTileTypes.Decoration][i] == (int)ESpecialTiles.Flowers)
-                DecoMap.SetTile(gridVector, flowerTiles[_random.Next(0, flowerTiles.Length)]);
+            tilePlacer.PlaceDecoration(_map.StackedMap[(int)EBiomTileTypes.Decoration][i], gridVector);
         }
-
         return this;
     }
 
@@ -371,9 +347,11 @@ public class WorldGenerator : MonoBehaviour
         world.GenerateLand(_map, percentOfLand, smoothnessOfCoast, permittedDeviationFromMid)
             .GenerateLandScape(_map, percentageOfMountain)
             .SetSpecialTiles(_map, percentOfWood, percentOfStone, percentOfOre, percentOfFlowers)
-            .SetupTileMaps()
-            .SetTilesInUnity();
+            .SetupTileMaps();
+        tilePlacer = new TilePlacer(SeaMap, BeachMap , GrassMap, MountainMap, DecoMap);
+            SetTilesInUnity();
 
-        WorldHelper.SetPlayerPosition(WorldHelper.GetRandomTileOfMap(BeachMap)); //spawn player on Beach
+        //spawn player on Beach
+        WorldHelper.SetPlayerPosition(WorldHelper.GetRandomTileOfMap(BeachMap)); 
     }
 }
