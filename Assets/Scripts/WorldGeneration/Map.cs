@@ -138,7 +138,7 @@ namespace WorldGeneration
             stringBuilder.Append("\n\n\n");
             for (int i = 0; i < _mapSize; i++)
             {
-                switch (StackedMap[(int)EBiomTileTypes.Ressources][i])
+                switch (StackedMap[(int)EBiomTileTypes.Farmable][i])
                 {
                     case (int)EGameObjectType.Tree:
                         stringBuilder.Append("[ T ]");
