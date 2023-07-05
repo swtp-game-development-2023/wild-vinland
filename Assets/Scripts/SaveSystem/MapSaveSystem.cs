@@ -181,7 +181,6 @@ public class MapSaveSystem : MonoBehaviour
         }
         catch (System.Exception)
         {
-            throw;
             Debug.Log("Gameworld Save File not Found under: " + saveGameName);
             return;
         }
