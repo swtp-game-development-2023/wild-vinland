@@ -130,7 +130,7 @@ public class Inventory : MonoBehaviour
     }
 
     ///<summary>
-    /// Function just to Test adding Coffee Items, calling ToString(), Deleting one calling ToString() again. Demo for Inventory. 
+    /// returns true if slot at index is empty 
     ///</summary>
     public bool IsSlotEmpty(int index)
     {
@@ -166,18 +166,19 @@ public class Inventory : MonoBehaviour
             switch (resource.ID)
             {
                 case (int)CollectableName.Wood:
-                    resource.Sprite = Resources.Load<Sprite>("Assets/Sprites/Icons_Wood.png");
+                    resource.Sprite = Resources.Load<Sprite>("Icons/Icons_Wood.png");
                     break;
                 case (int)CollectableName.Stone:
-                    resource.Sprite = Resources.Load<Sprite>("Assets/Sprites/Icons_Stone.png");
+                    resource.Sprite = Resources.Load<Sprite>("Icons/Icons_Stone.png");
                     break;
                 case (int)CollectableName.Ore:
-                    resource.Sprite = Resources.Load<Sprite>("Assets/Sprites/Icons_Ore.png");
+                    resource.Sprite = Resources.Load<Sprite>("Icons/Icons_Ore.png");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
             this.Add(resource.copy());
+            resource = ScriptableObject.CreateInstance<Resource>();
         }
     }
 
