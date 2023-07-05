@@ -21,6 +21,5 @@ public class MainMenu : MonoBehaviour
         { 
             AudioListener.volume = 0; 
         }
-        
     }
 }

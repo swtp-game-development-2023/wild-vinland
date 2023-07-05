@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3744942197985407109}
   - component: {fileID: 8770024765715201721}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: BauMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,7 +144,7 @@ RectTransform:
   m_Children:
   - {fileID: 2480023238638280271}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -227,7 +227,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
-  buildMenu: {fileID: 3488961463412540514}
+  isDebug: 0
+  buildMenu: {fileID: 756990705763679714}
 --- !u!1001 &148266766793496048
 PrefabInstance:
   m_ObjectHideFlags: 0

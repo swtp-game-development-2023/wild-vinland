@@ -12,8 +12,7 @@ namespace WorldGeneration
         Grass = 2,
         Mountain = 3,
         //TODO separate layers and biom
-        Ressources = 4,
+        Farmable = 4,
         Decoration = 5,
-        Farmable = 6
     }
 }
