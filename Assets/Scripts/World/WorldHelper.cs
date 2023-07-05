@@ -8,7 +8,7 @@ namespace World
     {
         
         ///<summary>
-        /// Finds all Tilemap Gameobjects and deletes all Tiles
+        /// Finds all Tilemaps and Gameobjects and deletes all Tiles, Objects, clears player inventory and resets the player position
         ///</summary>
         public static void ClearMap()
         {
@@ -17,15 +17,17 @@ namespace World
             foreach (var tilemap in maps)
             {
                 tilemap.ClearAllTiles();
-            }
-        }
 
-        ///<summary>
-        /// Function to set a PositionedTile on a Tilemap
-        ///</summary>
-        public static void SetTile(Tilemap map, PositionedTile tile)
-        {
-            map.SetTile(tile.Position, tile.Tile);
+                if(tilemap.transform.childCount > 0)
+                {
+                    foreach (Transform gamobjectInTilemap in tilemap.transform)
+                    {
+                        Destroy(gamobjectInTilemap.gameObject);
+                    }
+                }
+            }
+            SetPlayerPosition(new Vector3(0,0,0));
+            GetPlayer().GetComponent<Inventory>().ClearSlots();
         }
 
         ///<summary>
