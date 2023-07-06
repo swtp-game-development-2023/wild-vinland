@@ -12,7 +12,7 @@ public class LoadGameBtn : MonoBehaviour
 
     public void LoadSaveGame()
     {
-        Debug.Log(SaveGameName);
+        //Debug.Log(SaveGameName);
         UIWorldGenDropBox.GenOnStart = false;
         UIWorldGenDropBox.IsFilled = true;
         UILoadGameDropBox.SaveGameName = SaveGameName;

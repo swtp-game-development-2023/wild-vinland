@@ -1,5 +1,8 @@
 using System;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using Random = System.Random;
+using WorldGeneration;
 
 ///<summary>
 /// Class to Save a Tile and its Positon in the Mapgrid
@@ -8,11 +11,18 @@ using UnityEngine;
 public class PositionedTile
 {
     public Vector3Int Position;
-    public MapTile Tile;
-    
-    public PositionedTile( Vector3Int Position, MapTile Tile)
+    public EBiomTileTypes Type;
+    public ESpecialTiles SpecialType;
+    private Random _random;
+
+    public PositionedTile(Vector3Int Position, EBiomTileTypes Type)
     {
-        this.Tile = Tile;
+        this.Type = Type;
+        this.Position = Position;
+    }
+    public PositionedTile(Vector3Int Position, ESpecialTiles Type)
+    {
+        this.SpecialType = Type;
         this.Position = Position;
     }
 }

@@ -29,7 +29,6 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private PauseMenu pauseMenu;
     [SerializeField] private InventoryMenu inventoryMenu;
     [SerializeField] private BuildMenu buildMenu;
-    [SerializeField] private ShipMenu shipMenu;
 
     private void Awake()
     {
@@ -71,7 +70,6 @@ public class PlayerInput : MonoBehaviour
         pauseMenu = FindObjectOfType<PauseMenu>();
         inventoryMenu = FindObjectOfType<InventoryMenu>();
         buildMenu = FindObjectOfType<BuildMenu>();
-        shipMenu = FindObjectOfType<ShipMenu>();
     }
 
     private void Update()

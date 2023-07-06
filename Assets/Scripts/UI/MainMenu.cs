@@ -2,27 +2,8 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    private bool isSoundOn = false;
+    private bool isSoundOn = true;
     
-    public void Start()
-    {
-        //TODO remove in final version
-        AudioListener.pause = !isSoundOn;
-    }
-
-    public void ClickedBtnNewGame()
-    {
-        //TODO
-    }
-    public void ClickedBtnLoadGame()
-    {
-        //TODO
-    }
-    
-    public void ClickedBtnCredits()
-    {
-        //TODO
-    }
     public void ClickedBtnExit()
     {
         Debug.Log("Game Exit"); //We should keep this because in development there is no other way to detect exit.
@@ -32,6 +13,13 @@ public class MainMenu : MonoBehaviour
     public void ToggleSound()
     {
         isSoundOn = !isSoundOn;
-        AudioListener.pause = !isSoundOn; 
+        if (isSoundOn)
+        { 
+            AudioListener.volume = 0.5f; 
+        }
+        else
+        { 
+            AudioListener.volume = 0; 
+        }
     }
 }

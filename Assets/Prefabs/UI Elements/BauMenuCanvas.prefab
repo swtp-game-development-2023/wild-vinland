@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3744942197985407109}
   - component: {fileID: 8770024765715201721}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: BauMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,7 +227,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
-  buildMenu: {fileID: 3488961463412540514}
+  isDebug: 0
+  buildMenu: {fileID: 756990705763679714}
 --- !u!1001 &148266766793496048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1033,9 +1034,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingPrefab: {fileID: 8526370981950594493, guid: 85ee20aeec6c59042b26a15ed0d3f2c4, type: 3}
-  requiredWood: 0
-  requiredStone: 0
-  requiredOre: 0
+  requiredWood: 3
+  requiredStone: 3
+  requiredOre: 3
 --- !u!1001 &7257339271972167004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1215,8 +1216,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingPrefab: {fileID: 4088997613552050299, guid: 43f701a837456fe4ab0499a87df8c880, type: 3}
-  requiredWood: 0
-  requiredStone: 0
+  requiredWood: 3
+  requiredStone: 5
   requiredOre: 0
 --- !u!1001 &7269254172539005226
 PrefabInstance:
@@ -1421,9 +1422,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingPrefab: {fileID: 5712280442731200174, guid: bdf39753fc2c79a4e9f8caa6e5400ba1, type: 3}
-  requiredWood: 0
+  requiredWood: 2
   requiredStone: 0
-  requiredOre: 0
+  requiredOre: 5
 --- !u!1001 &7400775842315058701
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,13 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Cinemachine.Editor;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class LoadMenuScrollList : MonoBehaviour
 {
@@ -20,7 +14,7 @@ public class LoadMenuScrollList : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _directory = new DirectoryInfo(Application.dataPath + "/Saves");
+        _directory = new DirectoryInfo(Application.persistentDataPath + "/Saves");
         
         if (_directory.Exists)
         {

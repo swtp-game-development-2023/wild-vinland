@@ -1,3 +1,4 @@
+#if ( UNITY_EDITOR )
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -17,3 +18,4 @@ public class CreateMapTile
         return mapTile;
     }
 }
+#endif

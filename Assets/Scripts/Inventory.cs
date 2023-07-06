@@ -117,6 +117,18 @@ public class Inventory : MonoBehaviour
         return _inventory[index].Remove(amount);
     }
 
+    public void ClearSlots()
+    {
+        if (null != _inventory)
+        {
+            _inventory.Clear();
+            for (int i = 0; i < inventorySize; i++)
+            {
+                _inventory.Add(ScriptableObject.CreateInstance<EmptySlot>());
+            }   
+        }
+    }
+
     ///<summary>
     /// Function just to Test adding Coffee Items, calling ToString(), Deleting one calling ToString() again. Demo for Inventory. 
     ///</summary>
@@ -132,7 +144,7 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < _inventory.Count; i++)
         {
             Collectable collectable = _inventory[i];
-            if (!collectable)
+            if ( collectable.Amount >= 1 )
             {
                 inv.Add(collectable.ID);
                 amount.Add(collectable.Amount);
@@ -145,18 +157,27 @@ public class Inventory : MonoBehaviour
     public void DeSerialize(SerializedInventory serializedInventory)
     {
         inventorySize = serializedInventory.inventorySize;
+        Resource resource;
+        resource = ScriptableObject.CreateInstance<Resource>();
         for (int i = 0; i < serializedInventory.inventory.Count; i++)
         {
-            int item = serializedInventory.inventory[i];
-            switch (item)
+            resource.ID = serializedInventory.inventory[i];
+            resource.Amount = serializedInventory.amount[i];
+            switch (resource.ID)
             {
                 case (int)CollectableName.Wood:
-                    //TODO _inventory.Add(new Coffee(serializedInventory.amount[i]));
+                    resource.Sprite = Resources.Load<Sprite>("Assets/Sprites/Icons_Wood.png");
+                    break;
+                case (int)CollectableName.Stone:
+                    resource.Sprite = Resources.Load<Sprite>("Assets/Sprites/Icons_Stone.png");
+                    break;
+                case (int)CollectableName.Ore:
+                    resource.Sprite = Resources.Load<Sprite>("Assets/Sprites/Icons_Ore.png");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            // TODO other Items based on their Id
+            this.Add(resource.copy());
         }
     }
 
