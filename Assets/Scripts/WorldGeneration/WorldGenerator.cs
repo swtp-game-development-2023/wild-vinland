@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Pathfinding;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -61,7 +62,6 @@ public class WorldGenerator : MonoBehaviour
     public GameObject[] treePrefab;
     public GameObject orePrefab;
     public GameObject[] stonePrefabs;
-    
 
 
     /// <summary>
@@ -93,6 +93,19 @@ public class WorldGenerator : MonoBehaviour
         {
             Generate();
             // generation of first Map
+        }
+    }
+
+    private bool isGenerated;
+
+    private int framesAtGen;
+    private void Update()
+    {
+        //TODO find a better solution, but it`s not stupid if it works!
+        if (isGenerated && framesAtGen + 1 < Time.frameCount)
+        {
+            AstarPath.active.Scan();
+            isGenerated = false;
         }
     }
 
@@ -268,9 +281,11 @@ public class WorldGenerator : MonoBehaviour
             SetTileByRuleAndProbability(i, (int)EGameObjectType.Ore, map.StackedMap[(int)EBiomTileTypes.Farmable],
                 _rules.OreTileRule.Check, orePercent);
             //Flower
-            SetTileByRuleAndProbability(i, (int)ESpecialTiles.WildMeadow, map.StackedMap[(int)EBiomTileTypes.Decoration],
+            SetTileByRuleAndProbability(i, (int)ESpecialTiles.WildMeadow,
+                map.StackedMap[(int)EBiomTileTypes.Decoration],
                 _rules.FlowerTileRule.Check, flowersPercent);
         }
+
         return this;
     }
 
@@ -299,7 +314,7 @@ public class WorldGenerator : MonoBehaviour
     {
         int x = 0;
         int y = 0;
-        
+
         for (int i = 0; i < _map.MapSize; i++)
         {
             if (x == (_map.EdgeLength - 1))
@@ -313,30 +328,36 @@ public class WorldGenerator : MonoBehaviour
             Vector3Int gridVector = new Vector3Int(x, y);
             Vector3 worldVector = gridToWorldVector(gridVector);
             tilePlacer.Place(_map.BiomTileTypeMap[i], gridVector);
-            
-            
+
+
             switch (_map.StackedMap[(int)EBiomTileTypes.Farmable][i])
             {
                 case (int)EGameObjectType.Stone01:
-                    Instantiate(stonePrefabs[_random.Next(0, stonePrefabs.Length)], worldVector , Quaternion.identity, gameObject.transform.GetChild(4).transform);
+                    Instantiate(stonePrefabs[_random.Next(0, stonePrefabs.Length)], worldVector, Quaternion.identity,
+                        gameObject.transform.GetChild(4).transform);
                     break;
                 case (int)EGameObjectType.Ore:
-                    Instantiate(orePrefab, worldVector , Quaternion.identity, gameObject.transform.GetChild(4).transform);
+                    Instantiate(orePrefab, worldVector, Quaternion.identity,
+                        gameObject.transform.GetChild(4).transform);
                     break;
                 case (int)EGameObjectType.Tree:
-                    Instantiate(treePrefab[_random.Next(0, treePrefab.Length)], worldVector , Quaternion.identity, gameObject.transform.GetChild(4).transform);
+                    Instantiate(treePrefab[_random.Next(0, treePrefab.Length)], worldVector, Quaternion.identity,
+                        gameObject.transform.GetChild(4).transform);
                     break;
             }
+
             tilePlacer.PlaceDecoration(_map.StackedMap[(int)EBiomTileTypes.Decoration][i], gridVector);
         }
+
         return this;
     }
 
     private Vector3 gridToWorldVector(Vector3Int v)
     {
-        return (gameObject.GetComponent<Grid>().GetCellCenterWorld(v)) - new Vector3(0f, 0.08f, 0); // 0.08 half the grid size (0.16)
+        return (gameObject.GetComponent<Grid>().GetCellCenterWorld(v)) -
+               new Vector3(0f, 0.08f, 0); // 0.08 half the grid size (0.16)
     }
-    
+
     /// <summary>
     /// Generates a new WorldMap
     /// </summary>
@@ -348,10 +369,12 @@ public class WorldGenerator : MonoBehaviour
             .GenerateLandScape(_map, percentageOfMountain)
             .SetSpecialTiles(_map, percentOfWood, percentOfStone, percentOfOre, percentOfFlowers)
             .SetupTileMaps();
-        tilePlacer = new TilePlacer(SeaMap, BeachMap , GrassMap, MountainMap, DecoMap);
-            SetTilesInUnity();
-
-        //spawn player on Beach
-        WorldHelper.SetPlayerPosition(WorldHelper.GetRandomTileOfMap(BeachMap)); 
+        tilePlacer = new TilePlacer(SeaMap, BeachMap, GrassMap, MountainMap, DecoMap);
+        SetTilesInUnity();
+        WorldHelper.SetPlayerPosition(WorldHelper.GetRandomTileOfMap(BeachMap));
+        
+        //TODO ugly, but works:
+        isGenerated = true;
+        framesAtGen = Time.frameCount;
     }
 }
