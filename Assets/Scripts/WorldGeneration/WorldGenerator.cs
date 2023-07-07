@@ -1,11 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Pathfinding;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 using World;
 using WorldGeneration;
@@ -96,12 +92,11 @@ public class WorldGenerator : MonoBehaviour
         }
     }
 
+    //TODO find a better solution, but it`s not stupid if it works!
     private bool isGenerated;
-
     private int framesAtGen;
     private void Update()
     {
-        //TODO find a better solution, but it`s not stupid if it works!
         if (isGenerated && framesAtGen + 1 < Time.frameCount)
         {
             AstarPath.active.Scan();
