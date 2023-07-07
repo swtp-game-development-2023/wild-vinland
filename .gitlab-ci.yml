@@ -1,0 +1,46 @@
+stages:
+  - Build
+
+Windows:
+  stage: Build
+  script:
+    - cd BuildScripts
+    - .\deployPowershell.ps1 -platform Windows
+    - cd ..
+  artifacts:
+    paths:
+      - builds/Windows
+    when: always
+
+WebGL:
+  stage: Build
+  script:
+    - cd BuildScripts
+    - .\deployPowershell.ps1 -platform WebGL
+    - cd ..
+  artifacts:
+    paths:
+      - builds/WebGL
+    when: always
+
+Mac:
+  stage: Build
+  script:
+    - cd BuildScripts
+    - .\deployPowershell.ps1 -platform Mac
+    - cd ..
+  artifacts:
+    paths:
+      - builds/Mac
+    when: always
+    
+Linux:
+  stage: Build
+  script:
+    - cd BuildScripts
+    - .\deployPowershell.ps1 -platform Linux
+    - cd ..
+  artifacts:
+    paths:
+      - builds/Linux
+    when: always  
