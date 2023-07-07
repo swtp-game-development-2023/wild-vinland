@@ -79,3 +79,6 @@ bin
 #ide
 .idea
 .vscode
+
+# Gitlab-Runner
+/Library/PackageCache/com.unity.collections@1.2.4/Unity.Collections.LowLevel.ILSupport/source~/Unity.Collections.LowLevel.ILSupport.CodeGen/Unity.Collections.LowLevel.ILSupport.CodeGen.asmdef.meta
