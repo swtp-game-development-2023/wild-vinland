@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 8722714054865022552}
   - component: {fileID: 1564648139197530132}
   - component: {fileID: 4951637688958225758}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,7 +436,7 @@ Transform:
   - {fileID: 4658300128307500733}
   - {fileID: 764852227533504385}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &1117200554720009966
 Grid:
@@ -502,8 +502,8 @@ MonoBehaviour:
   percentOfOre: 0.1
   percentOfFlowers: 0.5
   treePrefab:
-  - {fileID: 4566267646329848832, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
   - {fileID: 4566267646329848832, guid: 482a4e2a431eeed47ae3a697e399417c, type: 3}
+  - {fileID: 4566267646329848832, guid: 728188c91a775524dbe86122802c2dbc, type: 3}
   orePrefab: {fileID: 8937067806647536911, guid: bca6b27a99cd5e142b7d2a9c32d21197, type: 3}
   stonePrefabs:
   - {fileID: 6156401229786571731, guid: 4364735cbff7f4f4889655ed4b328cd4, type: 3}
@@ -520,7 +520,7 @@ GameObject:
   - component: {fileID: 5032097085017775806}
   - component: {fileID: 2692935651403795421}
   - component: {fileID: 7032674155582359489}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Beach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1028,7 +1028,7 @@ GameObject:
   - component: {fileID: 947111903515250117}
   - component: {fileID: 6238108099069270257}
   - component: {fileID: 5190305121777511394}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Mountain
   m_TagString: Untagged
   m_Icon: {fileID: 0}

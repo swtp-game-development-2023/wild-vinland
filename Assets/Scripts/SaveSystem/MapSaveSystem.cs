@@ -68,12 +68,20 @@ public class MapSaveSystem : MonoBehaviour
         _load.Disable();
     }
 
+    
+    //TODO find a better solution, but it`s not stupid if it works!
+    private bool isLoaded;
+    private int framesAtLoad;
     void Update()
     {
-        if (_save.IsPressed()) SaveMap();
-        // Saves the Tilemaps, if the save button is pressed
-        if (_load.IsPressed()) LoadMap();
-        // Loads the Tilemaps, if the load button is pressed
+        if (_save.IsPressed()) SaveMap(); // Saves the Tilemaps, if the save button is pressed
+        if (_load.IsPressed()) LoadMap(); // Loads the Tilemaps, if the load button is pressed
+
+        if (isLoaded && framesAtLoad + 1 < Time.frameCount)
+        {
+            AstarPath.active.Scan();
+            isLoaded = false;
+        }
     }
 
     public void SaveMap()
@@ -293,12 +301,17 @@ public class MapSaveSystem : MonoBehaviour
             WorldHelper.SetPlayerPosition(newLoad.PlayerPosition);
             WorldHelper.SetPlayerRotation(newLoad.PlayerRotation);
             _inventory.DeSerialize(newLoad.Inventory);
-            Debug.Log("Gameworld loaded!");
+            Debug.Log("Gameworld "+ saveGameName+" loaded!");
+
+            //TODO ugly, but works:
+            isLoaded = true;
+            framesAtLoad = Time.frameCount;
         }
-        catch (System.Exception)
+        catch (Exception)
         {
             Debug.Log("Gameworld Save File not Found under: "+Application.persistentDataPath + "/Saves/sav_" + saveGameName);
-            return;
         }
     }
+    
+
 }

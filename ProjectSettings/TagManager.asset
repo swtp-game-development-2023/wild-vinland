@@ -23,11 +23,13 @@ TagManager:
   - BuildBtn
   - Dock
   - Ship
+  - VirtualCamera
+  - A*
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Land
   - Water
   - UI
   - 
