@@ -14,6 +14,16 @@ public class LoadMenuScrollList : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        RefreshFileList();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+    }
+
+    public void RefreshFileList()
+    {
         _directory = new DirectoryInfo(Application.persistentDataPath + "/Saves");
         
         if (_directory.Exists)
@@ -27,11 +37,5 @@ public class LoadMenuScrollList : MonoBehaviour
                 obj.transform.GetComponent<LoadGameBtn>().SaveGameName = file.Name;
             }
         }
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }
