@@ -19,6 +19,6 @@ public class StartShipScript : MonoBehaviour
         player.SetActive(false);
         virtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = ship.transform;
         ship.GetComponent<AIPath>().canMove = true;
-        ship.GetComponent<AudioSource>().Play(44100);
+        ship.GetComponent<AudioSource>().PlayDelayed(1);
     }
 }
