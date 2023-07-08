@@ -26,6 +26,8 @@ public class MapSaveSystem : MonoBehaviour
     
     private InputManager _input = null;
 
+    public InputManager Input => _input;
+
     // Links up with our InputManager.inpuctactions object in Unity
     private InputAction _save, _load;
 
