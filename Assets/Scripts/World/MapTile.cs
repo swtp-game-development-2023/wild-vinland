@@ -8,5 +8,4 @@ public class MapTile : Tile
 {
     public EBiomTileTypes Type;
     public ESpecialTiles SpecialType;
-
 }
