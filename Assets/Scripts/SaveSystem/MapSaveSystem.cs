@@ -285,6 +285,7 @@ public class MapSaveSystem : MonoBehaviour
                         case EGameObjectType.Dock:
                             GameObjectToPlace = Instantiate(buildingPrefabs[0], gameObject.Position, Quaternion.identity, _buildingMap.transform);
                             GameObjectToPlace.GetComponent<PolygonCollider2D>().enabled = true;
+                            GameObjectToPlace.GetComponent<CircleCollider2D>().enabled = true;
                             break;
                         case EGameObjectType.Windmill:
                             GameObjectToPlace = Instantiate(buildingPrefabs[1], gameObject.Position, Quaternion.identity, _buildingMap.transform);
