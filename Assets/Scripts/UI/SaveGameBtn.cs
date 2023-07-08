@@ -27,5 +27,7 @@ public class SaveGameBtn : MonoBehaviour
     {
         worldGrid.transform.GetComponent<MapSaveSystem>().SaveMap(saveNameInput.text);
         LoadMenu.RefreshFileList();
+        transform.parent.gameObject.transform.parent.gameObject.transform.gameObject.SetActive(false);
+        transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.GetChild(1).gameObject.SetActive(true);
     }
 }
