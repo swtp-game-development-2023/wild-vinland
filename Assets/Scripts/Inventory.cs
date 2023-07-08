@@ -1,16 +1,14 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Collectables;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-[Serializable]
 public class Inventory : MonoBehaviour
 {
+    [SerializeField] private int inventorySize = 10;
+    [SerializeField] private Sprite[] itemIcons;
     public class EmptySlot : Collectable
     {
         private void Awake()
@@ -18,8 +16,6 @@ public class Inventory : MonoBehaviour
             ID = -1;
         }
     }
-
-    [SerializeField] private int inventorySize = 10;
 
     public int InventorySize
     {
@@ -156,6 +152,7 @@ public class Inventory : MonoBehaviour
 
     public void DeSerialize(SerializedInventory serializedInventory)
     {
+        GameObject inventoryUiParent = GameObject.Find("ItemsParent");
         inventorySize = serializedInventory.inventorySize;
         Resource resource;
         resource = ScriptableObject.CreateInstance<Resource>();
@@ -166,13 +163,13 @@ public class Inventory : MonoBehaviour
             switch (resource.ID)
             {
                 case (int)CollectableName.Wood:
-                    resource.Sprite = Resources.Load<Sprite>("Icons/Icons_Wood.png");
+                    resource.Sprite = itemIcons[0];
                     break;
                 case (int)CollectableName.Stone:
-                    resource.Sprite = Resources.Load<Sprite>("Icons/Icons_Stone.png");
+                    resource.Sprite =  itemIcons[1];
                     break;
                 case (int)CollectableName.Ore:
-                    resource.Sprite = Resources.Load<Sprite>("Icons/Icons_Ore.png");
+                    resource.Sprite =  itemIcons[2];
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
