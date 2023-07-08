@@ -167,7 +167,7 @@ public class MapSaveSystem : MonoBehaviour
                     }else{
                         spritename = gamobjectInTilemap.gameObject.GetComponent<SpriteRenderer>().sprite.name;
                     }
-                    Debug.Log(spritename);
+                    //Debug.Log(spritename);
                     switch (spritename)
                     {
                         case "Tree":
@@ -255,6 +255,7 @@ public class MapSaveSystem : MonoBehaviour
             }
 
             // Placing GameObjects
+            GameObject GameObjectToPlace;
             foreach (List<PositionedGameObject> gameObjects in gameobjectslist)
             {
                 foreach (PositionedGameObject gameObject in gameObjects)
@@ -280,16 +281,20 @@ public class MapSaveSystem : MonoBehaviour
                             Instantiate(stonePrefabs[2], gameObject.Position, Quaternion.identity, _farmableMap.transform);
                             break;
                         case EGameObjectType.Dock:
-                            Instantiate(buildingPrefabs[0], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            GameObjectToPlace = Instantiate(buildingPrefabs[0], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            GameObjectToPlace.GetComponent<PolygonCollider2D>().enabled = true;
                             break;
                         case EGameObjectType.Windmill:
-                            Instantiate(buildingPrefabs[1], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            GameObjectToPlace = Instantiate(buildingPrefabs[1], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            GameObjectToPlace.GetComponent<PolygonCollider2D>().enabled = true;
                             break;
                         case EGameObjectType.Lumberjack:
-                            Instantiate(buildingPrefabs[2], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            GameObjectToPlace = Instantiate(buildingPrefabs[2], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            GameObjectToPlace.GetComponent<PolygonCollider2D>().enabled = true;
                             break;
                         case EGameObjectType.Stonecutter:
-                            Instantiate(buildingPrefabs[3], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            GameObjectToPlace = Instantiate(buildingPrefabs[3], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            GameObjectToPlace.GetComponent<PolygonCollider2D>().enabled = true;
                             break;
                         case EGameObjectType.Ship:
                             Instantiate(buildingPrefabs[4], gameObject.Position, Quaternion.identity, _buildingMap.transform);
@@ -309,6 +314,7 @@ public class MapSaveSystem : MonoBehaviour
         }
         catch (Exception)
         {
+            //throw;
             Debug.Log("Gameworld Save File not Found under: "+Application.persistentDataPath + "/Saves/sav_" + saveGameName);
         }
     }

@@ -26,7 +26,7 @@ public class ShipBuildScript : MonoBehaviour
 
     private void OnEnable()
     {
-        dock = transform.root.gameObject;
+        dock = transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject;
         var shipMenu = gameObject.transform.parent.gameObject.gameObject.transform.parent.gameObject;
         startShipScript = shipMenu.GetComponentInChildren<StartShipScript>();
         startShipBtn = startShipScript.gameObject.GetComponentInChildren<Button>();
