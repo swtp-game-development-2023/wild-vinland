@@ -44,9 +44,18 @@ public class ShipBuildScript : MonoBehaviour
         var twoBelow = new Vector3Int(gridPos.x , gridPos.y -1, gridPos.z);
 
         var x = gridToWorldVector(twoBelow);
-        ship = Instantiate(ship, x, Quaternion.identity);
+        ship = Instantiate(ship, x, Quaternion.identity, Grid.transform.Find("Buildings").gameObject.GetComponent<Tilemap>().transform);
         startShipBtn.interactable = true;
         startShipScript.Ship = ship;
         isSpawned = true;
+    }
+
+    public bool GetIsSpawned()
+    {
+        return isSpawned;
+    }
+    public void SetIsSpawned(bool isSpawned)
+    {
+        this.isSpawned = isSpawned;
     }
 }

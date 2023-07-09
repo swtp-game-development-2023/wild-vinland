@@ -6,6 +6,7 @@ using SceneDropBoxes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using World;
 using WorldGeneration;
 
@@ -161,6 +162,7 @@ public class MapSaveSystem : MonoBehaviour
                 {
                     EGameObjectType type = EGameObjectType.Tree;
                     String spritename;
+
                     if(gamobjectInTilemap.gameObject.GetComponent<SpriteRenderer>().Equals(null))
                     {
                         spritename = gamobjectInTilemap.gameObject.GetComponentInChildren<SpriteRenderer>().sprite.name;
@@ -172,41 +174,53 @@ public class MapSaveSystem : MonoBehaviour
                     {
                         case "Tree":
                             type = EGameObjectType.Tree;
+                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
                             break;
                         case "Bush":
                             type = EGameObjectType.Bush;
+                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
                             break;
                         case "Ore":
                             type = EGameObjectType.Ore;
+                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
                             break;
                         case "Stone01":
                             type = EGameObjectType.Stone01;
+                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
                             break;
                         case "Stone02":
                             type = EGameObjectType.Stone02;
+                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
                             break;
                         case "Stone03":
                             type = EGameObjectType.Stone03;
+                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
                             break;
                         case "MasterSimple_41":
                             type = EGameObjectType.Dock;
+                            ShipBuildScript ShipbuildScript = gamobjectInTilemap.GetChild(0).GetChild(0).GetChild(5).GetChild(0).GetComponent<ShipBuildScript>();
+                            StartShipScript startShipScript = gamobjectInTilemap.GetChild(0).GetChild(0).GetChild(4).GetComponent<StartShipScript>();
+                            var posigameObj = new PositionedGameObject( gamobjectInTilemap.transform.position, type );
+                            if(ShipbuildScript.GetIsSpawned())
+                            {
+                                posigameObj.SetStatus(1);
+                                posigameObj.SetAttachedGameObjectPosition(startShipScript.Ship.transform.position);
+                            }
+                            yield return posigameObj;
                             break;
                         case "MasterSimple_40":
                             type = EGameObjectType.Windmill;
+                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
                             break;
                         case "MasterSimple_25":
                             type = EGameObjectType.Lumberjack;
+                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
                             break;
                         case "MasterSimple_10":
                             type = EGameObjectType.Stonecutter;
-                            break;
-                        case "ship_strip16 1_4":
-                            type = EGameObjectType.Ship;
+                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
                             break;
                     }
-                    yield return new PositionedGameObject(
-                        gamobjectInTilemap.transform.position, 
-                        type);
                 }
             }
         }
@@ -282,6 +296,15 @@ public class MapSaveSystem : MonoBehaviour
                             break;
                         case EGameObjectType.Dock:
                             GameObjectToPlace = Instantiate(buildingPrefabs[0], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            if(gameObject.status.Equals(1))
+                            {
+                                StartShipScript startShipScript = GameObjectToPlace.GetComponentInChildren<StartShipScript>();
+                                ShipBuildScript ShipbuildScript = GameObjectToPlace.GetComponentInChildren<ShipBuildScript>();
+                                Button startShipBtn = startShipScript.gameObject.GetComponentInChildren<Button>();
+                                startShipBtn.interactable = true;
+                                startShipScript.Ship = Instantiate(buildingPrefabs[4], gameObject.attachedGameObjectPosition, Quaternion.identity, _buildingMap.transform);
+                                ShipbuildScript.SetIsSpawned(true);
+                            }
                             GameObjectToPlace.GetComponent<PolygonCollider2D>().enabled = true;
                             break;
                         case EGameObjectType.Windmill:
@@ -295,9 +318,6 @@ public class MapSaveSystem : MonoBehaviour
                         case EGameObjectType.Stonecutter:
                             GameObjectToPlace = Instantiate(buildingPrefabs[3], gameObject.Position, Quaternion.identity, _buildingMap.transform);
                             GameObjectToPlace.GetComponent<PolygonCollider2D>().enabled = true;
-                            break;
-                        case EGameObjectType.Ship:
-                            Instantiate(buildingPrefabs[4], gameObject.Position, Quaternion.identity, _buildingMap.transform);
                             break;
                     }
                 }
