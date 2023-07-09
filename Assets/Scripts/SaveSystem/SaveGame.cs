@@ -11,7 +11,7 @@ public class SaveGame
 {
     public int LevelIndex;
     public List<PositionedTile> SeaTiles, BeachTiles, GrassTiles, MountainTiles, DecoTiles;
-    public List<PositionedGameObject> FarmableObjects, UnitObjects;
+    public List<PositionedGameObject> FarmableObjects, BuildingObjects;
     public SerializedInventory Inventory;
     public Vector3 PlayerPosition;
     public Quaternion PlayerRotation;

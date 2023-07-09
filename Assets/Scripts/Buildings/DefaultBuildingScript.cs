@@ -8,6 +8,11 @@ namespace Buildings
         //TODO
         private Tilemap seaMap;
 
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+        }
+
         protected new void OnEnable()
         {
             base.OnEnable();
