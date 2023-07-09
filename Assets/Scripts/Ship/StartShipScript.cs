@@ -14,9 +14,12 @@ public class StartShipScript : MonoBehaviour
 
     public void startShip()
     {
+        InputManager input = GameObject.FindGameObjectWithTag("World").GetComponent<MapSaveSystem>().Input;
         var player = GameObject.FindGameObjectWithTag("Player");
         var virtualCamera = GameObject.FindGameObjectWithTag("VirtualCamera");
         player.SetActive(false);
+        input.UI.save.Disable();
+        input.UI.load.Disable();
         virtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = ship.transform;
         ship.GetComponent<AIPath>().canMove = true;
         ship.GetComponent<AudioSource>().PlayDelayed(1);
