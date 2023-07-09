@@ -27,6 +27,8 @@ public class MapSaveSystem : MonoBehaviour
     
     private InputManager _input = null;
 
+    public InputManager Input => _input;
+
     // Links up with our InputManager.inpuctactions object in Unity
     private InputAction _save, _load;
 
@@ -306,6 +308,7 @@ public class MapSaveSystem : MonoBehaviour
                                 ShipbuildScript.SetIsSpawned(true);
                             }
                             GameObjectToPlace.GetComponent<PolygonCollider2D>().enabled = true;
+                            GameObjectToPlace.GetComponent<CircleCollider2D>().enabled = true;
                             break;
                         case EGameObjectType.Windmill:
                             GameObjectToPlace = Instantiate(buildingPrefabs[1], gameObject.Position, Quaternion.identity, _buildingMap.transform);
