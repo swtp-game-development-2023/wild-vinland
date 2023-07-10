@@ -60,6 +60,8 @@ public class PlayerInput : MonoBehaviour
         input.Player.PauseMenu.Disable();
         input.Player.Inventory.Disable();
         input.UI.ShipMenu.Disable();
+        inventoryMenu.CloseInventory();
+        buildMenu.CloseBuildMenu();
     }
 
     private void Start()
