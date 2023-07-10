@@ -51,6 +51,6 @@ public class InventoryMenu : MonoBehaviour
     public void CloseInventory()
     {
         isInventoryOpen = false;
-        inventoryMenu.SetActive(false);
+        if( !inventoryMenu.Equals(null) )inventoryMenu.SetActive(false);
     }
 }
