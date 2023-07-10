@@ -112,7 +112,7 @@ public class MapSaveSystem : MonoBehaviour
         newSave.PlayerRotation = WorldHelper.GetPlayerRotation();
         newSave.Inventory = _inventory.Serialize();
         
-        String json = JsonUtility.ToJson(newSave, true);
+        String json = JsonUtility.ToJson(newSave, false);
         // Saves the SaveGame object as Json textfile, second parameter formats the Json in a more readable format if true, at cost of bigger file size
         System.IO.Directory.CreateDirectory(Application.persistentDataPath + "/Saves");
         File.WriteAllText(Application.persistentDataPath + "/Saves/sav_" + saveName + ".json", json);
