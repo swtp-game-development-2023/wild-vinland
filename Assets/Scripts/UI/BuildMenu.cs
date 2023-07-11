@@ -68,6 +68,6 @@ public class BuildMenu : MonoBehaviour
     public void CloseBuildMenu()
     {
         isOpen = false;
-        buildMenu.SetActive(false);
+        if( !buildMenu.Equals(null) ) buildMenu.SetActive(false);
     }
 }
