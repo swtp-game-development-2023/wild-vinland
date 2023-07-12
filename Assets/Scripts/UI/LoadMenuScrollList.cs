@@ -29,6 +29,12 @@ public class LoadMenuScrollList : MonoBehaviour
         if (_directory.Exists)
         {
             _files = _directory.GetFiles("*.json").OrderBy(p => p.LastWriteTime).Reverse().ToArray();
+
+            foreach (Transform cell in gameObject.transform)
+            {
+               Destroy(cell.gameObject);
+            }
+
             foreach (var file in _files)
             {
                 var obj = Instantiate(cellPrefab, gameObject.transform, false);

@@ -24,7 +24,7 @@ public class MapSaveSystem : MonoBehaviour
     public GameObject[] treePrefab, stonePrefabs, buildingPrefabs;
     private Inventory _inventory;
     private TilePlacer tilePlacer;
-    
+    [SerializeField] private LoadMenuScrollList _loadMenuScrollListContainer;
     private InputManager _input = null;
 
     public InputManager Input => _input;
@@ -227,6 +227,7 @@ public class MapSaveSystem : MonoBehaviour
             }
         }
 
+        _loadMenuScrollListContainer.RefreshFileList();
         Debug.Log("Gameworld saved!");
     }
 
