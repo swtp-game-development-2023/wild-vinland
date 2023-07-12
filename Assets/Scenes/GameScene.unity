@@ -341,6 +341,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 804929683364882372, guid: f64febd58491d0348b6a18935b88ac07, type: 3}
+      propertyPath: _loadMenu
+      value: 
+      objectReference: {fileID: 679666107}
+    - target: {fileID: 804929683364882372, guid: f64febd58491d0348b6a18935b88ac07, type: 3}
+      propertyPath: _loadMenuContainer
+      value: 
+      objectReference: {fileID: 679666107}
+    - target: {fileID: 804929683364882372, guid: f64febd58491d0348b6a18935b88ac07, type: 3}
+      propertyPath: _loadMenuScrollListContainer
+      value: 
+      objectReference: {fileID: 679666107}
     - target: {fileID: 4079552243611285768, guid: f64febd58491d0348b6a18935b88ac07, type: 3}
       propertyPath: m_Name
       value: WorldMapGrid
@@ -398,6 +410,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f64febd58491d0348b6a18935b88ac07, type: 3}
+--- !u!114 &679666107 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4915513465863101090, guid: 011c8c5b4fe5b6e4e99e04d368110a60, type: 3}
+  m_PrefabInstance: {fileID: 1737966930}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74a8880f574034c47a7011cbb87c89e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &849079777
 PrefabInstance:
   m_ObjectHideFlags: 0
