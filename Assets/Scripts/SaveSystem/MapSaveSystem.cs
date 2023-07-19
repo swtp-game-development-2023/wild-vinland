@@ -44,7 +44,7 @@ public class MapSaveSystem : MonoBehaviour
         tilePlacer = new TilePlacer(_seaMap, _beachMap, _grassMap, _mountainMap, _decoMap);
 
         _inventory = GameObject.Find("Player").GetComponent<Inventory>();
-        
+
         if (UILoadGameDropBox.IsFilled)
         {
             LoadMap(UILoadGameDropBox.SaveGameName);
@@ -71,10 +71,11 @@ public class MapSaveSystem : MonoBehaviour
         _load.Disable();
     }
 
-    
+
     //TODO find a better solution, but it`s not stupid if it works!
     private bool isLoaded;
     private int framesAtLoad;
+
     void Update()
     {
         if (_save.IsPressed()) SaveMap(); // Saves the Tilemaps, if the save button is pressed
@@ -98,20 +99,20 @@ public class MapSaveSystem : MonoBehaviour
     public void SaveMap(String saveName)
     {
         SaveGame newSave = new SaveGame();
-        
+
         newSave.SeaTiles = GetTilesFromMap(_seaMap).ToList();
         newSave.BeachTiles = GetTilesFromMap(_beachMap).ToList();
         newSave.GrassTiles = GetTilesFromMap(_grassMap).ToList();
         newSave.MountainTiles = GetTilesFromMap(_mountainMap).ToList();
         newSave.DecoTiles = GetTilesFromMap(_decoMap).ToList();
-        
+
         newSave.FarmableObjects = GetGameObjectsFromMap(_farmableMap).ToList();
         newSave.BuildingObjects = GetGameObjectsFromMap(_buildingMap).ToList();
 
         newSave.PlayerPosition = WorldHelper.GetPlayerPositon();
         newSave.PlayerRotation = WorldHelper.GetPlayerRotation();
         newSave.Inventory = _inventory.Serialize();
-        
+
         String json = JsonUtility.ToJson(newSave, false);
         // Saves the SaveGame object as Json textfile, second parameter formats the Json in a more readable format if true, at cost of bigger file size
         System.IO.Directory.CreateDirectory(Application.persistentDataPath + "/Saves");
@@ -156,71 +157,79 @@ public class MapSaveSystem : MonoBehaviour
                 }
             }
         }
+
         IEnumerable<PositionedGameObject> GetGameObjectsFromMap(Tilemap map)
         {
-            if(map.transform.childCount > 0)
+            if (map.transform.childCount > 0)
             {
                 foreach (Transform gamobjectInTilemap in map.transform)
                 {
-                    EGameObjectType type = EGameObjectType.Tree;
+                    EGameObjectType type;
                     String spritename;
 
-                    if(gamobjectInTilemap.gameObject.GetComponent<SpriteRenderer>().Equals(null))
+                    if (gamobjectInTilemap.gameObject.GetComponent<SpriteRenderer>() != null)
                     {
-                        spritename = gamobjectInTilemap.gameObject.GetComponentInChildren<SpriteRenderer>().sprite.name;
-                    }else{
+                        //farmable
                         spritename = gamobjectInTilemap.gameObject.GetComponent<SpriteRenderer>().sprite.name;
                     }
-                    //Debug.Log(spritename);
+                    else
+                    {
+                        //building
+                        spritename = gamobjectInTilemap.gameObject.GetComponentInChildren<SpriteRenderer>().sprite.name;
+                    }
+
                     switch (spritename)
                     {
                         case "Tree":
                             type = EGameObjectType.Tree;
-                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
+                            yield return new PositionedGameObject(gamobjectInTilemap.transform.position, type);
                             break;
                         case "Bush":
                             type = EGameObjectType.Bush;
-                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
+                            yield return new PositionedGameObject(gamobjectInTilemap.transform.position, type);
                             break;
                         case "Ore":
                             type = EGameObjectType.Ore;
-                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
+                            yield return new PositionedGameObject(gamobjectInTilemap.transform.position, type);
                             break;
                         case "Stone01":
                             type = EGameObjectType.Stone01;
-                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
+                            yield return new PositionedGameObject(gamobjectInTilemap.transform.position, type);
                             break;
                         case "Stone02":
                             type = EGameObjectType.Stone02;
-                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
+                            yield return new PositionedGameObject(gamobjectInTilemap.transform.position, type);
                             break;
                         case "Stone03":
                             type = EGameObjectType.Stone03;
-                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
+                            yield return new PositionedGameObject(gamobjectInTilemap.transform.position, type);
                             break;
                         case "MasterSimple_41":
                             type = EGameObjectType.Dock;
-                            ShipBuildScript ShipbuildScript = gamobjectInTilemap.GetChild(0).GetChild(0).GetChild(5).GetChild(0).GetComponent<ShipBuildScript>();
-                            StartShipScript startShipScript = gamobjectInTilemap.GetChild(0).GetChild(0).GetChild(4).GetComponent<StartShipScript>();
-                            var posigameObj = new PositionedGameObject( gamobjectInTilemap.transform.position, type );
-                            if(ShipbuildScript.GetIsSpawned())
+                            ShipBuildScript ShipbuildScript = gamobjectInTilemap.GetChild(0).GetChild(0).GetChild(5)
+                                .GetChild(0).GetComponent<ShipBuildScript>();
+                            StartShipScript startShipScript = gamobjectInTilemap.GetChild(0).GetChild(0).GetChild(4)
+                                .GetComponent<StartShipScript>();
+                            var posigameObj = new PositionedGameObject(gamobjectInTilemap.transform.position, type);
+                            if (ShipbuildScript.GetIsSpawned())
                             {
                                 posigameObj.SetStatus(1);
                                 posigameObj.SetAttachedGameObjectPosition(startShipScript.Ship.transform.position);
                             }
+
                             yield return posigameObj;
                             break;
                         case "MasterSimple_40":
                             type = EGameObjectType.Windmill;
-                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
+                            yield return new PositionedGameObject(gamobjectInTilemap.transform.position, type);
                             break;
                         case "MasterSimple_25":
                             type = EGameObjectType.Lumberjack;
-                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
+                            yield return new PositionedGameObject(gamobjectInTilemap.transform.position, type);
                             break;
                         case "MasterSimple_10":
                             type = EGameObjectType.Stonecutter;
-                            yield return new PositionedGameObject( gamobjectInTilemap.transform.position, type );
+                            yield return new PositionedGameObject(gamobjectInTilemap.transform.position, type);
                             break;
                     }
                 }
@@ -235,6 +244,7 @@ public class MapSaveSystem : MonoBehaviour
     {
         LoadMap("sav_" + _levelIndex + ".json");
     }
+
     ///<summary>
     /// Trys to load a Savegame from path (index set in the _levelIndex field): Assets/saves/worldmap_sav_<index> 
     ///</summary>
@@ -242,7 +252,7 @@ public class MapSaveSystem : MonoBehaviour
     {
         try
         {
-            string json = File.ReadAllText(Application.persistentDataPath + "/Saves/" + saveGameName );
+            string json = File.ReadAllText(Application.persistentDataPath + "/Saves/" + saveGameName);
             SaveGame newLoad = JsonUtility.FromJson<SaveGame>(json);
 
             WorldHelper.ClearMap();
@@ -255,7 +265,7 @@ public class MapSaveSystem : MonoBehaviour
             {
                 newLoad.FarmableObjects, newLoad.BuildingObjects
             };
-            
+
             // Placing regular Tiles
             foreach (List<PositionedTile> tilemap in tilemaps)
             {
@@ -280,47 +290,60 @@ public class MapSaveSystem : MonoBehaviour
                     switch (gameObject.Type)
                     {
                         case EGameObjectType.Tree:
-                            Instantiate(treePrefab[0], gameObject.Position, Quaternion.identity, _farmableMap.transform);
+                            Instantiate(treePrefab[0], gameObject.Position, Quaternion.identity,
+                                _farmableMap.transform);
                             break;
                         case EGameObjectType.Bush:
-                            Instantiate(treePrefab[1], gameObject.Position, Quaternion.identity, _farmableMap.transform);
+                            Instantiate(treePrefab[1], gameObject.Position, Quaternion.identity,
+                                _farmableMap.transform);
                             break;
                         case EGameObjectType.Ore:
                             Instantiate(orePrefab, gameObject.Position, Quaternion.identity, _farmableMap.transform);
                             break;
                         case EGameObjectType.Stone01:
-                            Instantiate(stonePrefabs[0], gameObject.Position, Quaternion.identity, _farmableMap.transform);
+                            Instantiate(stonePrefabs[0], gameObject.Position, Quaternion.identity,
+                                _farmableMap.transform);
                             break;
                         case EGameObjectType.Stone02:
-                            Instantiate(stonePrefabs[1], gameObject.Position, Quaternion.identity, _farmableMap.transform);
+                            Instantiate(stonePrefabs[1], gameObject.Position, Quaternion.identity,
+                                _farmableMap.transform);
                             break;
                         case EGameObjectType.Stone03:
-                            Instantiate(stonePrefabs[2], gameObject.Position, Quaternion.identity, _farmableMap.transform);
+                            Instantiate(stonePrefabs[2], gameObject.Position, Quaternion.identity,
+                                _farmableMap.transform);
                             break;
                         case EGameObjectType.Dock:
-                            GameObjectToPlace = Instantiate(buildingPrefabs[0], gameObject.Position, Quaternion.identity, _buildingMap.transform);
-                            if(gameObject.status.Equals(1))
+                            GameObjectToPlace = Instantiate(buildingPrefabs[0], gameObject.Position,
+                                Quaternion.identity, _buildingMap.transform);
+                            if (gameObject.status.Equals(1))
                             {
-                                StartShipScript startShipScript = GameObjectToPlace.GetComponentInChildren<StartShipScript>();
-                                ShipBuildScript ShipbuildScript = GameObjectToPlace.GetComponentInChildren<ShipBuildScript>();
+                                StartShipScript startShipScript =
+                                    GameObjectToPlace.GetComponentInChildren<StartShipScript>();
+                                ShipBuildScript ShipbuildScript =
+                                    GameObjectToPlace.GetComponentInChildren<ShipBuildScript>();
                                 Button startShipBtn = startShipScript.gameObject.GetComponentInChildren<Button>();
                                 startShipBtn.interactable = true;
-                                startShipScript.Ship = Instantiate(buildingPrefabs[4], gameObject.attachedGameObjectPosition, Quaternion.identity, _buildingMap.transform);
+                                startShipScript.Ship = Instantiate(buildingPrefabs[4],
+                                    gameObject.attachedGameObjectPosition, Quaternion.identity, _buildingMap.transform);
                                 ShipbuildScript.SetIsSpawned(true);
                             }
+
                             GameObjectToPlace.GetComponent<PolygonCollider2D>().enabled = true;
                             GameObjectToPlace.GetComponent<CircleCollider2D>().enabled = true;
                             break;
                         case EGameObjectType.Windmill:
-                            GameObjectToPlace = Instantiate(buildingPrefabs[1], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            GameObjectToPlace = Instantiate(buildingPrefabs[1], gameObject.Position,
+                                Quaternion.identity, _buildingMap.transform);
                             GameObjectToPlace.GetComponent<PolygonCollider2D>().enabled = true;
                             break;
                         case EGameObjectType.Lumberjack:
-                            GameObjectToPlace = Instantiate(buildingPrefabs[2], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            GameObjectToPlace = Instantiate(buildingPrefabs[2], gameObject.Position,
+                                Quaternion.identity, _buildingMap.transform);
                             GameObjectToPlace.GetComponent<PolygonCollider2D>().enabled = true;
                             break;
                         case EGameObjectType.Stonecutter:
-                            GameObjectToPlace = Instantiate(buildingPrefabs[3], gameObject.Position, Quaternion.identity, _buildingMap.transform);
+                            GameObjectToPlace = Instantiate(buildingPrefabs[3], gameObject.Position,
+                                Quaternion.identity, _buildingMap.transform);
                             GameObjectToPlace.GetComponent<PolygonCollider2D>().enabled = true;
                             break;
                     }
@@ -330,7 +353,7 @@ public class MapSaveSystem : MonoBehaviour
             WorldHelper.SetPlayerPosition(newLoad.PlayerPosition);
             WorldHelper.SetPlayerRotation(newLoad.PlayerRotation);
             _inventory.DeSerialize(newLoad.Inventory);
-            Debug.Log("Gameworld "+ saveGameName+" loaded!");
+            Debug.Log("Gameworld " + saveGameName + " loaded!");
 
             //TODO ugly, but works:
             isLoaded = true;
@@ -339,9 +362,8 @@ public class MapSaveSystem : MonoBehaviour
         catch (Exception)
         {
             //throw;
-            Debug.Log("Gameworld Save File not Found under: "+Application.persistentDataPath + "/Saves/sav_" + saveGameName);
+            Debug.Log("Gameworld Save File not Found under: " + Application.persistentDataPath + "/Saves/sav_" +
+                      saveGameName);
         }
     }
-    
-
 }
